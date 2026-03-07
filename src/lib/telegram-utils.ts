@@ -141,7 +141,7 @@ export function formatAlertMessage(alerts: ThresholdAlert[]): string {
       const pct = escapeMarkdownV2(
         `(${Math.abs(alert.percentChange).toFixed(1)}%)`,
       );
-      return `${emoji} [${name}](${url}) ${oldPrice} \\-> ${newPrice} ${pct}`;
+      return `${emoji} [${name}](${url}) ${oldPrice} \\-\\> ${newPrice} ${pct}`;
     })
     .join('\n');
 }

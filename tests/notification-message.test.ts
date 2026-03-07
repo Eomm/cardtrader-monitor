@@ -72,6 +72,8 @@ describe('formatAlertMessage', () => {
     // Prices (escaped for MarkdownV2: dots become \.)
     expect(msg).toContain('€17\\.27');
     expect(msg).toContain('€15\\.00');
+    // Arrow separator must have > escaped for MarkdownV2
+    expect(msg).toContain('\\-\\>');
   });
 
   it('formats a single price rise alert with red circle', () => {
