@@ -15,11 +15,15 @@ describe('extractWishlistId', () => {
   });
 
   it('throws on invalid URL without cardtrader domain', () => {
-    expect(() => extractWishlistId('https://example.com/foo')).toThrow('Invalid CardTrader wishlist URL');
+    expect(() => extractWishlistId('https://example.com/foo')).toThrow(
+      'Invalid CardTrader wishlist URL',
+    );
   });
 
   it('throws on cardtrader URL without wishlists path', () => {
-    expect(() => extractWishlistId('https://www.cardtrader.com/marketplace')).toThrow('Invalid CardTrader wishlist URL');
+    expect(() => extractWishlistId('https://www.cardtrader.com/marketplace')).toThrow(
+      'Invalid CardTrader wishlist URL',
+    );
   });
 
   it('throws on empty string', () => {

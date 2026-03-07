@@ -28,29 +28,53 @@ const defaultFilters: CardFilters = {
 
 describe('filterCtZeroOffers', () => {
   it('includes sellers with can_sell_via_hub=true', () => {
-    const products = [makeProduct({ user: { can_sell_via_hub: true, user_type: 'regular', can_sell_sealed_with_ct_zero: false } })];
+    const products = [
+      makeProduct({
+        user: { can_sell_via_hub: true, user_type: 'regular', can_sell_sealed_with_ct_zero: false },
+      }),
+    ];
     expect(filterCtZeroOffers(products, defaultFilters)).toHaveLength(1);
   });
 
   it('includes sellers with user_type=pro', () => {
-    const products = [makeProduct({ user: { can_sell_via_hub: false, user_type: 'pro', can_sell_sealed_with_ct_zero: false } })];
+    const products = [
+      makeProduct({
+        user: { can_sell_via_hub: false, user_type: 'pro', can_sell_sealed_with_ct_zero: false },
+      }),
+    ];
     expect(filterCtZeroOffers(products, defaultFilters)).toHaveLength(1);
   });
 
   it('includes sellers with can_sell_sealed_with_ct_zero=true', () => {
-    const products = [makeProduct({ user: { can_sell_via_hub: false, user_type: 'regular', can_sell_sealed_with_ct_zero: true } })];
+    const products = [
+      makeProduct({
+        user: { can_sell_via_hub: false, user_type: 'regular', can_sell_sealed_with_ct_zero: true },
+      }),
+    ];
     expect(filterCtZeroOffers(products, defaultFilters)).toHaveLength(1);
   });
 
   it('excludes sellers without any CT Zero qualification', () => {
-    const products = [makeProduct({ user: { can_sell_via_hub: false, user_type: 'regular', can_sell_sealed_with_ct_zero: false } })];
+    const products = [
+      makeProduct({
+        user: {
+          can_sell_via_hub: false,
+          user_type: 'regular',
+          can_sell_sealed_with_ct_zero: false,
+        },
+      }),
+    ];
     expect(filterCtZeroOffers(products, defaultFilters)).toHaveLength(0);
   });
 
   it('filters by condition when condition_required is set', () => {
     const products = [
-      makeProduct({ properties_hash: { condition: 'Near Mint', mtg_language: 'en', mtg_foil: false } }),
-      makeProduct({ properties_hash: { condition: 'Played', mtg_language: 'en', mtg_foil: false } }),
+      makeProduct({
+        properties_hash: { condition: 'Near Mint', mtg_language: 'en', mtg_foil: false },
+      }),
+      makeProduct({
+        properties_hash: { condition: 'Played', mtg_language: 'en', mtg_foil: false },
+      }),
     ];
     const filters: CardFilters = { condition: 'Near Mint', language: 'en', onlyZero: true };
     expect(filterCtZeroOffers(products, filters)).toHaveLength(1);
@@ -58,8 +82,12 @@ describe('filterCtZeroOffers', () => {
 
   it('filters by language', () => {
     const products = [
-      makeProduct({ properties_hash: { condition: 'Near Mint', mtg_language: 'en', mtg_foil: false } }),
-      makeProduct({ properties_hash: { condition: 'Near Mint', mtg_language: 'de', mtg_foil: false } }),
+      makeProduct({
+        properties_hash: { condition: 'Near Mint', mtg_language: 'en', mtg_foil: false },
+      }),
+      makeProduct({
+        properties_hash: { condition: 'Near Mint', mtg_language: 'de', mtg_foil: false },
+      }),
     ];
     expect(filterCtZeroOffers(products, defaultFilters)).toHaveLength(1);
   });
@@ -80,7 +108,15 @@ describe('findCheapestPrice', () => {
   });
 
   it('returns null when no offers match filters', () => {
-    const products = [makeProduct({ user: { can_sell_via_hub: false, user_type: 'regular', can_sell_sealed_with_ct_zero: false } })];
+    const products = [
+      makeProduct({
+        user: {
+          can_sell_via_hub: false,
+          user_type: 'regular',
+          can_sell_sealed_with_ct_zero: false,
+        },
+      }),
+    ];
     expect(findCheapestPrice(products, defaultFilters)).toBeNull();
   });
 
