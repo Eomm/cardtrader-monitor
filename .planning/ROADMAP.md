@@ -45,11 +45,13 @@ Plans:
   2. Each imported card has a baseline price set automatically and a default threshold notification rule created
   3. Hourly GitHub Actions job fetches current prices for all active cards, deduplicating API calls by blueprint ID
   4. Daily price snapshots are stored and retained for the configured number of days per card
-**Plans**: TBD
+**Plans:** 4 plans
 
 Plans:
-- [ ] 02-01: TBD
-- [ ] 02-02: TBD
+- [ ] 02-01-PLAN.md — Test infrastructure (vitest), shared CardTrader types and utilities with tests, and Phase 2 database migration
+- [ ] 02-02-PLAN.md — Supabase Edge Function for wishlist import (fetch wishlist, resolve blueprints, set baseline prices, insert cards)
+- [ ] 02-03-PLAN.md — GitHub Actions hourly price fetch script and cron workflow (deduplicated by blueprint ID)
+- [ ] 02-04-PLAN.md — Dashboard UI: import form, card list with prices, and price change indicators
 
 ### Phase 3: Dashboard
 **Goal**: Users can browse their monitored cards, filter results, view card details, and configure notification rules
@@ -101,8 +103,8 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation | 1/2 | Executing | - |
-| 2. Data Pipeline | 0/? | Not started | - |
+| 1. Foundation | 2/2 | Complete | - |
+| 2. Data Pipeline | 0/4 | Planning | - |
 | 3. Dashboard | 0/? | Not started | - |
 | 4. Notifications | 0/? | Not started | - |
 | 5. Automation | 0/? | Not started | - |
