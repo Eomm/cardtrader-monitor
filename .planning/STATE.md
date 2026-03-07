@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 04-01-PLAN.md
-last_updated: "2026-03-07T17:54:56.501Z"
-last_activity: 2026-03-07 -- Executed 04-01 notification utilities (TDD)
+stopped_at: Completed 04-02-PLAN.md
+last_updated: "2026-03-07T20:43:44.772Z"
+last_activity: 2026-03-07 -- Executed 04-02 Telegram bot connection
 progress:
   total_phases: 5
   completed_phases: 3
   total_plans: 12
-  completed_plans: 10
-  percent: 60
+  completed_plans: 11
+  percent: 92
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-03-07)
 ## Current Position
 
 Phase: 4 of 5 (Notifications)
-Plan: 1 of 3 in current phase (04-01 complete)
+Plan: 2 of 3 in current phase (04-02 complete)
 Status: In Progress
-Last activity: 2026-03-07 -- Executed 04-01 notification utilities (TDD)
+Last activity: 2026-03-07 -- Executed 04-02 Telegram bot connection
 
-Progress: [██████░░░░] 60%
+Progress: [█████████░] 92%
 
 ## Performance Metrics
 
@@ -55,6 +55,7 @@ Progress: [██████░░░░] 60%
 | Phase 03-dashboard P02 | 2 | 2 tasks | 5 files |
 | Phase 03-dashboard P03 | 39 min | 2 tasks | 4 files |
 | Phase 04-notifications P01 | 2 | 2 tasks | 4 files |
+| Phase 04-notifications P02 | 8 min | 3 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -93,6 +94,10 @@ Recent decisions affecting current work:
 - [03-03]: Defensive Array.isArray check in RuleEditor for databases where migration not applied
 - [Phase 04-01]: Null baseline treated as -100% drop to alert when unavailable cards appear
 - [Phase 04-01]: Cooldown re-evaluates threshold against last notified price during 24h window
+- [Phase 04-02]: Shared telegram.ts helper in _shared/ for Deno runtime (same pattern as cardtrader-api.ts)
+- [Phase 04-02]: Webhook always returns 200 OK to Telegram to prevent retries
+- [Phase 04-02]: Save & Test flow: update profile first, then invoke Edge Function for test message
+- [Phase 04-02]: Added direct link to @card_trader_monitor_bot in Settings instructions
 
 ### Pending Todos
 
@@ -105,6 +110,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-07T17:54:56.492Z
-Stopped at: Completed 04-01-PLAN.md
+Last session: 2026-03-07T20:43:44Z
+Stopped at: Completed 04-02-PLAN.md
 Resume file: None

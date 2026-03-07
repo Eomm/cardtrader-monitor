@@ -48,7 +48,7 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Notifications
 
-- [ ] **NOTF-01**: User receives a Telegram message when a threshold alert triggers
+- [x] **NOTF-01**: User receives a Telegram message when a threshold alert triggers
 - [x] **NOTF-02**: Telegram notification includes card name, old price, new price, and percentage change
 - [x] **NOTF-03**: Telegram notification includes a direct link to the CardTrader listing
 - [ ] **NOTF-04**: Sent notifications are logged in the database
@@ -139,7 +139,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | RULE-01 | Phase 3: Dashboard | Complete |
 | RULE-02 | Phase 3: Dashboard | Complete |
 | RULE-03 | Phase 4: Notifications | Complete |
-| NOTF-01 | Phase 4: Notifications | Pending |
+| NOTF-01 | Phase 4: Notifications | Complete |
 | NOTF-02 | Phase 4: Notifications | Complete |
 | NOTF-03 | Phase 4: Notifications | Complete |
 | NOTF-04 | Phase 4: Notifications | Pending |

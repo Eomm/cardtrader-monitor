@@ -78,7 +78,7 @@ Plans:
   2. Telegram notification includes card name, old price, new price, percentage change, and a direct link to the CardTrader listing
   3. All sent notifications are logged in the database with timestamp and details
   4. Threshold evaluation runs as part of the hourly price check job (no separate workflow needed)
-**Plans:** 3 plans
+**Plans:** 2/3 plans executed
 
 Plans:
 - [ ] 04-01-PLAN.md — TDD: threshold evaluation, cooldown logic, MarkdownV2 escaping, and alert message formatting utilities
@@ -108,5 +108,5 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5
 | 1. Foundation | 2/2 | Complete | - |
 | 2. Data Pipeline | 4/4 | Complete | 2026-03-07 |
 | 3. Dashboard | 1/3 | In Progress|  |
-| 4. Notifications | 0/3 | Not started | - |
+| 4. Notifications | 2/3 | In Progress|  |
 | 5. Automation | 0/? | Not started | - |
