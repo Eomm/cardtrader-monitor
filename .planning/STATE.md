@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: completed
-stopped_at: Phase 5 context gathered
-last_updated: "2026-03-07T21:10:01.242Z"
-last_activity: 2026-03-07 -- Executed 04-03 Price fetch notification integration
+status: executing
+stopped_at: Completed 05-01-PLAN.md
+last_updated: "2026-03-07T21:25:22.141Z"
+last_activity: 2026-03-07 -- Executed 05-01 Snapshot & Notification Cleanup
 progress:
   total_phases: 5
   completed_phases: 4
-  total_plans: 12
-  completed_plans: 12
-  percent: 100
+  total_plans: 14
+  completed_plans: 13
+  percent: 93
 ---
 
 # Project State
@@ -25,12 +25,12 @@ See: .planning/PROJECT.md (updated 2026-03-07)
 
 ## Current Position
 
-Phase: 4 of 5 (Notifications) -- COMPLETE
-Plan: 3 of 3 in current phase (04-03 complete)
-Status: Phase 04 Complete
-Last activity: 2026-03-07 -- Executed 04-03 Price fetch notification integration
+Phase: 5 of 5 (Automation)
+Plan: 1 of 2 in current phase (05-01 complete)
+Status: Executing Phase 05
+Last activity: 2026-03-07 -- Executed 05-01 Snapshot & Notification Cleanup
 
-Progress: [██████████] 100%
+Progress: [█████████░] 93%
 
 ## Performance Metrics
 
@@ -57,6 +57,7 @@ Progress: [██████████] 100%
 | Phase 04-notifications P01 | 2 | 2 tasks | 4 files |
 | Phase 04-notifications P02 | 8 min | 3 tasks | 4 files |
 | Phase 04-notifications P03 | 3 min | 2 tasks | 2 files |
+| Phase 05-automation P01 | 1 | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -102,6 +103,8 @@ Recent decisions affecting current work:
 - [Phase 04-03]: Local sendTelegramMessage in fetch-prices.ts (Node.js cannot import Deno code)
 - [Phase 04-03]: One alert per card per run with first-triggered-rule-wins dedup
 - [Phase 04-03]: Graceful skip when TELEGRAM_BOT_TOKEN not set (no failure)
+- [Phase 05-01]: Used SECURITY DEFINER PL/pgSQL function for DELETE with JOIN (Supabase JS limitation)
+- [Phase 05-01]: Cleanup at 04:00 UTC to avoid overlap with hourly fetch-prices; cancel-in-progress: false on both workflows
 
 ### Pending Todos
 
@@ -114,6 +117,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-07T21:10:01.237Z
-Stopped at: Phase 5 context gathered
-Resume file: .planning/phases/05-automation/05-CONTEXT.md
+Last session: 2026-03-07T21:25:22.136Z
+Stopped at: Completed 05-01-PLAN.md
+Resume file: None

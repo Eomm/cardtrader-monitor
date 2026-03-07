@@ -31,7 +31,7 @@ Requirements for initial release. Each maps to roadmap phases.
 - [x] **PRIC-02**: Price fetches are deduplicated by blueprint ID across users (one API call per unique card)
 - [x] **PRIC-03**: Each card stores a baseline price set at import time
 - [x] **PRIC-04**: Daily price snapshots are retained for a configurable number of days per card
-- [ ] **PRIC-05**: Snapshots older than the retention window are cleaned up automatically
+- [x] **PRIC-05**: Snapshots older than the retention window are cleaned up automatically
 
 ### Card Filtering
 
@@ -144,7 +144,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | NOTF-03 | Phase 4: Notifications | Complete |
 | NOTF-04 | Phase 4: Notifications | Complete |
 | WISH-04 | Phase 5: Automation | Pending |
-| PRIC-05 | Phase 5: Automation | Pending |
+| PRIC-05 | Phase 5: Automation | Complete |
 
 **Coverage:**
 - v1 requirements: 31 total
