@@ -36,14 +36,14 @@ Requirements for initial release. Each maps to roadmap phases.
 ### Card Filtering
 
 - [ ] **FILT-01**: User can filter monitored card results by condition (NM, LP, etc.)
-- [ ] **FILT-02**: User can filter monitored card results by language
+- [x] **FILT-02**: User can filter monitored card results by language
 - [ ] **FILT-03**: User can filter monitored card results by foil status
 - [ ] **FILT-04**: User can filter to CardTrader Zero listings only
 
 ### Notification Rules
 
-- [ ] **RULE-01**: User can set a threshold alert per card (notify when price moves X% from baseline, up or down)
-- [ ] **RULE-02**: User can enable or disable notifications per card
+- [x] **RULE-01**: User can set a threshold alert per card (notify when price moves X% from baseline, up or down)
+- [x] **RULE-02**: User can enable or disable notifications per card
 - [ ] **RULE-03**: Threshold alert evaluates current cheapest matching price vs baseline price
 
 ### Notifications
@@ -133,11 +133,11 @@ Which phases cover which requirements. Updated during roadmap creation.
 | DASH-03 | Phase 3: Dashboard | Pending |
 | DASH-04 | Phase 3: Dashboard | Pending |
 | FILT-01 | Phase 3: Dashboard | Pending |
-| FILT-02 | Phase 3: Dashboard | Pending |
+| FILT-02 | Phase 3: Dashboard | Complete |
 | FILT-03 | Phase 3: Dashboard | Pending |
 | FILT-04 | Phase 3: Dashboard | Pending |
-| RULE-01 | Phase 3: Dashboard | Pending |
-| RULE-02 | Phase 3: Dashboard | Pending |
+| RULE-01 | Phase 3: Dashboard | Complete |
+| RULE-02 | Phase 3: Dashboard | Complete |
 | RULE-03 | Phase 4: Notifications | Pending |
 | NOTF-01 | Phase 4: Notifications | Pending |
 | NOTF-02 | Phase 4: Notifications | Pending |

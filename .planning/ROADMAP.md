@@ -62,7 +62,7 @@ Plans:
   2. User can filter the card list by condition, language, foil status, and CardTrader Zero listings
   3. User can click a card to see its detail page with current price, baseline price, and rule configuration
   4. User can set a threshold alert percentage and enable/disable notifications per card from the detail page
-**Plans:** 3 plans
+**Plans:** 1/3 plans executed
 
 Plans:
 - [ ] 03-01-PLAN.md — Types, utilities, DB migration, and tests (notification rule array, flag emoji, card sorting)
@@ -106,6 +106,6 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5
 |-------|----------------|--------|-----------|
 | 1. Foundation | 2/2 | Complete | - |
 | 2. Data Pipeline | 4/4 | Complete | 2026-03-07 |
-| 3. Dashboard | 0/3 | Not started | - |
+| 3. Dashboard | 1/3 | In Progress|  |
 | 4. Notifications | 0/? | Not started | - |
 | 5. Automation | 0/? | Not started | - |
