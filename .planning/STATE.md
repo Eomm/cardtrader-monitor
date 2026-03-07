@@ -28,7 +28,7 @@ See: .planning/PROJECT.md (updated 2026-03-07)
 Phase: 5 of 5 (Automation)
 Plan: 2 of 2 in current phase (05-02 complete)
 Status: All phases complete
-Last activity: 2026-03-07 -- Executed 05-02 Wishlist Sync
+Last activity: 2026-03-07 - Completed quick task 1: Fix Telegram MarkdownV2 escaping for > character
 
 Progress: [██████████] 100%
 
@@ -118,6 +118,12 @@ None yet.
 
 - CardTrader API behavior needs live validation during Phase 2 planning (25-product limit, rate limits, token scopes)
 - GitHub Actions minutes budget is tight (estimated 1,620 of 2,000 min/month) -- monitor from Phase 2
+
+### Quick Tasks Completed
+
+| # | Description | Date | Commit | Directory |
+|---|-------------|------|--------|-----------|
+| 1 | Fix Telegram MarkdownV2 escaping for > character | 2026-03-07 | 903bfba | [1-fix-telegram-markdownv2-escaping-for-cha](./quick/1-fix-telegram-markdownv2-escaping-for-cha/) |
 
 ## Session Continuity
 
