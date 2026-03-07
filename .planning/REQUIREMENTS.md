@@ -27,7 +27,7 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Price Tracking
 
-- [ ] **PRIC-01**: Hourly GitHub Actions job fetches current prices for all active monitored cards
+- [x] **PRIC-01**: Hourly GitHub Actions job fetches current prices for all active monitored cards
 - [x] **PRIC-02**: Price fetches are deduplicated by blueprint ID across users (one API call per unique card)
 - [x] **PRIC-03**: Each card stores a baseline price set at import time
 - [x] **PRIC-04**: Daily price snapshots are retained for a configurable number of days per card
@@ -124,7 +124,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | WISH-01 | Phase 2: Data Pipeline | Complete |
 | WISH-02 | Phase 2: Data Pipeline | Complete |
 | WISH-03 | Phase 2: Data Pipeline | Complete |
-| PRIC-01 | Phase 2: Data Pipeline | Pending |
+| PRIC-01 | Phase 2: Data Pipeline | Complete |
 | PRIC-02 | Phase 2: Data Pipeline | Complete |
 | PRIC-03 | Phase 2: Data Pipeline | Complete |
 | PRIC-04 | Phase 2: Data Pipeline | Complete |

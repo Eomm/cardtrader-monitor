@@ -45,7 +45,7 @@ Plans:
   2. Each imported card has a baseline price set automatically and a default threshold notification rule created
   3. Hourly GitHub Actions job fetches current prices for all active cards, deduplicating API calls by blueprint ID
   4. Daily price snapshots are stored and retained for the configured number of days per card
-**Plans:** 4 plans
+**Plans:** 3/4 plans executed
 
 Plans:
 - [ ] 02-01-PLAN.md — Test infrastructure (vitest), shared CardTrader types and utilities with tests, and Phase 2 database migration
@@ -104,7 +104,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation | 2/2 | Complete | - |
-| 2. Data Pipeline | 0/4 | Planning | - |
+| 2. Data Pipeline | 3/4 | In Progress|  |
 | 3. Dashboard | 0/? | Not started | - |
 | 4. Notifications | 0/? | Not started | - |
 | 5. Automation | 0/? | Not started | - |

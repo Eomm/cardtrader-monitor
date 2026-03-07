@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: in-progress
-stopped_at: Completed 02-02-PLAN.md
-last_updated: "2026-03-07T13:55:37Z"
-last_activity: 2026-03-07 -- Executed 02-02 import-wishlist Edge Function
+stopped_at: Completed 02-03-PLAN.md
+last_updated: "2026-03-07T14:01:00Z"
+last_activity: 2026-03-07 -- Executed 02-03 hourly price fetch script and workflow
 progress:
   total_phases: 5
   completed_phases: 1
   total_plans: 6
-  completed_plans: 4
-  percent: 58
+  completed_plans: 5
+  percent: 65
 ---
 
 # Project State
@@ -26,28 +26,28 @@ See: .planning/PROJECT.md (updated 2026-03-07)
 ## Current Position
 
 Phase: 2 of 5 (Data Pipeline) -- IN PROGRESS
-Plan: 2 of 4 in current phase (02-02 complete)
+Plan: 3 of 4 in current phase (02-03 complete)
 Status: In Progress
-Last activity: 2026-03-07 -- Executed 02-02 import-wishlist Edge Function
+Last activity: 2026-03-07 -- Executed 02-03 hourly price fetch script and workflow
 
-Progress: [██████░░░░] 58%
+Progress: [██████▌░░░] 65%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 4
-- Average duration: 20 min
-- Total execution time: 1.32 hours
+- Total plans completed: 5
+- Average duration: 17 min
+- Total execution time: 1.37 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 01-foundation | 2/2 | 73 min | 37 min |
-| 02-data-pipeline | 2/4 | 6 min | 3 min |
+| 02-data-pipeline | 3/4 | 9 min | 3 min |
 
 **Recent Trend:**
-- Last 5 plans: 4 min, 69 min, 3 min, 3 min
+- Last 5 plans: 4 min, 69 min, 3 min, 3 min, 3 min
 - Trend: -
 
 *Updated after each plan completion*
@@ -73,6 +73,9 @@ Recent decisions affecting current work:
 - [02-02]: Used ?? '' fallback for Deno env vars instead of non-null assertions for Biome compliance
 - [02-02]: Individual marketplace price fetch failures return null price, card still imported without baseline
 - [02-02]: CardTrader API helpers re-implemented for Deno runtime with inline types (cannot import from src/lib/)
+- [02-03]: Used first available valid API token for all marketplace queries (prices are user-independent)
+- [02-03]: Skip price snapshot for cards with no matching offers (price_cents is NOT NULL)
+- [02-03]: Store top 3 offers in marketplace_data jsonb for price context
 
 ### Pending Todos
 
@@ -85,6 +88,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-07T13:55:37Z
-Stopped at: Completed 02-02-PLAN.md
-Resume file: .planning/phases/02-data-pipeline/02-02-SUMMARY.md
+Last session: 2026-03-07T14:01:00Z
+Stopped at: Completed 02-03-PLAN.md
+Resume file: .planning/phases/02-data-pipeline/02-03-SUMMARY.md
