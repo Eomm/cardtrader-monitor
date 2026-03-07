@@ -62,8 +62,8 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Code Quality
 
-- [ ] **QUAL-01**: Project uses Biome for linting and formatting
-- [ ] **QUAL-02**: Biome runs in CI on push/PR via GitHub Actions
+- [x] **QUAL-01**: Project uses Biome for linting and formatting
+- [x] **QUAL-02**: Biome runs in CI on push/PR via GitHub Actions
 
 ## v2 Requirements
 
@@ -119,8 +119,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 | AUTH-03 | Phase 1: Foundation | Pending |
 | SETT-01 | Phase 1: Foundation | Pending |
 | SETT-02 | Phase 1: Foundation | Pending |
-| QUAL-01 | Phase 1: Foundation | Pending |
-| QUAL-02 | Phase 1: Foundation | Pending |
+| QUAL-01 | Phase 1: Foundation | Complete |
+| QUAL-02 | Phase 1: Foundation | Complete |
 | WISH-01 | Phase 2: Data Pipeline | Pending |
 | WISH-02 | Phase 2: Data Pipeline | Pending |
 | WISH-03 | Phase 2: Data Pipeline | Pending |
