@@ -2,6 +2,7 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router';
 import { Navbar } from './components/Navbar';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { AuthProvider } from './contexts/AuthContext';
+import { CardDetailPage } from './pages/CardDetailPage';
 import { DashboardPage } from './pages/DashboardPage';
 import { LoginPage } from './pages/LoginPage';
 import { SettingsPage } from './pages/SettingsPage';
@@ -37,6 +38,16 @@ function App() {
               <ProtectedRoute>
                 <AuthenticatedLayout>
                   <SettingsPage />
+                </AuthenticatedLayout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/cards/:id"
+            element={
+              <ProtectedRoute>
+                <AuthenticatedLayout>
+                  <CardDetailPage />
                 </AuthenticatedLayout>
               </ProtectedRoute>
             }
