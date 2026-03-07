@@ -1,11 +1,17 @@
 import { createClient } from '@supabase/supabase-js';
-import type { CardFilters, MarketplaceProduct } from '../src/lib/cardtrader-types';
+import type {
+  CardFilters,
+  MarketplaceProduct,
+  NotificationRule,
+  ThresholdRule,
+} from '../src/lib/cardtrader-types';
 import {
   deduplicateBlueprintIds,
   filterCtZeroOffers,
   findCheapestPrice,
   processBatches,
 } from '../src/lib/cardtrader-utils';
+import { type ThresholdAlert, formatAlertMessage, shouldNotify } from '../src/lib/telegram-utils';
 
 const CARDTRADER_API_BASE = 'https://api.cardtrader.com/api/v2';
 
@@ -18,6 +24,10 @@ interface MonitoredCardRow {
   foil_required: boolean | null;
   is_active: boolean;
   user_id: string;
+  card_name: string;
+  baseline_price_cents: number | null;
+  notification_rule: unknown;
+  telegram_chat_id: number | null;
 }
 
 interface BlueprintGroup {
@@ -68,6 +78,57 @@ async function fetchMarketplaceProducts(
   }
 }
 
+interface TelegramSendResult {
+  ok: boolean;
+  messageId: string | null;
+  error?: string;
+}
+
+async function sendTelegramMessage(
+  botToken: string,
+  chatId: string,
+  text: string,
+): Promise<TelegramSendResult> {
+  try {
+    const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        chat_id: chatId,
+        text,
+        parse_mode: 'MarkdownV2',
+        link_preview_options: { is_disabled: true },
+      }),
+    });
+
+    const data = (await response.json()) as {
+      ok: boolean;
+      result?: { message_id: number };
+      description?: string;
+    };
+
+    if (!data.ok) {
+      return {
+        ok: false,
+        messageId: null,
+        error: data.description ?? `HTTP ${response.status}`,
+      };
+    }
+
+    return {
+      ok: true,
+      messageId: data.result ? String(data.result.message_id) : null,
+    };
+  } catch (err) {
+    return {
+      ok: false,
+      messageId: null,
+      error: err instanceof Error ? err.message : String(err),
+    };
+  }
+}
+
 export async function main(): Promise<void> {
   const startTime = Date.now();
 
@@ -76,7 +137,9 @@ export async function main(): Promise<void> {
   const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
   if (!supabaseUrl || !supabaseKey) {
-    console.error('Missing required environment variables: SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY');
+    console.error(
+      'Missing required environment variables: SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY',
+    );
     process.exit(1);
   }
 
@@ -84,11 +147,11 @@ export async function main(): Promise<void> {
     db: { schema: 'public' },
   });
 
-  // 2. Query all active monitored cards with user_id
+  // 2. Query all active monitored cards with user_id and Telegram chat ID
   const { data: activeCards, error: cardsError } = await supabase
     .from('monitored_cards')
     .select(
-      'id, blueprint_id, only_zero, condition_required, language_required, foil_required, is_active, wishlists!inner(user_id)',
+      'id, blueprint_id, only_zero, condition_required, language_required, foil_required, is_active, card_name, baseline_price_cents, notification_rule, wishlists!inner(user_id, profiles!inner(telegram_chat_id))',
     )
     .eq('is_active', true);
 
@@ -102,9 +165,12 @@ export async function main(): Promise<void> {
     return;
   }
 
-  // Flatten the join result to get user_id at the top level
+  // Flatten the join result to get user_id and telegram_chat_id at the top level
   const cards: MonitoredCardRow[] = activeCards.map((row: Record<string, unknown>) => {
-    const wishlists = row.wishlists as { user_id: string } | null;
+    const wishlists = row.wishlists as {
+      user_id: string;
+      profiles: { telegram_chat_id: number | null } | null;
+    } | null;
     return {
       id: row.id as string,
       blueprint_id: row.blueprint_id as number,
@@ -114,6 +180,10 @@ export async function main(): Promise<void> {
       foil_required: row.foil_required as boolean | null,
       is_active: row.is_active as boolean,
       user_id: wishlists?.user_id ?? '',
+      card_name: (row.card_name as string) ?? '',
+      baseline_price_cents: (row.baseline_price_cents as number | null) ?? null,
+      notification_rule: row.notification_rule ?? null,
+      telegram_chat_id: wishlists?.profiles?.telegram_chat_id ?? null,
     };
   });
 
@@ -250,10 +320,157 @@ export async function main(): Promise<void> {
     }
   }
 
-  // 7. Log summary
+  // 7. Check for Telegram bot token
+  const telegramBotToken = process.env.TELEGRAM_BOT_TOKEN;
+  let notificationsSent = 0;
+  let notifiedCardCount = 0;
+
+  if (!telegramBotToken) {
+    console.log('TELEGRAM_BOT_TOKEN not set, skipping notifications');
+  } else {
+    // 8. Query recent notifications (last 24h) for cooldown
+    const { data: recentNotifs } = await supabase
+      .from('notifications')
+      .select('monitored_card_id, new_price_cents, sent_at')
+      .in(
+        'monitored_card_id',
+        cards.map((c) => c.id),
+      )
+      .gte('sent_at', new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString())
+      .order('sent_at', { ascending: false });
+
+    const lastNotifMap = new Map<string, { priceCents: number; sentAt: Date }>();
+    if (recentNotifs) {
+      for (const n of recentNotifs) {
+        const cardId = n.monitored_card_id as string;
+        if (!lastNotifMap.has(cardId)) {
+          lastNotifMap.set(cardId, {
+            priceCents: n.new_price_cents as number,
+            sentAt: new Date(n.sent_at as string),
+          });
+        }
+      }
+    }
+
+    // Build a map of card ID -> current cheapest price from snapshots
+    const currentPriceMap = new Map<string, number>();
+    for (const snap of snapshots) {
+      currentPriceMap.set(snap.monitored_card_id, snap.price_cents);
+    }
+
+    // 9. Evaluate thresholds for each card
+    interface AlertWithCardId extends ThresholdAlert {
+      cardId: string;
+    }
+
+    const alertsByChat = new Map<string, AlertWithCardId[]>();
+
+    for (const card of cards) {
+      const rules = Array.isArray(card.notification_rule)
+        ? (card.notification_rule as NotificationRule[])
+        : [];
+
+      const thresholdRules = rules.filter(
+        (r): r is ThresholdRule => r.type === 'threshold' && r.enabled,
+      );
+
+      if (thresholdRules.length === 0) continue;
+
+      const currentPrice = currentPriceMap.get(card.id) ?? null;
+      if (currentPrice === null) continue;
+
+      if (!card.telegram_chat_id) continue;
+
+      const lastNotif = lastNotifMap.get(card.id) ?? null;
+
+      for (const rule of thresholdRules) {
+        const result = shouldNotify(rule, card.baseline_price_cents, currentPrice, lastNotif);
+        if (result.triggered) {
+          const chatKey = String(card.telegram_chat_id);
+          const alert: AlertWithCardId = {
+            cardId: card.id,
+            cardName: card.card_name,
+            blueprintId: card.blueprint_id,
+            oldPriceCents: result.comparisonPriceCents ?? 0,
+            newPriceCents: currentPrice,
+            percentChange: result.percentChange,
+          };
+
+          const existing = alertsByChat.get(chatKey) ?? [];
+          // Avoid duplicate alerts for the same card (multiple rules)
+          if (!existing.some((a) => a.cardId === card.id)) {
+            existing.push(alert);
+            alertsByChat.set(chatKey, existing);
+          }
+          break; // One alert per card is enough
+        }
+      }
+    }
+
+    // 10. Send Telegram messages grouped by user
+    const allSentAlerts: Array<AlertWithCardId & { telegramMessageId: string | null }> = [];
+
+    for (const [chatId, alerts] of alertsByChat) {
+      const message = formatAlertMessage(alerts);
+
+      // Split long messages into chunks
+      const chunks: string[] = [];
+      if (message.length <= 4000) {
+        chunks.push(message);
+      } else {
+        const lines = message.split('\n');
+        let chunk = '';
+        for (const line of lines) {
+          if (chunk.length + line.length + 1 > 4000) {
+            chunks.push(chunk);
+            chunk = '';
+          }
+          chunk = chunk ? `${chunk}\n${line}` : line;
+        }
+        if (chunk) chunks.push(chunk);
+      }
+
+      for (const chunk of chunks) {
+        const sendResult = await sendTelegramMessage(telegramBotToken, chatId, chunk);
+        if (sendResult.ok) {
+          notificationsSent++;
+          for (const alert of alerts) {
+            allSentAlerts.push({
+              ...alert,
+              telegramMessageId: sendResult.messageId,
+            });
+          }
+        } else {
+          console.warn(`Failed to send Telegram message to chat ${chatId}: ${sendResult.error}`);
+        }
+      }
+
+      notifiedCardCount += alerts.length;
+    }
+
+    // 11. Log notifications to database
+    if (allSentAlerts.length > 0) {
+      const notifRows = allSentAlerts.map((alert) => ({
+        monitored_card_id: alert.cardId,
+        notification_type: 'threshold',
+        old_price_cents: alert.oldPriceCents,
+        new_price_cents: alert.newPriceCents,
+        sent_at: new Date().toISOString(),
+        telegram_message_id: alert.telegramMessageId ?? null,
+      }));
+
+      const { error: notifInsertError } = await supabase.from('notifications').insert(notifRows);
+
+      if (notifInsertError) {
+        console.error('Failed to insert notifications:', notifInsertError.message);
+      }
+    }
+  }
+
+  // 12. Log summary
   const elapsed = ((Date.now() - startTime) / 1000).toFixed(1);
   console.log(
-    `Price fetch complete: ${snapshots.length} snapshots created for ${cards.length} cards (${uniqueBlueprintIds.length} blueprints queried, ${failedCount} failed) in ${elapsed}s`,
+    `Price fetch complete: ${snapshots.length} snapshots, ${notificationsSent} notifications sent for ${notifiedCardCount} cards (${uniqueBlueprintIds.length} blueprints queried, ${failedCount} failed) in ${elapsed}s`,
   );
 }
 
