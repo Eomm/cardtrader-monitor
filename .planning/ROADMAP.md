@@ -93,10 +93,11 @@ Plans:
   1. Daily GitHub Actions job syncs each user's wishlist -- adding new cards and deactivating removed ones
   2. Snapshots older than the retention window are automatically cleaned up
   3. The system handles GitHub Actions cron delays gracefully (gap-tolerant logic, no duplicate processing)
-**Plans**: TBD
+**Plans:** 2 plans
 
 Plans:
-- [ ] 05-01: TBD
+- [ ] 05-01-PLAN.md — Snapshot/notification cleanup: Postgres function, Node.js script, daily workflow, and concurrency guard on fetch-prices
+- [ ] 05-02-PLAN.md — Daily wishlist sync: diff-based add/remove/update script with per-user error isolation and daily workflow
 
 ## Progress
 
@@ -109,4 +110,4 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5
 | 2. Data Pipeline | 4/4 | Complete | 2026-03-07 |
 | 3. Dashboard | 1/3 | In Progress|  |
 | 4. Notifications | 2/3 | In Progress|  |
-| 5. Automation | 0/? | Not started | - |
+| 5. Automation | 0/2 | Not started | - |
