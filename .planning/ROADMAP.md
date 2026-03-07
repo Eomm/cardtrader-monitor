@@ -16,7 +16,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [ ] **Phase 2: Data Pipeline** - Wishlist import from CardTrader, hourly price fetching, baseline prices, and snapshot storage
 - [ ] **Phase 3: Dashboard** - Card list view, card detail page, filtering, and notification rule configuration
 - [ ] **Phase 4: Notifications** - Telegram alert delivery when threshold rules trigger, with logging
-- [ ] **Phase 5: Automation** - Daily wishlist sync, snapshot cleanup, and operational reliability
+- [x] **Phase 5: Automation** - Daily wishlist sync, snapshot cleanup, and operational reliability (completed 2026-03-07)
 
 ## Phase Details
 
@@ -93,7 +93,7 @@ Plans:
   1. Daily GitHub Actions job syncs each user's wishlist -- adding new cards and deactivating removed ones
   2. Snapshots older than the retention window are automatically cleaned up
   3. The system handles GitHub Actions cron delays gracefully (gap-tolerant logic, no duplicate processing)
-**Plans:** 2 plans
+**Plans:** 2/2 plans complete
 
 Plans:
 - [ ] 05-01-PLAN.md — Snapshot/notification cleanup: Postgres function, Node.js script, daily workflow, and concurrency guard on fetch-prices
@@ -110,4 +110,4 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5
 | 2. Data Pipeline | 4/4 | Complete | 2026-03-07 |
 | 3. Dashboard | 1/3 | In Progress|  |
 | 4. Notifications | 2/3 | In Progress|  |
-| 5. Automation | 0/2 | Not started | - |
+| 5. Automation | 2/2 | Complete   | 2026-03-07 |

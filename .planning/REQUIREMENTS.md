@@ -23,7 +23,7 @@ Requirements for initial release. Each maps to roadmap phases.
 - [x] **WISH-01**: User can import a wishlist by pasting a CardTrader wishlist URL
 - [x] **WISH-02**: Imported cards include name, expansion, image, game, and collector number
 - [x] **WISH-03**: Each imported card gets a default threshold notification rule
-- [ ] **WISH-04**: Wishlist auto-syncs daily via GitHub Actions (adds new cards, deactivates removed ones)
+- [x] **WISH-04**: Wishlist auto-syncs daily via GitHub Actions (adds new cards, deactivates removed ones)
 
 ### Price Tracking
 
@@ -143,7 +143,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | NOTF-02 | Phase 4: Notifications | Complete |
 | NOTF-03 | Phase 4: Notifications | Complete |
 | NOTF-04 | Phase 4: Notifications | Complete |
-| WISH-04 | Phase 5: Automation | Pending |
+| WISH-04 | Phase 5: Automation | Complete |
 | PRIC-05 | Phase 5: Automation | Complete |
 
 **Coverage:**

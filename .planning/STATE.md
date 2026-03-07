@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: executing
-stopped_at: Completed 05-01-PLAN.md
-last_updated: "2026-03-07T21:25:22.141Z"
-last_activity: 2026-03-07 -- Executed 05-01 Snapshot & Notification Cleanup
+status: complete
+stopped_at: Completed 05-02-PLAN.md
+last_updated: "2026-03-07T21:27:42Z"
+last_activity: 2026-03-07 -- Executed 05-02 Wishlist Sync
 progress:
   total_phases: 5
-  completed_phases: 4
+  completed_phases: 5
   total_plans: 14
-  completed_plans: 13
-  percent: 93
+  completed_plans: 14
+  percent: 100
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-03-07)
 ## Current Position
 
 Phase: 5 of 5 (Automation)
-Plan: 1 of 2 in current phase (05-01 complete)
-Status: Executing Phase 05
-Last activity: 2026-03-07 -- Executed 05-01 Snapshot & Notification Cleanup
+Plan: 2 of 2 in current phase (05-02 complete)
+Status: All phases complete
+Last activity: 2026-03-07 -- Executed 05-02 Wishlist Sync
 
-Progress: [█████████░] 93%
+Progress: [██████████] 100%
 
 ## Performance Metrics
 
@@ -58,6 +58,7 @@ Progress: [█████████░] 93%
 | Phase 04-notifications P02 | 8 min | 3 tasks | 4 files |
 | Phase 04-notifications P03 | 3 min | 2 tasks | 2 files |
 | Phase 05-automation P01 | 1 | 2 tasks | 4 files |
+| Phase 05-automation P02 | 2 min | 2 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -105,6 +106,9 @@ Recent decisions affecting current work:
 - [Phase 04-03]: Graceful skip when TELEGRAM_BOT_TOKEN not set (no failure)
 - [Phase 05-01]: Used SECURITY DEFINER PL/pgSQL function for DELETE with JOIN (Supabase JS limitation)
 - [Phase 05-01]: Cleanup at 04:00 UTC to avoid overlap with hourly fetch-prices; cancel-in-progress: false on both workflows
+- [Phase 05-02]: Hard-delete removed cards (CASCADE cleans up snapshots/notifications)
+- [Phase 05-02]: Blueprint cache checked before API calls to reduce rate limit usage
+- [Phase 05-02]: Metadata updates never touch user settings (rules, baseline, filters)
 
 ### Pending Todos
 
@@ -117,6 +121,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-07T21:25:22.136Z
-Stopped at: Completed 05-01-PLAN.md
+Last session: 2026-03-07T21:27:42Z
+Stopped at: Completed 05-02-PLAN.md
 Resume file: None
