@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import type { MonitoredCardWithPrice } from '../lib/cardtrader-types';
 import { languageToFlag } from '../lib/cardtrader-utils';
 import { PriceChange, formatEur } from './PriceDisplay';
