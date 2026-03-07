@@ -116,7 +116,7 @@ CREATE TRIGGER on_auth_user_created
   FOR EACH ROW EXECUTE FUNCTION public.handle_new_user();
 
 -- =============================================================================
--- Token encryption functions
+-- Token storage functions (plaintext for MVP — TODO: encrypt at rest post-MVP)
 -- =============================================================================
 
 CREATE OR REPLACE FUNCTION public.save_api_token(token text)
@@ -124,7 +124,7 @@ RETURNS void AS $$
 BEGIN
   UPDATE public.profiles
   SET
-    cardtrader_api_token = pgp_sym_encrypt(token, current_setting('app.settings.encryption_key')),
+    cardtrader_api_token = token,
     updated_at = now()
   WHERE id = auth.uid();
 END;

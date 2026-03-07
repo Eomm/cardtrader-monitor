@@ -53,28 +53,23 @@ COMMENT ON TABLE public.ct_blueprints IS
   'Cache of CardTrader blueprint reference data. Populated by Edge Functions and GitHub Actions.';
 
 -- =============================================================================
--- 4. Create decrypt_api_token function (for Edge Function / service role use)
+-- 4. Get API token function (plaintext for MVP — TODO: encrypt at rest post-MVP)
 -- =============================================================================
 
-CREATE OR REPLACE FUNCTION public.decrypt_api_token(target_user_id uuid)
+CREATE OR REPLACE FUNCTION public.get_api_token(target_user_id uuid)
 RETURNS text AS $$
-DECLARE
-  decrypted text;
 BEGIN
-  SELECT pgp_sym_decrypt(
-    cardtrader_api_token::bytea,
-    current_setting('app.settings.encryption_key')
-  ) INTO decrypted
-  FROM public.profiles
-  WHERE id = target_user_id
-    AND cardtrader_api_token IS NOT NULL;
-
-  RETURN decrypted;
+  RETURN (
+    SELECT cardtrader_api_token
+    FROM public.profiles
+    WHERE id = target_user_id
+      AND cardtrader_api_token IS NOT NULL
+  );
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
 
-COMMENT ON FUNCTION public.decrypt_api_token(uuid) IS
-  'Decrypt a user API token by user ID. For Edge Function and service role use (not auth.uid() based).';
+COMMENT ON FUNCTION public.get_api_token(uuid) IS
+  'Get a user API token by user ID. For Edge Function and service role use.';
 
 -- =============================================================================
 -- 5. RLS for cache tables

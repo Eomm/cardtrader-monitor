@@ -107,9 +107,9 @@ Deno.serve(async (req) => {
     }
 
     // -----------------------------------------------------------------------
-    // 4. Decrypt CardTrader API token
+    // 4. Get CardTrader API token
     // -----------------------------------------------------------------------
-    const { data: apiToken, error: tokenError } = await supabaseAdmin.rpc('decrypt_api_token', {
+    const { data: apiToken, error: tokenError } = await supabaseAdmin.rpc('get_api_token', {
       target_user_id: user.id,
     });
 

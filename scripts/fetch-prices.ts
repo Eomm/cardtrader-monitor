@@ -74,36 +74,15 @@ export async function main(): Promise<void> {
   // 1. Read and validate environment variables
   const supabaseUrl = process.env.SUPABASE_URL;
   const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-  const encryptionKey = process.env.ENCRYPTION_KEY;
 
-  if (!supabaseUrl || !supabaseKey || !encryptionKey) {
-    console.error(
-      'Missing required environment variables: SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, ENCRYPTION_KEY',
-    );
+  if (!supabaseUrl || !supabaseKey) {
+    console.error('Missing required environment variables: SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY');
     process.exit(1);
   }
 
   const supabase = createClient(supabaseUrl, supabaseKey, {
     db: { schema: 'public' },
-    global: {
-      headers: {
-        'x-encryption-key': encryptionKey,
-      },
-    },
   });
-
-  // Set the encryption key for decrypt_api_token function
-  await supabase
-    .rpc(
-      'set_config' as never,
-      {
-        setting: 'app.settings.encryption_key',
-        value: encryptionKey,
-      } as never,
-    )
-    .catch(() => {
-      // set_config may not exist as RPC; we'll set it via SQL instead
-    });
 
   // 2. Query all active monitored cards with user_id
   const { data: activeCards, error: cardsError } = await supabase
@@ -169,7 +148,7 @@ export async function main(): Promise<void> {
   let apiToken: string | null = null;
 
   for (const userId of distinctUserIds) {
-    const { data: token, error: tokenError } = await supabase.rpc('decrypt_api_token', {
+    const { data: token, error: tokenError } = await supabase.rpc('get_api_token', {
       target_user_id: userId,
     });
 
