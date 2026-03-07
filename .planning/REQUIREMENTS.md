@@ -35,10 +35,10 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Card Filtering
 
-- [ ] **FILT-01**: User can filter monitored card results by condition (NM, LP, etc.)
+- [x] **FILT-01**: User can filter monitored card results by condition (NM, LP, etc.)
 - [x] **FILT-02**: User can filter monitored card results by language
-- [ ] **FILT-03**: User can filter monitored card results by foil status
-- [ ] **FILT-04**: User can filter to CardTrader Zero listings only
+- [x] **FILT-03**: User can filter monitored card results by foil status
+- [x] **FILT-04**: User can filter to CardTrader Zero listings only
 
 ### Notification Rules
 
@@ -55,7 +55,7 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Dashboard
 
-- [ ] **DASH-01**: User can view all monitored cards with current price and active rule
+- [x] **DASH-01**: User can view all monitored cards with current price and active rule
 - [ ] **DASH-02**: User can click a card to view its detail page
 - [ ] **DASH-03**: Card detail page shows current price, baseline price, and rule configuration
 - [ ] **DASH-04**: User can edit notification rule from the card detail page
@@ -128,14 +128,14 @@ Which phases cover which requirements. Updated during roadmap creation.
 | PRIC-02 | Phase 2: Data Pipeline | Complete |
 | PRIC-03 | Phase 2: Data Pipeline | Complete |
 | PRIC-04 | Phase 2: Data Pipeline | Complete |
-| DASH-01 | Phase 3: Dashboard | Pending |
+| DASH-01 | Phase 3: Dashboard | Complete |
 | DASH-02 | Phase 3: Dashboard | Pending |
 | DASH-03 | Phase 3: Dashboard | Pending |
 | DASH-04 | Phase 3: Dashboard | Pending |
-| FILT-01 | Phase 3: Dashboard | Pending |
+| FILT-01 | Phase 3: Dashboard | Complete |
 | FILT-02 | Phase 3: Dashboard | Complete |
-| FILT-03 | Phase 3: Dashboard | Pending |
-| FILT-04 | Phase 3: Dashboard | Pending |
+| FILT-03 | Phase 3: Dashboard | Complete |
+| FILT-04 | Phase 3: Dashboard | Complete |
 | RULE-01 | Phase 3: Dashboard | Complete |
 | RULE-02 | Phase 3: Dashboard | Complete |
 | RULE-03 | Phase 4: Notifications | Pending |
