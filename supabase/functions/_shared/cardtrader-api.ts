@@ -103,13 +103,8 @@ async function fetchJson<T>(url: string, apiToken: string): Promise<T> {
 /**
  * Fetch all expansions and return a Map keyed by expansion code.
  */
-export async function fetchExpansions(
-  apiToken: string,
-): Promise<Map<string, Expansion>> {
-  const expansions = await fetchJson<Expansion[]>(
-    `${CARD_TRADER_BASE_URL}/expansions`,
-    apiToken,
-  );
+export async function fetchExpansions(apiToken: string): Promise<Map<string, Expansion>> {
+  const expansions = await fetchJson<Expansion[]>(`${CARD_TRADER_BASE_URL}/expansions`, apiToken);
   const map = new Map<string, Expansion>();
   for (const exp of expansions) {
     map.set(exp.code, exp);
@@ -120,14 +115,8 @@ export async function fetchExpansions(
 /**
  * Fetch a single wishlist by ID and return the full wishlist object.
  */
-export async function fetchWishlist(
-  apiToken: string,
-  wishlistId: string,
-): Promise<Wishlist> {
-  return fetchJson<Wishlist>(
-    `${CARD_TRADER_BASE_URL}/wishlists/${wishlistId}`,
-    apiToken,
-  );
+export async function fetchWishlist(apiToken: string, wishlistId: string): Promise<Wishlist> {
+  return fetchJson<Wishlist>(`${CARD_TRADER_BASE_URL}/wishlists/${wishlistId}`, apiToken);
 }
 
 /**
@@ -163,10 +152,7 @@ export async function fetchMarketplaceProducts(
   if (language) {
     url += `&language=${language}`;
   }
-  const response = await fetchJson<Record<string, MarketplaceProduct[]>>(
-    url,
-    apiToken,
-  );
+  const response = await fetchJson<Record<string, MarketplaceProduct[]>>(url, apiToken);
   // Response is keyed by blueprint_id as string
   return response[String(blueprintId)] ?? [];
 }
