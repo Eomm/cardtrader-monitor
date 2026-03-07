@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: in-progress
-stopped_at: Completed 02-03-PLAN.md
-last_updated: "2026-03-07T14:01:00Z"
-last_activity: 2026-03-07 -- Executed 02-03 hourly price fetch script and workflow
+stopped_at: Completed 02-04-PLAN.md
+last_updated: "2026-03-07T15:14:00Z"
+last_activity: 2026-03-07 -- Executed 02-04 Dashboard UI with import form and card list
 progress:
   total_phases: 5
-  completed_phases: 1
+  completed_phases: 2
   total_plans: 6
-  completed_plans: 5
-  percent: 65
+  completed_plans: 6
+  percent: 75
 ---
 
 # Project State
@@ -21,33 +21,33 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-07)
 
 **Core value:** Users get notified about meaningful price movements on cards they care about -- so they can act on deals without constantly checking CardTrader.
-**Current focus:** Phase 2: Data Pipeline
+**Current focus:** Phase 3: Dashboard (Phase 2 complete)
 
 ## Current Position
 
-Phase: 2 of 5 (Data Pipeline) -- IN PROGRESS
-Plan: 3 of 4 in current phase (02-03 complete)
-Status: In Progress
-Last activity: 2026-03-07 -- Executed 02-03 hourly price fetch script and workflow
+Phase: 2 of 5 (Data Pipeline) -- COMPLETE
+Plan: 4 of 4 in current phase (02-04 complete)
+Status: Phase 2 Complete, Phase 3 Not Started
+Last activity: 2026-03-07 -- Executed 02-04 Dashboard UI with import form and card list
 
-Progress: [██████▌░░░] 65%
+Progress: [███████▌░░] 75%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 5
-- Average duration: 17 min
-- Total execution time: 1.37 hours
+- Total plans completed: 6
+- Average duration: 16 min
+- Total execution time: 1.57 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 01-foundation | 2/2 | 73 min | 37 min |
-| 02-data-pipeline | 3/4 | 9 min | 3 min |
+| 02-data-pipeline | 4/4 | 21 min | 5 min |
 
 **Recent Trend:**
-- Last 5 plans: 4 min, 69 min, 3 min, 3 min, 3 min
+- Last 5 plans: 69 min, 3 min, 3 min, 3 min, 12 min
 - Trend: -
 
 *Updated after each plan completion*
@@ -76,6 +76,9 @@ Recent decisions affecting current work:
 - [02-03]: Used first available valid API token for all marketplace queries (prices are user-independent)
 - [02-03]: Skip price snapshot for cards with no matching offers (price_cents is NOT NULL)
 - [02-03]: Store top 3 offers in marketplace_data jsonb for price context
+- [02-04]: Two separate Supabase queries (monitored_cards + price_snapshots) merged in JS
+- [02-04]: Green = price dropped (good for buyer), Red = price rose (bad for buyer)
+- [02-04]: Empty state shows full import form, data state shows compact form + card grid
 
 ### Pending Todos
 
@@ -88,6 +91,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-07T14:01:00Z
-Stopped at: Completed 02-03-PLAN.md
-Resume file: .planning/phases/02-data-pipeline/02-03-SUMMARY.md
+Last session: 2026-03-07T15:14:00Z
+Stopped at: Completed 02-04-PLAN.md (Phase 2 complete)
+Resume file: .planning/phases/02-data-pipeline/02-04-SUMMARY.md
