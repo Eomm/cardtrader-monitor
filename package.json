@@ -9,7 +9,11 @@
     "check": "biome check .",
     "check:fix": "biome check . --write",
     "preview": "vite preview",
-    "test": "vitest run --reporter=verbose"
+    "test": "vitest run --reporter=verbose",
+    "db:push": "supabase db push",
+    "db:reset": "supabase db reset",
+    "functions:deploy": "supabase functions deploy import-wishlist",
+    "functions:serve": "supabase functions serve"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.0.0",
