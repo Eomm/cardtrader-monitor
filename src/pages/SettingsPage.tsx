@@ -332,7 +332,16 @@ export function SettingsPage() {
               <span className="font-mono text-xs bg-steel/10 dark:bg-steel/20 px-1.5 py-0.5 rounded">
                 /start
               </span>{' '}
-              to your bot in Telegram, copy the chat ID it replies with, and paste it below.
+              to{' '}
+              <a
+                href="https://t.me/card_trader_monitor_bot"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-steel underline hover:text-steel/80"
+              >
+                @card_trader_monitor_bot
+              </a>
+              {' '}on Telegram, copy the chat ID it replies with, and paste it below.
             </p>
 
             {/* Connection Status */}
