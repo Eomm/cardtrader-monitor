@@ -12,7 +12,7 @@
     "test": "vitest run --reporter=verbose",
     "db:push": "supabase db push",
     "db:reset": "supabase db reset",
-    "functions:deploy": "supabase functions deploy import-wishlist",
+    "functions:deploy": "bin/deploy-supabase-functions.sh",
     "functions:serve": "supabase functions serve"
   },
   "dependencies": {
