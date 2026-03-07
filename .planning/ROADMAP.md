@@ -78,11 +78,12 @@ Plans:
   2. Telegram notification includes card name, old price, new price, percentage change, and a direct link to the CardTrader listing
   3. All sent notifications are logged in the database with timestamp and details
   4. Threshold evaluation runs as part of the hourly price check job (no separate workflow needed)
-**Plans**: TBD
+**Plans:** 3 plans
 
 Plans:
-- [ ] 04-01: TBD
-- [ ] 04-02: TBD
+- [ ] 04-01-PLAN.md — TDD: threshold evaluation, cooldown logic, MarkdownV2 escaping, and alert message formatting utilities
+- [ ] 04-02-PLAN.md — Telegram bot Edge Functions (webhook + test message) and Settings page Telegram chat ID section
+- [ ] 04-03-PLAN.md — Integrate threshold evaluation and Telegram notification sending into hourly price fetch job
 
 ### Phase 5: Automation
 **Goal**: The system maintains itself -- wishlists stay in sync, old data is cleaned up, and the operational loop runs reliably
@@ -107,5 +108,5 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5
 | 1. Foundation | 2/2 | Complete | - |
 | 2. Data Pipeline | 4/4 | Complete | 2026-03-07 |
 | 3. Dashboard | 1/3 | In Progress|  |
-| 4. Notifications | 0/? | Not started | - |
+| 4. Notifications | 0/3 | Not started | - |
 | 5. Automation | 0/? | Not started | - |
