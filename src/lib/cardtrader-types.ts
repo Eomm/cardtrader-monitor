@@ -46,12 +46,21 @@ export interface Expansion {
   name: string;
 }
 
-export interface NotificationRule {
+export interface ThresholdRule {
   type: 'threshold';
   threshold_percent: number;
   direction: 'up' | 'down' | 'both';
   enabled: boolean;
 }
+
+export interface StabilityRule {
+  type: 'stability';
+  range_percent: number;
+  consecutive_days: number;
+  enabled: boolean;
+}
+
+export type NotificationRule = ThresholdRule | StabilityRule;
 
 export interface CardFilters {
   condition?: string;
@@ -69,3 +78,23 @@ export interface ImportResult {
     reason?: string;
   }>;
 }
+
+export type MonitoredCardWithPrice = {
+  id: string;
+  blueprint_id: number;
+  card_name: string;
+  expansion_name: string;
+  game_id: number;
+  collector_number: string | null;
+  image_url: string | null;
+  baseline_price_cents: number | null;
+  notification_rule: NotificationRule[] | null;
+  is_active: boolean;
+  created_at: string;
+  latest_price_cents: number | null;
+  language_required: string;
+  condition_required: string | null;
+  foil_required: boolean | null;
+  only_zero: boolean;
+  wishlist_id: string;
+};

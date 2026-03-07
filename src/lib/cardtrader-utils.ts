@@ -2,7 +2,10 @@ import type {
   Blueprint,
   CardFilters,
   MarketplaceProduct,
+  MonitoredCardWithPrice,
   NotificationRule,
+  StabilityRule,
+  ThresholdRule,
 } from './cardtrader-types';
 
 /**
@@ -101,13 +104,83 @@ export function mapBlueprintToCard(
  * Create the default notification rule for newly imported cards.
  * +/-20% threshold from baseline, both directions, enabled.
  */
-export function createDefaultNotificationRule(): NotificationRule {
+export function createDefaultNotificationRule(): ThresholdRule {
   return {
     type: 'threshold',
     threshold_percent: 20,
     direction: 'both',
     enabled: true,
   };
+}
+
+/**
+ * Create a default stability rule.
+ * Triggers when price stays within range_percent for consecutive_days.
+ */
+export function createDefaultStabilityRule(): StabilityRule {
+  return {
+    type: 'stability',
+    range_percent: 5,
+    consecutive_days: 3,
+    enabled: true,
+  };
+}
+
+/**
+ * Create the default notification rules array for newly imported cards.
+ * Contains a single default threshold rule.
+ */
+export function createDefaultNotificationRules(): NotificationRule[] {
+  return [createDefaultNotificationRule()];
+}
+
+/**
+ * Map a language code to its corresponding country flag emoji.
+ * Uses regional indicator symbols. Unknown codes return uppercase text.
+ */
+const LANGUAGE_TO_COUNTRY: Record<string, string> = {
+  en: 'GB',
+  it: 'IT',
+  de: 'DE',
+  fr: 'FR',
+  es: 'ES',
+  pt: 'PT',
+  ja: 'JP',
+  ko: 'KR',
+  zh: 'CN',
+  ru: 'RU',
+};
+
+export function languageToFlag(lang: string): string {
+  const countryCode = LANGUAGE_TO_COUNTRY[lang];
+  if (!countryCode) {
+    return lang.toUpperCase();
+  }
+  // Convert country code to regional indicator symbols (flag emoji)
+  return [...countryCode]
+    .map((char) => String.fromCodePoint(0x1f1e6 + char.charCodeAt(0) - 65))
+    .join('');
+}
+
+/**
+ * Sort cards: active first by price ascending (null prices at end),
+ * inactive at bottom also sorted by price ascending.
+ * Returns a new sorted array (does not mutate the original).
+ */
+export function sortCards(cards: MonitoredCardWithPrice[]): MonitoredCardWithPrice[] {
+  return [...cards].sort((a, b) => {
+    // Active before inactive
+    if (a.is_active !== b.is_active) {
+      return a.is_active ? -1 : 1;
+    }
+    // Within same active group: price ascending, null at end
+    const priceA = a.latest_price_cents;
+    const priceB = b.latest_price_cents;
+    if (priceA === null && priceB === null) return 0;
+    if (priceA === null) return 1;
+    if (priceB === null) return -1;
+    return priceA - priceB;
+  });
 }
 
 /**
