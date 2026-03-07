@@ -1,0 +1,21 @@
+{
+  "id": 2,
+  "name": "Mono Red Goblin",
+  "game_id": 1,
+  "public": true,
+  "created_at": "2021-08-31T15:24:23.000Z",
+  "updated_at": "2021-08-31T15:24:23.000Z",
+  "items": [
+    {
+      "quantity": 2,
+      "meta_name": "Conspicuous Snoop",
+      "expansion_code": "m21",
+      "collector_number": "139",
+      "language": "en",
+      "condition": "Near Mint",
+      "foil": "false",
+      "reverse": null,
+      "first_edition": null
+    }
+  ]
+}

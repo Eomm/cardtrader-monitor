@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "skills": {
+    "cardtrader-api": {
+      "source": "Eomm/cardtrader-api-skills",
+      "sourceType": "github",
+      "computedHash": "21b88e738bc06bf7ff402cd1ea9c0abecc451bc3e5dcc969be968a1c192a0952"
+    }
+  }
+}

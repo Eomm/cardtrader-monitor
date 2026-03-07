@@ -1,0 +1,83 @@
+[
+  {
+    "id": 332885,
+    "name": "Atraxa, Grand Unifier",
+    "version": "Sephiroth, the Savior",
+    "game_id": 1,
+    "category_id": 1,
+    "expansion_id": 4203,
+    "fixed_properties": {
+      "mtg_rarity": "Mythic",
+      "collector_number": "049"
+    },
+    "editable_properties": [
+      {
+        "name": "condition",
+        "type": "string",
+        "default_value": "Near Mint",
+        "possible_values": [
+          "Near Mint",
+          "Slightly Played",
+          "Moderately Played",
+          "Played",
+          "Poor"
+        ]
+      },
+      {
+        "name": "mtg_language",
+        "type": "string",
+        "default_value": "en",
+        "possible_values": [
+          "en",
+          "jp"
+        ]
+      },
+      {
+        "name": "mtg_foil",
+        "type": "boolean",
+        "default_value": "false",
+        "possible_values": [
+          true,
+          false
+        ]
+      },
+      {
+        "name": "signed",
+        "type": "boolean",
+        "default_value": "false",
+        "possible_values": [
+          true,
+          false
+        ]
+      },
+      {
+        "name": "altered",
+        "type": "boolean",
+        "default_value": "false",
+        "possible_values": [
+          true,
+          false
+        ]
+      }
+    ],
+    "card_market_ids": [
+      824977
+    ],
+    "tcg_player_id": 631072,
+    "scryfall_id": "be326fe9-4ed8-4f64-934c-9955edea5fdb",
+    "image_url": "https://cardtrader.com/uploads/blueprints/image/332885/preview_atraxa-grand-unifier-sephiroth-the-savior-commander-final-fantasy.jpg",
+    "image": {
+      "url": "/uploads/blueprints/image/332885/atraxa-grand-unifier-sephiroth-the-savior-commander-final-fantasy.jpg",
+      "show": {
+        "url": "/uploads/blueprints/image/332885/show_atraxa-grand-unifier-sephiroth-the-savior-commander-final-fantasy.jpg"
+      },
+      "preview": {
+        "url": "/uploads/blueprints/image/332885/preview_atraxa-grand-unifier-sephiroth-the-savior-commander-final-fantasy.jpg"
+      },
+      "social": {
+        "url": "/uploads/blueprints/image/332885/social_atraxa-grand-unifier-sephiroth-the-savior-commander-final-fantasy.jpg"
+      }
+    },
+    "back_image": null
+  }
+]

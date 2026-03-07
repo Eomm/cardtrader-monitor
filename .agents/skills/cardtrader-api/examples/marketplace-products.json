@@ -1,0 +1,38 @@
+{
+  "10050": [
+    {
+      "id": 101862104,
+      "blueprint_id": 10050,
+      "name_en": "Dragon Fodder",
+      "quantity": 1,
+      "price": {
+        "cents": 5,
+        "currency": "EUR"
+      },
+      "description": "protection from postofficer",
+      "properties_hash": {
+        "condition": "Near Mint",
+        "mtg_language": "en",
+        "mtg_foil": false,
+        "signed": false,
+        "altered": false
+      },
+      "expansion": {
+        "id": 8,
+        "code": "m19",
+        "name_en": "Core Set 2019"
+      },
+      "user": {
+        "id": 12345,
+        "username": "seller_name",
+        "can_sell_via_hub": true,
+        "country_code": "IT",
+        "user_type": "normal",
+        "max_sellable_in24h_quantity": 100
+      },
+      "graded": false,
+      "on_vacation": false,
+      "bundle_size": 1
+    }
+  ]
+}

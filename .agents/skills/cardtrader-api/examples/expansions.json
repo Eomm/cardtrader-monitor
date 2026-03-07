@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "game_id": 1,
+    "code": "gnt",
+    "name": "Game Night"
+  },
+  {
+    "id": 3,
+    "game_id": 1,
+    "code": "pgrn",
+    "name": "Guilds of Ravnica Promos"
+  }
+]
