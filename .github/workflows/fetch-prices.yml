@@ -1,0 +1,22 @@
+name: Fetch Prices
+
+on:
+  schedule:
+    - cron: '0 * * * *' # Every hour at minute 0
+  workflow_dispatch: {} # Manual trigger for testing
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v6
+        with:
+          node-version: lts/*
+          cache: 'npm'
+      - run: npm ci
+      - run: npx tsx scripts/fetch-prices.ts
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          ENCRYPTION_KEY: ${{ secrets.ENCRYPTION_KEY }}
