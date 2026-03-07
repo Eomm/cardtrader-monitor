@@ -199,7 +199,7 @@ export function SettingsPage() {
               Your API token is required to fetch wishlist data and monitor card prices. You can
               find it in your{' '}
               <a
-                href="https://www.cardtrader.com/full-api/docs"
+                href="https://www.cardtrader.com/it/docs/api/full/reference"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-steel underline hover:text-steel/80"
