@@ -1,9 +1,50 @@
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router';
+import { Navbar } from './components/Navbar';
+import { ProtectedRoute } from './components/ProtectedRoute';
+import { AuthProvider } from './contexts/AuthContext';
+import { DashboardPage } from './pages/DashboardPage';
+import { LoginPage } from './pages/LoginPage';
+import { SettingsPage } from './pages/SettingsPage';
+
+function AuthenticatedLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="min-h-screen flex flex-col bg-papaya dark:bg-deep-space text-deep-space dark:text-papaya">
+      <Navbar />
+      {children}
+    </div>
+  );
+}
+
 function App() {
   return (
-    <div className="min-h-screen bg-papaya dark:bg-deep-space text-deep-space dark:text-papaya">
-      <h1 className="text-2xl font-bold p-8">CardTrader Monitor</h1>
-      <p className="px-8 text-steel">Foundation loading...</p>
-    </div>
+    <BrowserRouter basename="/cardtrader-monitor">
+      <AuthProvider>
+        <Routes>
+          <Route path="/" element={<LoginPage />} />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <AuthenticatedLayout>
+                  <DashboardPage />
+                </AuthenticatedLayout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/settings"
+            element={
+              <ProtectedRoute>
+                <AuthenticatedLayout>
+                  <SettingsPage />
+                </AuthenticatedLayout>
+              </ProtectedRoute>
+            }
+          />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </AuthProvider>
+    </BrowserRouter>
   );
 }
 
