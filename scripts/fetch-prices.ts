@@ -4,14 +4,14 @@ import type {
   MarketplaceProduct,
   NotificationRule,
   ThresholdRule,
-} from '../src/lib/cardtrader-types';
+} from '../src/lib/cardtrader-types.ts';
 import {
   deduplicateBlueprintIds,
   filterCtZeroOffers,
   findCheapestPrice,
   processBatches,
-} from '../src/lib/cardtrader-utils';
-import { type ThresholdAlert, formatAlertMessage, shouldNotify } from '../src/lib/telegram-utils';
+} from '../src/lib/cardtrader-utils.ts';
+import { type ThresholdAlert, formatAlertMessage, shouldNotify } from '../src/lib/telegram-utils.ts';
 
 const CARDTRADER_API_BASE = 'https://api.cardtrader.com/api/v2';
 

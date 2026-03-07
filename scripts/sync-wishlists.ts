@@ -4,13 +4,13 @@ import type {
   CardFilters,
   Expansion,
   MarketplaceProduct,
-} from '../src/lib/cardtrader-types';
+} from '../src/lib/cardtrader-types.ts';
 import {
   createDefaultNotificationRule,
   findCheapestPrice,
   mapBlueprintToCard,
   processBatches,
-} from '../src/lib/cardtrader-utils';
+} from '../src/lib/cardtrader-utils.ts';
 
 const CARDTRADER_API_BASE = 'https://api.cardtrader.com/api/v2';
 
