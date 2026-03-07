@@ -56,9 +56,9 @@ Requirements for initial release. Each maps to roadmap phases.
 ### Dashboard
 
 - [x] **DASH-01**: User can view all monitored cards with current price and active rule
-- [ ] **DASH-02**: User can click a card to view its detail page
-- [ ] **DASH-03**: Card detail page shows current price, baseline price, and rule configuration
-- [ ] **DASH-04**: User can edit notification rule from the card detail page
+- [x] **DASH-02**: User can click a card to view its detail page
+- [x] **DASH-03**: Card detail page shows current price, baseline price, and rule configuration
+- [x] **DASH-04**: User can edit notification rule from the card detail page
 
 ### Code Quality
 
@@ -129,9 +129,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 | PRIC-03 | Phase 2: Data Pipeline | Complete |
 | PRIC-04 | Phase 2: Data Pipeline | Complete |
 | DASH-01 | Phase 3: Dashboard | Complete |
-| DASH-02 | Phase 3: Dashboard | Pending |
-| DASH-03 | Phase 3: Dashboard | Pending |
-| DASH-04 | Phase 3: Dashboard | Pending |
+| DASH-02 | Phase 3: Dashboard | Complete |
+| DASH-03 | Phase 3: Dashboard | Complete |
+| DASH-04 | Phase 3: Dashboard | Complete |
 | FILT-01 | Phase 3: Dashboard | Complete |
 | FILT-02 | Phase 3: Dashboard | Complete |
 | FILT-03 | Phase 3: Dashboard | Complete |
