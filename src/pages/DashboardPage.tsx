@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import type { MonitoredCardWithPrice } from '../lib/cardtrader-types';
+import { sortCards } from '../lib/cardtrader-utils';
 import { CardList } from '../components/CardList';
 import { ImportWishlistForm } from '../components/ImportWishlistForm';
 import { supabase } from '../lib/supabase';
@@ -13,12 +14,10 @@ export function DashboardPage() {
     setError(null);
 
     try {
-      // Fetch active monitored cards (RLS scopes to current user)
+      // Fetch all monitored cards (RLS scopes to current user)
       const { data: monitoredCards, error: cardsError } = await supabase
         .from('monitored_cards')
-        .select('*')
-        .eq('is_active', true)
-        .order('card_name');
+        .select('*');
 
       if (cardsError) {
         setError(cardsError.message);
@@ -55,13 +54,13 @@ export function DashboardPage() {
         }
       }
 
-      // Merge cards with latest prices
+      // Merge cards with latest prices, sort active first by price
       const merged: MonitoredCardWithPrice[] = monitoredCards.map((card) => ({
         ...card,
         latest_price_cents: latestPriceMap.get(card.id) ?? null,
       }));
 
-      setCards(merged);
+      setCards(sortCards(merged));
     } catch {
       setError('Failed to load cards. Please try again.');
     } finally {
