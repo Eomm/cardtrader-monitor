@@ -15,54 +15,34 @@
         "name": "condition",
         "type": "string",
         "default_value": "Near Mint",
-        "possible_values": [
-          "Near Mint",
-          "Slightly Played",
-          "Moderately Played",
-          "Played",
-          "Poor"
-        ]
+        "possible_values": ["Near Mint", "Slightly Played", "Moderately Played", "Played", "Poor"]
       },
       {
         "name": "mtg_language",
         "type": "string",
         "default_value": "en",
-        "possible_values": [
-          "en",
-          "jp"
-        ]
+        "possible_values": ["en", "jp"]
       },
       {
         "name": "mtg_foil",
         "type": "boolean",
         "default_value": "false",
-        "possible_values": [
-          true,
-          false
-        ]
+        "possible_values": [true, false]
       },
       {
         "name": "signed",
         "type": "boolean",
         "default_value": "false",
-        "possible_values": [
-          true,
-          false
-        ]
+        "possible_values": [true, false]
       },
       {
         "name": "altered",
         "type": "boolean",
         "default_value": "false",
-        "possible_values": [
-          true,
-          false
-        ]
+        "possible_values": [true, false]
       }
     ],
-    "card_market_ids": [
-      824977
-    ],
+    "card_market_ids": [824977],
     "tcg_player_id": 631072,
     "scryfall_id": "be326fe9-4ed8-4f64-934c-9955edea5fdb",
     "image_url": "https://cardtrader.com/uploads/blueprints/image/332885/preview_atraxa-grand-unifier-sephiroth-the-savior-commander-final-fantasy.jpg",
