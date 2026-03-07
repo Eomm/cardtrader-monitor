@@ -121,7 +121,7 @@ External services require manual configuration before the auth flow works end-to
 
 **Supabase:**
 - Create a Supabase project at https://supabase.com/dashboard
-- Add `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` to `.env` (see `.env.example`)
+- Add `VITE_SUPABASE_URL` and `VITE_SUPABASE_PUBLISHABLE_DEFAULT_KEY` to `.env` (see `.env.example`)
 - Enable Google OAuth provider in Authentication -> Providers -> Google
 - Set Site URL to your deployment URL in Authentication -> URL Configuration
 - Run `supabase/migrations/00001_initial_schema.sql` in SQL Editor
