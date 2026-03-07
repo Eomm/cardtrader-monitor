@@ -9,14 +9,14 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Authentication
 
-- [ ] **AUTH-01**: User can sign in with Google OAuth via Supabase
-- [ ] **AUTH-02**: User session persists across browser refresh
-- [ ] **AUTH-03**: User can log out from any page
+- [x] **AUTH-01**: User can sign in with Google OAuth via Supabase
+- [x] **AUTH-02**: User session persists across browser refresh
+- [x] **AUTH-03**: User can log out from any page
 
 ### Settings
 
-- [ ] **SETT-01**: User can add their CardTrader API token (stored encrypted)
-- [ ] **SETT-02**: User can update or remove their CardTrader API token
+- [x] **SETT-01**: User can add their CardTrader API token (stored encrypted)
+- [x] **SETT-02**: User can update or remove their CardTrader API token
 
 ### Wishlist Import
 
@@ -114,11 +114,11 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| AUTH-01 | Phase 1: Foundation | Pending |
-| AUTH-02 | Phase 1: Foundation | Pending |
-| AUTH-03 | Phase 1: Foundation | Pending |
-| SETT-01 | Phase 1: Foundation | Pending |
-| SETT-02 | Phase 1: Foundation | Pending |
+| AUTH-01 | Phase 1: Foundation | Complete |
+| AUTH-02 | Phase 1: Foundation | Complete |
+| AUTH-03 | Phase 1: Foundation | Complete |
+| SETT-01 | Phase 1: Foundation | Complete |
+| SETT-02 | Phase 1: Foundation | Complete |
 | QUAL-01 | Phase 1: Foundation | Complete |
 | QUAL-02 | Phase 1: Foundation | Complete |
 | WISH-01 | Phase 2: Data Pipeline | Pending |

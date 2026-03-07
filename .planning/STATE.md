@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: executing
-stopped_at: Completed 01-01-PLAN.md
-last_updated: "2026-03-07T10:59:07Z"
-last_activity: 2026-03-07 -- Executed 01-01 project scaffold
+status: phase-complete
+stopped_at: Completed 01-02-PLAN.md (Phase 1 complete)
+last_updated: "2026-03-07T12:11:52Z"
+last_activity: 2026-03-07 -- Executed 01-02 auth, app shell, and settings
 progress:
   total_phases: 5
-  completed_phases: 0
+  completed_phases: 1
   total_plans: 2
-  completed_plans: 1
-  percent: 10
+  completed_plans: 2
+  percent: 20
 ---
 
 # Project State
@@ -25,28 +25,28 @@ See: .planning/PROJECT.md (updated 2026-03-07)
 
 ## Current Position
 
-Phase: 1 of 5 (Foundation)
-Plan: 2 of 2 in current phase
-Status: Executing
-Last activity: 2026-03-07 -- Executed 01-01 project scaffold
+Phase: 1 of 5 (Foundation) -- COMPLETE
+Plan: 2 of 2 in current phase (all done)
+Status: Phase Complete
+Last activity: 2026-03-07 -- Executed 01-02 auth, app shell, and settings
 
-Progress: [█░░░░░░░░░] 10%
+Progress: [██░░░░░░░░] 20%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 1
-- Average duration: 4 min
-- Total execution time: 0.07 hours
+- Total plans completed: 2
+- Average duration: 37 min
+- Total execution time: 1.22 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| 01-foundation | 1/2 | 4 min | 4 min |
+| 01-foundation | 2/2 | 73 min | 37 min |
 
 **Recent Trend:**
-- Last 5 plans: 4 min
+- Last 5 plans: 4 min, 69 min
 - Trend: -
 
 *Updated after each plan completion*
@@ -63,6 +63,9 @@ Recent decisions affecting current work:
 - [01-01]: Used Biome instead of ESLint+Prettier for single-tool linting/formatting
 - [01-01]: Stripped JSONC comments from tsconfig files for Biome compatibility
 - [01-01]: Replaced non-null assertion with explicit null check in main.tsx for Biome compliance
+- [01-02]: Added aria-hidden to decorative SVGs for Biome a11y compliance
+- [01-02]: Used useCallback for RPC check function to satisfy exhaustive-deps rule
+- [01-02]: Inline confirmation for token removal instead of browser confirm dialog
 
 ### Pending Todos
 
@@ -75,6 +78,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-07T10:59:07Z
-Stopped at: Completed 01-01-PLAN.md
-Resume file: .planning/phases/01-foundation/01-01-SUMMARY.md
+Last session: 2026-03-07T12:10:35Z
+Stopped at: Completed 01-02-PLAN.md (Phase 1 Foundation complete)
+Resume file: .planning/phases/01-foundation/01-02-SUMMARY.md
