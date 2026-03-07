@@ -298,7 +298,7 @@ Deno.serve(async (req) => {
       collector_number: card.blueprint.fixed_properties.collector_number,
       image_url: card.blueprint.image_url,
       baseline_price_cents: prices[idx] ?? null,
-      notification_rule: defaultRule,
+      notification_rule: [defaultRule],
       only_zero: true,
       condition_required: card.item.condition || null,
       language_required: card.item.language,
