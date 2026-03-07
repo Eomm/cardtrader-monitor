@@ -44,13 +44,13 @@ Requirements for initial release. Each maps to roadmap phases.
 
 - [x] **RULE-01**: User can set a threshold alert per card (notify when price moves X% from baseline, up or down)
 - [x] **RULE-02**: User can enable or disable notifications per card
-- [ ] **RULE-03**: Threshold alert evaluates current cheapest matching price vs baseline price
+- [x] **RULE-03**: Threshold alert evaluates current cheapest matching price vs baseline price
 
 ### Notifications
 
 - [ ] **NOTF-01**: User receives a Telegram message when a threshold alert triggers
-- [ ] **NOTF-02**: Telegram notification includes card name, old price, new price, and percentage change
-- [ ] **NOTF-03**: Telegram notification includes a direct link to the CardTrader listing
+- [x] **NOTF-02**: Telegram notification includes card name, old price, new price, and percentage change
+- [x] **NOTF-03**: Telegram notification includes a direct link to the CardTrader listing
 - [ ] **NOTF-04**: Sent notifications are logged in the database
 
 ### Dashboard
@@ -138,10 +138,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 | FILT-04 | Phase 3: Dashboard | Complete |
 | RULE-01 | Phase 3: Dashboard | Complete |
 | RULE-02 | Phase 3: Dashboard | Complete |
-| RULE-03 | Phase 4: Notifications | Pending |
+| RULE-03 | Phase 4: Notifications | Complete |
 | NOTF-01 | Phase 4: Notifications | Pending |
-| NOTF-02 | Phase 4: Notifications | Pending |
-| NOTF-03 | Phase 4: Notifications | Pending |
+| NOTF-02 | Phase 4: Notifications | Complete |
+| NOTF-03 | Phase 4: Notifications | Complete |
 | NOTF-04 | Phase 4: Notifications | Pending |
 | WISH-04 | Phase 5: Automation | Pending |
 | PRIC-05 | Phase 5: Automation | Pending |
