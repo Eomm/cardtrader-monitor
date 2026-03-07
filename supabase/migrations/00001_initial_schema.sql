@@ -68,6 +68,8 @@ CREATE TABLE public.notifications (
 -- Indexes
 -- =============================================================================
 
+CREATE UNIQUE INDEX idx_wishlists_user_wishlist ON public.wishlists (user_id, cardtrader_wishlist_id);
+CREATE UNIQUE INDEX idx_monitored_cards_wishlist_blueprint ON public.monitored_cards (wishlist_id, blueprint_id);
 CREATE INDEX idx_wishlists_user_id ON public.wishlists (user_id);
 CREATE INDEX idx_monitored_cards_wishlist_id ON public.monitored_cards (wishlist_id);
 CREATE INDEX idx_monitored_cards_blueprint_id ON public.monitored_cards (blueprint_id);
