@@ -264,7 +264,7 @@ CREATE INDEX idx_notifications_card_id ON public.notifications(monitored_card_id
 **Environment Variables:**
 ```env
 VITE_SUPABASE_URL=https://<project>.supabase.co
-VITE_SUPABASE_ANON_KEY=<anon_key>
+VITE_SUPABASE_PUBLISHABLE_DEFAULT_KEY=<anon_key>
 ```
 
 **Build & Deploy:**
