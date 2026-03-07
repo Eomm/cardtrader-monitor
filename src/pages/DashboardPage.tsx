@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import type { MonitoredCardWithPrice } from '../components/CardItem';
+import type { MonitoredCardWithPrice } from '../lib/cardtrader-types';
 import { CardList } from '../components/CardList';
 import { ImportWishlistForm } from '../components/ImportWishlistForm';
 import { supabase } from '../lib/supabase';

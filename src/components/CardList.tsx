@@ -1,5 +1,5 @@
+import type { MonitoredCardWithPrice } from '../lib/cardtrader-types';
 import { CardItem } from './CardItem';
-import type { MonitoredCardWithPrice } from './CardItem';
 
 type CardListProps = {
   cards: MonitoredCardWithPrice[];

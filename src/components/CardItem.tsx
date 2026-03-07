@@ -1,17 +1,4 @@
-export type MonitoredCardWithPrice = {
-  id: string;
-  blueprint_id: number;
-  card_name: string;
-  expansion_name: string;
-  game_id: number;
-  collector_number: string | null;
-  image_url: string | null;
-  baseline_price_cents: number | null;
-  notification_rule: Record<string, unknown> | null;
-  is_active: boolean;
-  created_at: string;
-  latest_price_cents: number | null;
-};
+import type { MonitoredCardWithPrice } from '../lib/cardtrader-types';
 
 type CardItemProps = {
   card: MonitoredCardWithPrice;
