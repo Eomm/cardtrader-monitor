@@ -69,9 +69,9 @@ describe('formatAlertMessage', () => {
     // Card name as link
     expect(msg).toContain('[Dark Magician]');
     expect(msg).toContain('https://www.cardtrader.com/en/cards/12345');
-    // Prices
-    expect(msg).toContain('€17.27');
-    expect(msg).toContain('€15.00');
+    // Prices (escaped for MarkdownV2: dots become \.)
+    expect(msg).toContain('€17\\.27');
+    expect(msg).toContain('€15\\.00');
   });
 
   it('formats a single price rise alert with red circle', () => {
