@@ -20,17 +20,17 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Wishlist Import
 
-- [ ] **WISH-01**: User can import a wishlist by pasting a CardTrader wishlist URL
-- [ ] **WISH-02**: Imported cards include name, expansion, image, game, and collector number
-- [ ] **WISH-03**: Each imported card gets a default threshold notification rule
+- [x] **WISH-01**: User can import a wishlist by pasting a CardTrader wishlist URL
+- [x] **WISH-02**: Imported cards include name, expansion, image, game, and collector number
+- [x] **WISH-03**: Each imported card gets a default threshold notification rule
 - [ ] **WISH-04**: Wishlist auto-syncs daily via GitHub Actions (adds new cards, deactivates removed ones)
 
 ### Price Tracking
 
 - [ ] **PRIC-01**: Hourly GitHub Actions job fetches current prices for all active monitored cards
-- [ ] **PRIC-02**: Price fetches are deduplicated by blueprint ID across users (one API call per unique card)
-- [ ] **PRIC-03**: Each card stores a baseline price set at import time
-- [ ] **PRIC-04**: Daily price snapshots are retained for a configurable number of days per card
+- [x] **PRIC-02**: Price fetches are deduplicated by blueprint ID across users (one API call per unique card)
+- [x] **PRIC-03**: Each card stores a baseline price set at import time
+- [x] **PRIC-04**: Daily price snapshots are retained for a configurable number of days per card
 - [ ] **PRIC-05**: Snapshots older than the retention window are cleaned up automatically
 
 ### Card Filtering
@@ -121,13 +121,13 @@ Which phases cover which requirements. Updated during roadmap creation.
 | SETT-02 | Phase 1: Foundation | Complete |
 | QUAL-01 | Phase 1: Foundation | Complete |
 | QUAL-02 | Phase 1: Foundation | Complete |
-| WISH-01 | Phase 2: Data Pipeline | Pending |
-| WISH-02 | Phase 2: Data Pipeline | Pending |
-| WISH-03 | Phase 2: Data Pipeline | Pending |
+| WISH-01 | Phase 2: Data Pipeline | Complete |
+| WISH-02 | Phase 2: Data Pipeline | Complete |
+| WISH-03 | Phase 2: Data Pipeline | Complete |
 | PRIC-01 | Phase 2: Data Pipeline | Pending |
-| PRIC-02 | Phase 2: Data Pipeline | Pending |
-| PRIC-03 | Phase 2: Data Pipeline | Pending |
-| PRIC-04 | Phase 2: Data Pipeline | Pending |
+| PRIC-02 | Phase 2: Data Pipeline | Complete |
+| PRIC-03 | Phase 2: Data Pipeline | Complete |
+| PRIC-04 | Phase 2: Data Pipeline | Complete |
 | DASH-01 | Phase 3: Dashboard | Pending |
 | DASH-02 | Phase 3: Dashboard | Pending |
 | DASH-03 | Phase 3: Dashboard | Pending |
