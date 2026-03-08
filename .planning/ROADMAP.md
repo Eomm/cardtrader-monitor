@@ -117,7 +117,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6
 **Goal:** Polish and harden v1 -- fix lint violations, migrate to dark modern palette, improve card detail UX, add public How It Works page, enforce wishlist limits, normalize schema, and update developer docs
 **Requirements**: None (chores/fixes phase, no formal requirement IDs)
 **Depends on:** Phase 5
-**Plans:** 1/4 plans executed
+**Plans:** 2/4 plans executed
 
 Plans:
 - [ ] 06-01-PLAN.md — Fix all Biome lint errors and rename expansion_name to expansion_id with FK to ct_expansions

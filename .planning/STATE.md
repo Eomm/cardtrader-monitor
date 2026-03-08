@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: in_progress
-stopped_at: Completed 06-01-PLAN.md
-last_updated: "2026-03-08T18:13:10.000Z"
-last_activity: "2026-03-08 - Completed 06-01: Fix Biome lint errors and rename expansion_name to expansion_id"
+status: executing
+stopped_at: Completed 06-04-PLAN.md
+last_updated: "2026-03-08T18:16:59.573Z"
+last_activity: "2026-03-08 - Completed 06-04: Developer setup documentation"
 progress:
   total_phases: 6
   completed_phases: 5
   total_plans: 18
-  completed_plans: 15
-  percent: 83
+  completed_plans: 16
+  percent: 89
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-03-07)
 ## Current Position
 
 Phase: 6 of 6 (Chores and Fixes)
-Plan: 1 of 4 in current phase (06-01 complete)
+Plan: 4 of 4 in current phase (06-04 complete)
 Status: In progress
-Last activity: 2026-03-08 - Completed 06-01: Fix Biome lint errors and rename expansion_name to expansion_id
+Last activity: 2026-03-08 - Completed 06-04: Developer setup documentation
 
-Progress: [████████░░] 83%
+Progress: [█████████░] 89%
 
 ## Performance Metrics
 
@@ -60,6 +60,7 @@ Progress: [████████░░] 83%
 | Phase 05-automation P01 | 1 | 2 tasks | 4 files |
 | Phase 05-automation P02 | 2 min | 2 tasks | 2 files |
 | Phase 06-chores-and-fixes P01 | 4 min | 2 tasks | 23 files |
+| Phase 06-chores-and-fixes P04 | 1 min | 1 tasks | 1 files |
 
 ## Accumulated Context
 
@@ -113,6 +114,7 @@ Recent decisions affecting current work:
 - [06-01]: Used filter+type guard instead of non-null assertion for sync-wishlists Map.get()
 - [06-01]: Added ct_expansions optional join type to MonitoredCardWithPrice for Supabase FK join pattern
 - [06-01]: Display expansion via ct_expansions?.name with '---' fallback for null
+- [Phase 06-04]: Documented all 5 GitHub secrets from actual workflow files, used actual env var names from .env.example
 
 ### Pending Todos
 
@@ -135,6 +137,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-08T18:13:10.000Z
-Stopped at: Completed 06-01-PLAN.md
-Resume file: .planning/phases/06-chores-and-fixes/06-02-PLAN.md
+Last session: 2026-03-08T18:16:59.569Z
+Stopped at: Completed 06-04-PLAN.md
+Resume file: None
