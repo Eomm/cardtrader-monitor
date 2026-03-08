@@ -12,7 +12,9 @@ type RuleEditorProps = {
 type ActiveTab = 'threshold' | 'stability';
 
 export function RuleEditor({ cardId, rules, onSave }: RuleEditorProps) {
-  const [localRules, setLocalRules] = useState<NotificationRule[]>(Array.isArray(rules) ? rules : rules ? [rules] : []);
+  const [localRules, setLocalRules] = useState<NotificationRule[]>(
+    Array.isArray(rules) ? rules : rules ? [rules] : [],
+  );
   const [activeTab, setActiveTab] = useState<ActiveTab>('threshold');
   const [saving, setSaving] = useState(false);
   const [feedback, setFeedback] = useState<string | null>(null);

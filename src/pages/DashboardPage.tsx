@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useState } from 'react';
-import type { MonitoredCardWithPrice } from '../lib/cardtrader-types';
-import { sortCards } from '../lib/cardtrader-utils';
 import { CardList } from '../components/CardList';
 import { ImportWishlistForm } from '../components/ImportWishlistForm';
+import type { MonitoredCardWithPrice } from '../lib/cardtrader-types';
+import { sortCards } from '../lib/cardtrader-utils';
 import { supabase } from '../lib/supabase';
 
 export function DashboardPage() {

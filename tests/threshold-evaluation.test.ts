@@ -1,6 +1,6 @@
-import { describe, it, expect } from 'vitest';
-import { evaluateThreshold } from '../src/lib/telegram-utils';
+import { describe, expect, it } from 'vitest';
 import type { ThresholdRule } from '../src/lib/cardtrader-types';
+import { evaluateThreshold } from '../src/lib/telegram-utils';
 
 function makeRule(overrides: Partial<ThresholdRule> = {}): ThresholdRule {
   return {
@@ -32,7 +32,11 @@ describe('evaluateThreshold', () => {
   });
 
   it('triggers for price rise when direction is up', () => {
-    const result = evaluateThreshold(makeRule({ direction: 'up', threshold_percent: 15 }), 1000, 1200);
+    const result = evaluateThreshold(
+      makeRule({ direction: 'up', threshold_percent: 15 }),
+      1000,
+      1200,
+    );
     expect(result.triggered).toBe(true);
     expect(result.percentChange).toBe(20);
   });

@@ -1,4 +1,4 @@
-import { createClient, type SupabaseClient } from '@supabase/supabase-js';
+import { type SupabaseClient, createClient } from '@supabase/supabase-js';
 import type {
   Blueprint,
   CardFilters,
@@ -289,7 +289,9 @@ async function syncWishlist(
 
   // 6. Add new cards (with baseline price fetch)
   if (toAdd.length > 0) {
-    const toAddItems = toAdd.map((bpId) => resolvedItems.get(bpId)!);
+    const toAddItems = toAdd
+      .map((bpId) => resolvedItems.get(bpId))
+      .filter((item): item is NonNullable<typeof item> => item != null);
     const defaultRule = createDefaultNotificationRule();
 
     await processBatches(
@@ -301,11 +303,7 @@ async function syncWishlist(
         // Fetch baseline price
         let baselinePriceCents: number | null = null;
         try {
-          const products = await fetchMarketplaceProducts(
-            apiToken,
-            blueprint.id,
-            item.language,
-          );
+          const products = await fetchMarketplaceProducts(apiToken, blueprint.id, item.language);
           baselinePriceCents = findCheapestPrice(products, {
             condition: item.condition || undefined,
             language: item.language,
@@ -318,22 +316,20 @@ async function syncWishlist(
 
         const cardData = mapBlueprintToCard(blueprint, expansionName);
 
-        await supabase
-          .from('monitored_cards')
-          .upsert(
-            {
-              ...cardData,
-              wishlist_id: wishlist.id,
-              baseline_price_cents: baselinePriceCents,
-              notification_rule: [defaultRule],
-              only_zero: true,
-              condition_required: item.condition || null,
-              language_required: item.language,
-              foil_required: foilRequired,
-              is_active: true,
-            },
-            { onConflict: 'wishlist_id,blueprint_id' },
-          );
+        await supabase.from('monitored_cards').upsert(
+          {
+            ...cardData,
+            wishlist_id: wishlist.id,
+            baseline_price_cents: baselinePriceCents,
+            notification_rule: [defaultRule],
+            only_zero: true,
+            condition_required: item.condition || null,
+            language_required: item.language,
+            foil_required: foilRequired,
+            is_active: true,
+          },
+          { onConflict: 'wishlist_id,blueprint_id' },
+        );
       },
       8,
       1000,

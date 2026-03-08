@@ -340,8 +340,8 @@ export function SettingsPage() {
                 className="text-steel underline hover:text-steel/80"
               >
                 @card_trader_monitor_bot
-              </a>
-              {' '}on Telegram, copy the chat ID it replies with, and paste it below.
+              </a>{' '}
+              on Telegram, copy the chat ID it replies with, and paste it below.
             </p>
 
             {/* Connection Status */}

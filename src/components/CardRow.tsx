@@ -56,8 +56,7 @@ export function CardRow({ card }: CardRowProps) {
       {/* Name + flag */}
       <div className="min-w-0 flex-1">
         <p className="truncate font-medium text-deep-space dark:text-papaya">
-          {card.card_name}{' '}
-          <span className="text-sm">{languageToFlag(card.language_required)}</span>
+          {card.card_name} <span className="text-sm">{languageToFlag(card.language_required)}</span>
         </p>
         <p className="truncate text-sm text-deep-space/60 dark:text-papaya/60">
           {card.expansion_name}

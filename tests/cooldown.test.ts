@@ -1,6 +1,6 @@
-import { describe, it, expect } from 'vitest';
-import { shouldNotify } from '../src/lib/telegram-utils';
+import { describe, expect, it } from 'vitest';
 import type { ThresholdRule } from '../src/lib/cardtrader-types';
+import { shouldNotify } from '../src/lib/telegram-utils';
 
 function makeRule(overrides: Partial<ThresholdRule> = {}): ThresholdRule {
   return {

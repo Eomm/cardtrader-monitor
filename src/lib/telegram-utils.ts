@@ -39,8 +39,7 @@ export function evaluateThreshold(
   if (baselineCents === null) {
     // Null baseline = infinity; any actual price is a drop
     const percentChange = -100;
-    const directionMatch =
-      rule.direction === 'down' || rule.direction === 'both';
+    const directionMatch = rule.direction === 'down' || rule.direction === 'both';
     return {
       triggered: directionMatch,
       percentChange,
@@ -49,8 +48,7 @@ export function evaluateThreshold(
 
   const percentChange = ((currentCents - baselineCents) / baselineCents) * 100;
 
-  const meetsThreshold =
-    Math.abs(percentChange) >= rule.threshold_percent;
+  const meetsThreshold = Math.abs(percentChange) >= rule.threshold_percent;
 
   let directionMatch = false;
   if (rule.direction === 'both') {
@@ -86,8 +84,7 @@ export function shouldNotify(
     };
   }
 
-  const hoursSinceLast =
-    (Date.now() - lastNotification.sentAt.getTime()) / (1000 * 60 * 60);
+  const hoursSinceLast = (Date.now() - lastNotification.sentAt.getTime()) / (1000 * 60 * 60);
 
   if (hoursSinceLast >= COOLDOWN_HOURS) {
     // Cooldown expired: use original baseline
@@ -99,11 +96,7 @@ export function shouldNotify(
   }
 
   // Within cooldown: compare against last notified price
-  const result = evaluateThreshold(
-    rule,
-    lastNotification.priceCents,
-    currentCents,
-  );
+  const result = evaluateThreshold(rule, lastNotification.priceCents, currentCents);
   return {
     ...result,
     comparisonPriceCents: lastNotification.priceCents,
@@ -133,14 +126,10 @@ export function formatAlertMessage(alerts: ThresholdAlert[]): string {
     .map((alert) => {
       const emoji = alert.percentChange < 0 ? '\u{1F7E2}' : '\u{1F534}';
       const name = escapeMarkdownV2(alert.cardName);
-      const url = escapeMarkdownV2Url(
-        `https://www.cardtrader.com/en/cards/${alert.blueprintId}`,
-      );
+      const url = escapeMarkdownV2Url(`https://www.cardtrader.com/en/cards/${alert.blueprintId}`);
       const oldPrice = escapeMarkdownV2(formatEurCents(alert.oldPriceCents));
       const newPrice = escapeMarkdownV2(formatEurCents(alert.newPriceCents));
-      const pct = escapeMarkdownV2(
-        `(${Math.abs(alert.percentChange).toFixed(1)}%)`,
-      );
+      const pct = escapeMarkdownV2(`(${Math.abs(alert.percentChange).toFixed(1)}%)`);
       return `${emoji} [${name}](${url}) ${oldPrice} \\-\\> ${newPrice} ${pct}`;
     })
     .join('\n');

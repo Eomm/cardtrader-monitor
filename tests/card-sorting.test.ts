@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { sortCards } from '../src/lib/cardtrader-utils';
 import type { MonitoredCardWithPrice } from '../src/lib/cardtrader-types';
+import { sortCards } from '../src/lib/cardtrader-utils';
 
 function makeCard(overrides: Partial<MonitoredCardWithPrice>): MonitoredCardWithPrice {
   return {
