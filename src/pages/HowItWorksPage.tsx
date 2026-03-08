@@ -46,6 +46,12 @@ export function HowItWorksPage() {
                 securely -- it is only used to read your wishlists and check marketplace prices.
               </p>
               <p>
+                Your imported wishlists are{' '}
+                <strong className="text-slate-100">synced once a day</strong> with CardTrader. If
+                you add or remove cards from a wishlist on CardTrader, the changes will be
+                automatically reflected here within 24 hours.
+              </p>
+              <p>
                 For Telegram notifications, start a chat with{' '}
                 <a
                   href="https://t.me/card_trader_monitor_bot"
