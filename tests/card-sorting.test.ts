@@ -7,7 +7,7 @@ function makeCard(overrides: Partial<MonitoredCardWithPrice>): MonitoredCardWith
     id: 'test-id',
     blueprint_id: 1,
     card_name: 'Test Card',
-    expansion_name: 'Test Set',
+    expansion_id: 1,
     game_id: 1,
     collector_number: '001',
     image_url: null,

@@ -81,14 +81,14 @@ export async function processBatches<T, R>(
  */
 export function mapBlueprintToCard(
   blueprint: Blueprint,
-  expansionName: string,
+  expansionId: number,
 ): {
   blueprint_id: number;
   card_name: string;
   game_id: number;
   collector_number: string;
   image_url: string;
-  expansion_name: string;
+  expansion_id: number;
 } {
   return {
     blueprint_id: blueprint.id,
@@ -96,7 +96,7 @@ export function mapBlueprintToCard(
     game_id: blueprint.game_id,
     collector_number: blueprint.fixed_properties.collector_number,
     image_url: blueprint.image_url,
-    expansion_name: expansionName,
+    expansion_id: expansionId,
   };
 }
 

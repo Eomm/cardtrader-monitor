@@ -59,7 +59,7 @@ export function CardRow({ card }: CardRowProps) {
           {card.card_name} <span className="text-sm">{languageToFlag(card.language_required)}</span>
         </p>
         <p className="truncate text-sm text-deep-space/60 dark:text-papaya/60">
-          {card.expansion_name}
+          {card.ct_expansions?.name ?? '---'}
         </p>
       </div>
 

@@ -15,22 +15,7 @@ COMMENT ON COLUMN public.monitored_cards.retention_days IS
   'Number of days to retain price snapshots for this card. Default 30, range 1-365.';
 
 -- =============================================================================
--- 2. Create ct_expansions cache table
--- =============================================================================
-
-CREATE TABLE IF NOT EXISTS public.ct_expansions (
-  id int PRIMARY KEY,
-  game_id int NOT NULL,
-  code text NOT NULL UNIQUE,
-  name text NOT NULL,
-  fetched_at timestamptz NOT NULL DEFAULT now()
-);
-
-COMMENT ON TABLE public.ct_expansions IS
-  'Cache of CardTrader expansion reference data. Populated by Edge Functions and GitHub Actions.';
-
--- =============================================================================
--- 3. Create ct_blueprints cache table
+-- 2. Create ct_blueprints cache table
 -- =============================================================================
 
 CREATE TABLE IF NOT EXISTS public.ct_blueprints (

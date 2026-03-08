@@ -83,7 +83,8 @@ export type MonitoredCardWithPrice = {
   id: string;
   blueprint_id: number;
   card_name: string;
-  expansion_name: string;
+  expansion_id: number;
+  ct_expansions?: { name: string };
   game_id: number;
   collector_number: string | null;
   image_url: string | null;

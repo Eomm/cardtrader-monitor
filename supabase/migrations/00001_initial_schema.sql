@@ -25,12 +25,23 @@ CREATE TABLE public.wishlists (
   updated_at timestamptz NOT NULL DEFAULT now()
 );
 
+CREATE TABLE public.ct_expansions (
+  id int PRIMARY KEY,
+  game_id int NOT NULL,
+  code text NOT NULL UNIQUE,
+  name text NOT NULL,
+  fetched_at timestamptz NOT NULL DEFAULT now()
+);
+
+COMMENT ON TABLE public.ct_expansions IS
+  'Cache of CardTrader expansion reference data. Populated by Edge Functions and GitHub Actions.';
+
 CREATE TABLE public.monitored_cards (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   wishlist_id uuid NOT NULL REFERENCES public.wishlists ON DELETE CASCADE,
   blueprint_id bigint NOT NULL,
   card_name text NOT NULL,
-  expansion_name text,
+  expansion_id int REFERENCES public.ct_expansions(id),
   game_id int,
   collector_number text,
   image_url text,

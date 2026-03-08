@@ -23,7 +23,7 @@ export function CardDetailPage() {
     try {
       const { data: cardData, error: cardError } = await supabase
         .from('monitored_cards')
-        .select('*')
+        .select('*, ct_expansions(name)')
         .eq('id', id)
         .single();
 
@@ -259,7 +259,7 @@ export function CardDetailPage() {
               <dl className="grid grid-cols-2 gap-x-6 gap-y-3 text-sm sm:grid-cols-3">
                 <div>
                   <dt className="text-deep-space/50 dark:text-papaya/50">Expansion</dt>
-                  <dd className="font-medium">{card.expansion_name}</dd>
+                  <dd className="font-medium">{card.ct_expansions?.name ?? '---'}</dd>
                 </div>
                 <div>
                   <dt className="text-deep-space/50 dark:text-papaya/50">Condition</dt>

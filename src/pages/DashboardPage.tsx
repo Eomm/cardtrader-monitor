@@ -17,7 +17,7 @@ export function DashboardPage() {
       // Fetch all monitored cards (RLS scopes to current user)
       const { data: monitoredCards, error: cardsError } = await supabase
         .from('monitored_cards')
-        .select('*');
+        .select('*, ct_expansions(name)');
 
       if (cardsError) {
         setError(cardsError.message);

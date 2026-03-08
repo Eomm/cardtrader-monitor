@@ -160,7 +160,6 @@ Deno.serve(async (req) => {
     // 5e. For each unique expansion: fetch blueprints, cache, build lookup
     // Maps expansion_code -> (collector_number -> Blueprint)
     const blueprintLookup = new Map<string, Map<string, Blueprint>>();
-    const expansionNameLookup = new Map<string, string>();
 
     const uniqueExpansionCodes = Array.from(itemsByExpansion.keys());
     await processBatches(
@@ -168,8 +167,6 @@ Deno.serve(async (req) => {
       async (code) => {
         const expansion = expansionMap.get(code);
         if (!expansion) return;
-
-        expansionNameLookup.set(code, expansion.name);
 
         const bpMap = await fetchBlueprintsForExpansion(apiToken, expansion.id);
         blueprintLookup.set(code, bpMap);
@@ -197,7 +194,7 @@ Deno.serve(async (req) => {
     interface ResolvedCard {
       item: WishlistItem;
       blueprint: Blueprint;
-      expansionName: string;
+      expansionId: number;
     }
 
     const resolvedCards: ResolvedCard[] = [];
@@ -226,7 +223,7 @@ Deno.serve(async (req) => {
       resolvedCards.push({
         item,
         blueprint,
-        expansionName: expansionNameLookup.get(item.expansion_code) ?? expansion.name,
+        expansionId: expansion.id,
       });
     }
 
@@ -293,7 +290,7 @@ Deno.serve(async (req) => {
       wishlist_id: wishlistRow.id,
       blueprint_id: card.blueprint.id,
       card_name: card.blueprint.name,
-      expansion_name: card.expansionName,
+      expansion_id: card.expansionId,
       game_id: card.blueprint.game_id,
       collector_number: card.blueprint.fixed_properties.collector_number,
       image_url: card.blueprint.image_url,

@@ -47,13 +47,13 @@ interface DbCard {
   blueprint_id: number;
   card_name: string;
   image_url: string | null;
-  expansion_name: string;
+  expansion_id: number;
 }
 
 interface ResolvedItem {
   item: WishlistItem;
   blueprint: Blueprint;
-  expansionName: string;
+  expansionId: number;
 }
 
 interface SyncResult {
@@ -146,7 +146,7 @@ async function syncWishlist(
   // 2. Get current DB cards for this wishlist
   const { data: dbCardRows, error: dbError } = await supabase
     .from('monitored_cards')
-    .select('id, blueprint_id, card_name, image_url, expansion_name')
+    .select('id, blueprint_id, card_name, image_url, expansion_id')
     .eq('wishlist_id', wishlist.id);
 
   if (dbError) {
@@ -182,7 +182,7 @@ async function syncWishlist(
 
   // For each unique expansion: check cache first, then API
   const blueprintLookup = new Map<string, Map<string, Blueprint>>();
-  const expansionNameLookup = new Map<string, string>();
+  const expansionIdLookup = new Map<string, number>();
 
   const uniqueExpansionCodes = Array.from(itemsByExpansion.keys());
   await processBatches(
@@ -191,7 +191,7 @@ async function syncWishlist(
       const expansion = expansionMap.get(code);
       if (!expansion) return;
 
-      expansionNameLookup.set(code, expansion.name);
+      expansionIdLookup.set(code, expansion.id);
 
       // Check ct_blueprints cache first
       const { data: cachedBlueprints } = await supabase
@@ -254,7 +254,7 @@ async function syncWishlist(
     resolvedItems.set(blueprint.id, {
       item,
       blueprint,
-      expansionName: expansionNameLookup.get(item.expansion_code) ?? expansion.name,
+      expansionId: expansionIdLookup.get(item.expansion_code) ?? expansion.id,
     });
   }
 
@@ -297,7 +297,7 @@ async function syncWishlist(
     await processBatches(
       toAddItems,
       async (resolved) => {
-        const { item, blueprint, expansionName } = resolved;
+        const { item, blueprint, expansionId } = resolved;
         const foilRequired = normaliseFoil(item.foil);
 
         // Fetch baseline price
@@ -314,7 +314,7 @@ async function syncWishlist(
           // Continue with null baseline if fetch fails
         }
 
-        const cardData = mapBlueprintToCard(blueprint, expansionName);
+        const cardData = mapBlueprintToCard(blueprint, expansionId);
 
         await supabase.from('monitored_cards').upsert(
           {
@@ -359,7 +359,7 @@ async function syncWishlist(
       .update({
         card_name: resolved.blueprint.name,
         image_url: resolved.blueprint.image_url,
-        expansion_name: resolved.expansionName,
+        expansion_id: resolved.expansionId,
         updated_at: new Date().toISOString(),
       })
       .eq('id', dbCard.id);

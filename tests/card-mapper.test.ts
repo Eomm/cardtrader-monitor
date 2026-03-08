@@ -13,14 +13,14 @@ describe('mapBlueprintToCard', () => {
   };
 
   it('maps blueprint fields to monitored_card shape', () => {
-    const result = mapBlueprintToCard(blueprint, 'Alpha');
+    const result = mapBlueprintToCard(blueprint, 101);
     expect(result).toEqual({
       blueprint_id: 42,
       card_name: 'Lightning Bolt',
       game_id: 1,
       collector_number: '141',
       image_url: 'https://example.com/bolt.jpg',
-      expansion_name: 'Alpha',
+      expansion_id: 101,
     });
   });
 
@@ -33,9 +33,9 @@ describe('mapBlueprintToCard', () => {
       image_url: '',
       scryfall_id: '',
     };
-    const result = mapBlueprintToCard(minimal, 'Unknown Set');
+    const result = mapBlueprintToCard(minimal, 202);
     expect(result.blueprint_id).toBe(99);
     expect(result.card_name).toBe('Mystery Card');
-    expect(result.expansion_name).toBe('Unknown Set');
+    expect(result.expansion_id).toBe(202);
   });
 });
