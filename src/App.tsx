@@ -5,6 +5,7 @@ import { ProtectedRoute } from './components/ProtectedRoute';
 import { AuthProvider } from './contexts/AuthContext';
 import { CardDetailPage } from './pages/CardDetailPage';
 import { DashboardPage } from './pages/DashboardPage';
+import { HowItWorksPage } from './pages/HowItWorksPage';
 import { LoginPage } from './pages/LoginPage';
 import { SettingsPage } from './pages/SettingsPage';
 
@@ -24,6 +25,7 @@ function App() {
       <AuthProvider>
         <Routes>
           <Route path="/" element={<LoginPage />} />
+          <Route path="/how-it-works" element={<HowItWorksPage />} />
           <Route
             path="/dashboard"
             element={

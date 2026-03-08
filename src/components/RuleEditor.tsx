@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router';
 import type { NotificationRule, StabilityRule, ThresholdRule } from '../lib/cardtrader-types';
 import { createDefaultNotificationRule, createDefaultStabilityRule } from '../lib/cardtrader-utils';
 import { supabase } from '../lib/supabase';
@@ -78,9 +79,18 @@ export function RuleEditor({ cardId, rules, onSave }: RuleEditorProps) {
 
   return (
     <div>
-      <h3 className="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-400">
-        Notification Rules
-      </h3>
+      <div className="mb-3 flex items-center gap-2">
+        <h3 className="text-sm font-semibold uppercase tracking-wide text-slate-400">
+          Notification Rules
+        </h3>
+        <Link
+          to="/how-it-works#rules"
+          className="flex h-4 w-4 items-center justify-center rounded-full border border-slate-500 text-xs text-slate-400 transition-colors hover:border-blue-400 hover:text-blue-400"
+          aria-label="Learn how notification rules work"
+        >
+          ?
+        </Link>
+      </div>
 
       {/* Tabs */}
       <div className="mb-4 flex gap-1">

@@ -1,0 +1,112 @@
+import { Link } from 'react-router';
+import { Footer } from '../components/Footer';
+
+export function HowItWorksPage() {
+  return (
+    <div className="min-h-screen flex flex-col bg-slate-900 text-slate-100">
+      <div className="mx-auto w-full max-w-3xl px-4 py-8 sm:px-6 lg:px-8 flex-1">
+        <div className="mb-8 flex items-center justify-between">
+          <h1 className="text-2xl font-bold">How It Works</h1>
+          <Link
+            to="/"
+            className="rounded-md bg-slate-700 px-4 py-2 text-sm font-medium text-slate-100 transition-colors hover:bg-slate-600"
+          >
+            Go to Dashboard
+          </Link>
+        </div>
+
+        <div className="space-y-10">
+          {/* Section 1: Setup */}
+          <section id="setup">
+            <h2 className="mb-3 text-xl font-semibold text-slate-100">How to setup</h2>
+            <div className="space-y-3 text-sm leading-relaxed text-slate-400">
+              <p>
+                To get started, you need two things: a{' '}
+                <strong className="text-slate-100">CardTrader API token</strong> and a{' '}
+                <strong className="text-slate-100">Telegram chat ID</strong>.
+              </p>
+              <p>
+                Generate your CardTrader API token from your CardTrader account settings. Paste it
+                into the Settings page of this app. The token is encrypted and stored securely -- it
+                is only used to read your wishlists and check marketplace prices.
+              </p>
+              <p>
+                For Telegram notifications, start a chat with{' '}
+                <strong className="text-slate-100">@card_trader_monitor_bot</strong> on Telegram and
+                send{' '}
+                <code className="rounded bg-slate-800 px-1.5 py-0.5 text-slate-300">/start</code>.
+                The bot will reply with your chat ID. Enter that ID in the Settings page and click
+                "Save & Test" to verify the connection.
+              </p>
+            </div>
+          </section>
+
+          {/* Section 2: Price Detection */}
+          <section id="prices">
+            <h2 className="mb-3 text-xl font-semibold text-slate-100">How price detection works</h2>
+            <div className="space-y-3 text-sm leading-relaxed text-slate-400">
+              <p>
+                Prices are checked <strong className="text-slate-100">every hour</strong> via an
+                automated GitHub Actions workflow. For each monitored card, the system queries the
+                CardTrader marketplace for the cheapest matching offer.
+              </p>
+              <p>
+                "Matching" means the offer satisfies the card's language, condition, and foil
+                preferences. If the CT Zero filter is enabled, only offers from qualified sellers
+                (professional sellers with hub shipping) are considered.
+              </p>
+              <p>
+                Each card has a <strong className="text-slate-100">baseline price</strong> set at
+                import time. Price changes are always measured as a percentage relative to this
+                baseline. You can see both the current and baseline prices on each card's detail
+                page.
+              </p>
+            </div>
+          </section>
+
+          {/* Section 3: Notification Rules */}
+          <section id="rules">
+            <h2 className="mb-3 text-xl font-semibold text-slate-100">
+              How notification rules work
+            </h2>
+            <div className="space-y-3 text-sm leading-relaxed text-slate-400">
+              <p>
+                Each card can have <strong className="text-slate-100">threshold rules</strong> that
+                trigger when the price moves by a certain percentage from the baseline. You choose
+                the percentage and the direction (up, down, or both).
+              </p>
+              <p>
+                When a threshold is crossed, you get a Telegram notification with the card name, old
+                price, new price, and a direct link to the CardTrader listing.
+              </p>
+              <p>
+                To avoid spam, there is a{' '}
+                <strong className="text-slate-100">24-hour cooldown</strong> per card. After an
+                alert fires, the same card will not trigger another notification for 24 hours --
+                unless the price moves further beyond the threshold compared to the last notified
+                price. Only one alert per card per hourly run is sent.
+              </p>
+            </div>
+          </section>
+
+          {/* Section 4: Current Limits */}
+          <section id="limits">
+            <h2 className="mb-3 text-xl font-semibold text-slate-100">Current limits</h2>
+            <div className="space-y-3 text-sm leading-relaxed text-slate-400">
+              <p>
+                Each user can import a maximum of{' '}
+                <strong className="text-slate-100">2 wishlists</strong>. There is no limit on the
+                number of cards per wishlist.
+              </p>
+              <p>
+                This is an <strong className="text-slate-100">invite-only</strong> service -- it is
+                not open for public signup. If you have access, it means someone shared it with you.
+              </p>
+            </div>
+          </section>
+        </div>
+      </div>
+      <Footer />
+    </div>
+  );
+}

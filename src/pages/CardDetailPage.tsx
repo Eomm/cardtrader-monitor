@@ -10,6 +10,10 @@ export function CardDetailPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [card, setCard] = useState<MonitoredCardWithPrice | null>(null);
+  const [wishlistInfo, setWishlistInfo] = useState<{
+    name: string;
+    cardtrader_wishlist_id: number;
+  } | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [togglingZero, setTogglingZero] = useState(false);
@@ -53,6 +57,18 @@ export function CardDetailPage() {
       };
 
       setCard(merged);
+
+      // Fetch wishlist info for the link
+      if (cardData.wishlist_id) {
+        const { data: wData } = await supabase
+          .from('wishlists')
+          .select('name, cardtrader_wishlist_id')
+          .eq('id', cardData.wishlist_id)
+          .single();
+        if (wData) {
+          setWishlistInfo(wData);
+        }
+      }
     } catch {
       setError('Failed to load card. Please try again.');
     } finally {
@@ -257,6 +273,21 @@ export function CardDetailPage() {
             </h2>
             <div className="rounded-lg border border-slate-700 p-4">
               <dl className="grid grid-cols-2 gap-x-6 gap-y-3 text-sm sm:grid-cols-3">
+                {wishlistInfo && (
+                  <div>
+                    <dt className="text-slate-500">Wishlist</dt>
+                    <dd className="font-medium">
+                      <a
+                        href={`https://www.cardtrader.com/wishlists/${wishlistInfo.cardtrader_wishlist_id}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-500 underline decoration-blue-500/30 transition-colors hover:text-blue-400"
+                      >
+                        {wishlistInfo.name}
+                      </a>
+                    </dd>
+                  </div>
+                )}
                 <div>
                   <dt className="text-slate-500">Expansion</dt>
                   <dd className="font-medium">{card.ct_expansions?.name ?? '---'}</dd>
@@ -308,49 +339,54 @@ export function CardDetailPage() {
             />
           </section>
 
-          {/* Stop / Resume Monitoring */}
+          {/* Danger Zone */}
           <section>
-            {card.is_active ? (
-              <div>
-                {confirmStop ? (
-                  <div className="flex items-center gap-3">
-                    <span className="text-sm text-slate-400">Stop monitoring this card?</span>
+            <h2 className="mb-2 text-sm font-semibold uppercase tracking-wide text-slate-400">
+              Danger Zone
+            </h2>
+            <div className="rounded-lg border border-red-500/30 bg-red-500/5 p-4">
+              {card.is_active ? (
+                <div>
+                  {confirmStop ? (
+                    <div className="flex items-center gap-3">
+                      <span className="text-sm text-slate-400">Stop monitoring this card?</span>
+                      <button
+                        type="button"
+                        onClick={handleToggleActive}
+                        disabled={togglingActive}
+                        className="rounded-md bg-red-500 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-red-600 disabled:opacity-50"
+                      >
+                        {togglingActive ? 'Stopping...' : 'Confirm'}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setConfirmStop(false)}
+                        className="rounded-md bg-slate-700 px-4 py-2 text-sm font-medium text-slate-400 transition-colors hover:bg-slate-600"
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  ) : (
                     <button
                       type="button"
-                      onClick={handleToggleActive}
-                      disabled={togglingActive}
-                      className="rounded-md bg-red-500 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-red-600 disabled:opacity-50"
+                      onClick={() => setConfirmStop(true)}
+                      className="rounded-md border border-red-500/30 px-4 py-2 text-sm font-medium text-red-500 transition-colors hover:bg-red-500/10"
                     >
-                      {togglingActive ? 'Stopping...' : 'Confirm'}
+                      Stop Monitoring
                     </button>
-                    <button
-                      type="button"
-                      onClick={() => setConfirmStop(false)}
-                      className="rounded-md bg-slate-700 px-4 py-2 text-sm font-medium text-slate-400 transition-colors hover:bg-slate-600"
-                    >
-                      Cancel
-                    </button>
-                  </div>
-                ) : (
-                  <button
-                    type="button"
-                    onClick={() => setConfirmStop(true)}
-                    className="rounded-md border border-red-500/30 px-4 py-2 text-sm font-medium text-red-500 transition-colors hover:bg-red-500/5"
-                  >
-                    Stop Monitoring
-                  </button>
-                )}
-              </div>
-            ) : (
-              <button
-                type="button"
-                onClick={handleToggleActive}
-                disabled={togglingActive}
-                className="rounded-md bg-blue-500 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-600 disabled:opacity-50"
-              >
-                {togglingActive ? 'Resuming...' : 'Resume Monitoring'}
-              </button>
-            )}
+                  )}
+                </div>
+              ) : (
+                <button
+                  type="button"
+                  onClick={handleToggleActive}
+                  disabled={togglingActive}
+                  className="rounded-md bg-blue-500 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-600 disabled:opacity-50"
+                >
+                  {togglingActive ? 'Resuming...' : 'Resume Monitoring'}
+                </button>
+              )}
+            </div>
           </section>
         </div>
       </div>
