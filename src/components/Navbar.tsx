@@ -35,7 +35,10 @@ export function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-14">
           {/* Logo */}
-          <Link to="/dashboard" className="flex items-center gap-2 text-slate-100 font-bold text-lg">
+          <Link
+            to="/dashboard"
+            className="flex items-center gap-2 text-slate-100 font-bold text-lg"
+          >
             <span className="hidden sm:inline">CardTrader Monitor</span>
             <span className="sm:hidden">CTM</span>
           </Link>
@@ -65,9 +68,7 @@ export function Navbar() {
               {dropdownOpen && (
                 <div className="absolute right-0 mt-2 w-56 bg-slate-800 rounded-lg shadow-xl border border-slate-700 py-1 z-50">
                   <div className="px-4 py-2 border-b border-slate-700">
-                    <p className="text-sm font-medium text-slate-100 truncate">
-                      {user?.email}
-                    </p>
+                    <p className="text-sm font-medium text-slate-100 truncate">{user?.email}</p>
                   </div>
                   <button
                     type="button"

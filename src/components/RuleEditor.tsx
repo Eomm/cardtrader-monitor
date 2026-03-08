@@ -112,17 +112,12 @@ export function RuleEditor({ cardId, rules, onSave }: RuleEditorProps) {
       {activeTab === 'threshold' && (
         <div className="space-y-3">
           {thresholdRules.length === 0 ? (
-            <p className="py-4 text-center text-sm text-slate-500">
-              No threshold rules
-            </p>
+            <p className="py-4 text-center text-sm text-slate-500">No threshold rules</p>
           ) : (
             thresholdRules.map((rule) => {
               const idx = getGlobalIndex(rule);
               return (
-                <div
-                  key={idx}
-                  className="rounded-lg border border-slate-700 p-3"
-                >
+                <div key={idx} className="rounded-lg border border-slate-700 p-3">
                   <div className="flex flex-wrap items-center gap-3">
                     {/* Percentage */}
                     <label className="flex items-center gap-1.5 text-sm">
@@ -203,17 +198,12 @@ export function RuleEditor({ cardId, rules, onSave }: RuleEditorProps) {
       {activeTab === 'stability' && (
         <div className="space-y-3">
           {stabilityRules.length === 0 ? (
-            <p className="py-4 text-center text-sm text-slate-500">
-              No stability rules
-            </p>
+            <p className="py-4 text-center text-sm text-slate-500">No stability rules</p>
           ) : (
             stabilityRules.map((rule) => {
               const idx = getGlobalIndex(rule);
               return (
-                <div
-                  key={idx}
-                  className="rounded-lg border border-slate-700 p-3"
-                >
+                <div key={idx} className="rounded-lg border border-slate-700 p-3">
                   <div className="flex flex-wrap items-center gap-3">
                     {/* Range % */}
                     <label className="flex items-center gap-1.5 text-sm">

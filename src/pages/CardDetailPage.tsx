@@ -314,9 +314,7 @@ export function CardDetailPage() {
               <div>
                 {confirmStop ? (
                   <div className="flex items-center gap-3">
-                    <span className="text-sm text-slate-400">
-                      Stop monitoring this card?
-                    </span>
+                    <span className="text-sm text-slate-400">Stop monitoring this card?</span>
                     <button
                       type="button"
                       onClick={handleToggleActive}

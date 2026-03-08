@@ -58,9 +58,7 @@ export function CardRow({ card }: CardRowProps) {
         <p className="truncate font-medium text-slate-100">
           {card.card_name} <span className="text-sm">{languageToFlag(card.language_required)}</span>
         </p>
-        <p className="truncate text-sm text-slate-400">
-          {card.ct_expansions?.name ?? '---'}
-        </p>
+        <p className="truncate text-sm text-slate-400">{card.ct_expansions?.name ?? '---'}</p>
       </div>
 
       {/* Price + change */}

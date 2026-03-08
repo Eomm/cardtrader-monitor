@@ -192,9 +192,7 @@ export function SettingsPage() {
         {/* CardTrader API Token Section */}
         <div className="bg-slate-800 rounded-xl border border-slate-700 shadow-sm">
           <div className="p-6">
-            <h2 className="text-lg font-semibold text-slate-100 mb-2">
-              CardTrader API Token
-            </h2>
+            <h2 className="text-lg font-semibold text-slate-100 mb-2">CardTrader API Token</h2>
             <p className="text-sm text-slate-400 mb-6">
               Your API token is required to fetch wishlist data and monitor card prices. You can
               find it in your{' '}
@@ -214,33 +212,24 @@ export function SettingsPage() {
               {checking ? (
                 <div className="flex items-center gap-2">
                   <div className="h-3 w-3 animate-spin rounded-full border-2 border-blue-500 border-t-red-500" />
-                  <span className="text-sm text-slate-500">
-                    Checking token status...
-                  </span>
+                  <span className="text-sm text-slate-500">Checking token status...</span>
                 </div>
               ) : hasToken ? (
                 <>
                   <span className="inline-block h-3 w-3 rounded-full bg-green-500" />
-                  <span className="text-sm font-medium text-slate-100">
-                    Token saved
-                  </span>
+                  <span className="text-sm font-medium text-slate-100">Token saved</span>
                 </>
               ) : (
                 <>
                   <span className="inline-block h-3 w-3 rounded-full bg-gray-400" />
-                  <span className="text-sm text-slate-400">
-                    No token configured
-                  </span>
+                  <span className="text-sm text-slate-400">No token configured</span>
                 </>
               )}
             </div>
 
             {/* Save/Update Token Form */}
             <div className="space-y-3">
-              <label
-                htmlFor="api-token"
-                className="block text-sm font-medium text-slate-100"
-              >
+              <label htmlFor="api-token" className="block text-sm font-medium text-slate-100">
                 {hasToken ? 'Update token' : 'Add token'}
               </label>
               <div className="relative">
@@ -275,9 +264,7 @@ export function SettingsPage() {
               <div className="mt-6 pt-6 border-t border-slate-700">
                 {confirmRemove ? (
                   <div className="flex items-center gap-3">
-                    <span className="text-sm text-slate-400">
-                      Are you sure?
-                    </span>
+                    <span className="text-sm text-slate-400">Are you sure?</span>
                     <button
                       type="button"
                       onClick={handleRemoveToken}
@@ -324,14 +311,10 @@ export function SettingsPage() {
         {/* Telegram Notifications Section */}
         <div className="mt-6 bg-slate-800 rounded-xl border border-slate-700 shadow-sm">
           <div className="p-6">
-            <h2 className="text-lg font-semibold text-slate-100 mb-2">
-              Telegram Notifications
-            </h2>
+            <h2 className="text-lg font-semibold text-slate-100 mb-2">Telegram Notifications</h2>
             <p className="text-sm text-slate-400 mb-6">
               Receive price alerts via Telegram. Send{' '}
-              <span className="font-mono text-xs bg-slate-700 px-1.5 py-0.5 rounded">
-                /start
-              </span>{' '}
+              <span className="font-mono text-xs bg-slate-700 px-1.5 py-0.5 rounded">/start</span>{' '}
               to{' '}
               <a
                 href="https://t.me/card_trader_monitor_bot"
@@ -349,23 +332,17 @@ export function SettingsPage() {
               {telegramLoading ? (
                 <div className="flex items-center gap-2">
                   <div className="h-3 w-3 animate-spin rounded-full border-2 border-blue-500 border-t-red-500" />
-                  <span className="text-sm text-slate-500">
-                    Checking connection...
-                  </span>
+                  <span className="text-sm text-slate-500">Checking connection...</span>
                 </div>
               ) : isConnected ? (
                 <>
                   <span className="inline-block h-3 w-3 rounded-full bg-green-500" />
-                  <span className="text-sm font-medium text-slate-100">
-                    Connected
-                  </span>
+                  <span className="text-sm font-medium text-slate-100">Connected</span>
                 </>
               ) : (
                 <>
                   <span className="inline-block h-3 w-3 rounded-full bg-gray-400" />
-                  <span className="text-sm text-slate-400">
-                    Not connected
-                  </span>
+                  <span className="text-sm text-slate-400">Not connected</span>
                 </>
               )}
             </div>
@@ -402,9 +379,7 @@ export function SettingsPage() {
               <div className="mt-6 pt-6 border-t border-slate-700">
                 {confirmTelegramRemove ? (
                   <div className="flex items-center gap-3">
-                    <span className="text-sm text-slate-400">
-                      Are you sure?
-                    </span>
+                    <span className="text-sm text-slate-400">Are you sure?</span>
                     <button
                       type="button"
                       onClick={handleDisconnectTelegram}

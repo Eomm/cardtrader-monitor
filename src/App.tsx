@@ -1,4 +1,5 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router';
+import { Footer } from './components/Footer';
 import { Navbar } from './components/Navbar';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { AuthProvider } from './contexts/AuthContext';
@@ -11,7 +12,8 @@ function AuthenticatedLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen flex flex-col bg-slate-900 text-slate-100">
       <Navbar />
-      {children}
+      <div className="flex-1">{children}</div>
+      <Footer />
     </div>
   );
 }

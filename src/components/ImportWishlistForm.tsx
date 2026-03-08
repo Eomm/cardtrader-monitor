@@ -62,9 +62,7 @@ export function ImportWishlistForm({ onImportComplete, compact = false }: Import
   if (compact) {
     return (
       <div className="w-full">
-        {successMessage && (
-          <p className="mb-2 text-sm text-green-400">{successMessage}</p>
-        )}
+        {successMessage && <p className="mb-2 text-sm text-green-400">{successMessage}</p>}
         {error && <p className="mb-2 text-sm text-red-500">{error}</p>}
         <div className="flex gap-2">
           <input
@@ -110,17 +108,13 @@ export function ImportWishlistForm({ onImportComplete, compact = false }: Import
           </svg>
         </div>
 
-        <h2 className="mb-2 text-2xl font-bold text-slate-100">
-          No cards being monitored yet
-        </h2>
+        <h2 className="mb-2 text-2xl font-bold text-slate-100">No cards being monitored yet</h2>
         <p className="mb-6 text-slate-400">
           Paste your CardTrader wishlist URL below to import cards and start tracking prices.
         </p>
 
         {successMessage && (
-          <p className="mb-4 text-sm font-medium text-green-400">
-            {successMessage}
-          </p>
+          <p className="mb-4 text-sm font-medium text-green-400">{successMessage}</p>
         )}
         {error && <p className="mb-4 text-sm text-red-500">{error}</p>}
 
