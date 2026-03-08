@@ -1,14 +1,19 @@
 import { useCallback, useEffect, useState } from 'react';
+import { Link } from 'react-router';
 import { CardList } from '../components/CardList';
 import { ImportWishlistForm } from '../components/ImportWishlistForm';
+import { useAuth } from '../contexts/AuthContext';
 import type { MonitoredCardWithPrice } from '../lib/cardtrader-types';
 import { sortCards } from '../lib/cardtrader-utils';
 import { supabase } from '../lib/supabase';
 
 export function DashboardPage() {
+  const { user } = useAuth();
   const [cards, setCards] = useState<MonitoredCardWithPrice[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [hasToken, setHasToken] = useState<boolean | null>(null);
+  const [hasTelegram, setHasTelegram] = useState<boolean | null>(null);
 
   const fetchCards = useCallback(async () => {
     setError(null);
@@ -68,9 +73,21 @@ export function DashboardPage() {
     }
   }, []);
 
+  const checkSettings = useCallback(async () => {
+    const [tokenResult, profileResult] = await Promise.all([
+      supabase.rpc('has_api_token'),
+      user
+        ? supabase.from('profiles').select('telegram_chat_id').eq('id', user.id).single()
+        : Promise.resolve({ data: null, error: null }),
+    ]);
+    setHasToken(tokenResult.data ?? false);
+    setHasTelegram(!!profileResult.data?.telegram_chat_id);
+  }, [user]);
+
   useEffect(() => {
     fetchCards();
-  }, [fetchCards]);
+    checkSettings();
+  }, [fetchCards, checkSettings]);
 
   const handleImportComplete = () => {
     fetchCards();
@@ -123,8 +140,68 @@ export function DashboardPage() {
     );
   }
 
-  // Empty state: show full import form
+  const settingsComplete = hasToken === true && hasTelegram === true;
+
+  // Empty state: show full import form or setup prompt
   if (cards.length === 0) {
+    if (!settingsComplete && hasToken !== null) {
+      return (
+        <div className="flex flex-1 flex-col items-center justify-center px-4 py-16">
+          <div className="w-full max-w-md text-center">
+            <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-slate-700">
+              <svg
+                aria-hidden="true"
+                className="h-10 w-10 text-yellow-500"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={1.5}
+                  d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
+                />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={1.5}
+                  d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                />
+              </svg>
+            </div>
+
+            <h2 className="mb-2 text-2xl font-bold text-slate-100">Complete your setup</h2>
+            <p className="mb-6 text-slate-400">
+              Before importing wishlists, configure the missing settings:
+            </p>
+
+            <div className="mb-6 space-y-3 text-left">
+              <div className="flex items-center gap-3 rounded-md border border-slate-700 bg-slate-800 px-4 py-3">
+                <span className={hasToken ? 'text-green-400' : 'text-red-500'}>
+                  {hasToken ? '✓' : '✗'}
+                </span>
+                <span className="text-sm text-slate-300">CardTrader API token</span>
+              </div>
+              <div className="flex items-center gap-3 rounded-md border border-slate-700 bg-slate-800 px-4 py-3">
+                <span className={hasTelegram ? 'text-green-400' : 'text-red-500'}>
+                  {hasTelegram ? '✓' : '✗'}
+                </span>
+                <span className="text-sm text-slate-300">Telegram bot chat ID</span>
+              </div>
+            </div>
+
+            <Link
+              to="/settings"
+              className="inline-flex items-center justify-center rounded-md bg-blue-500 px-6 py-3 font-medium text-white transition-colors hover:bg-blue-600"
+            >
+              Go to Settings
+            </Link>
+          </div>
+        </div>
+      );
+    }
+
     return <ImportWishlistForm onImportComplete={handleImportComplete} />;
   }
 

@@ -51,6 +51,9 @@ export function Navbar() {
             <Link to="/settings" className={navLinkClass('/settings')}>
               Settings
             </Link>
+            <Link to="/how-it-works" className={navLinkClass('/how-it-works')}>
+              How it works
+            </Link>
           </div>
 
           {/* Right side: avatar dropdown + mobile menu */}
@@ -133,6 +136,13 @@ export function Navbar() {
               className={`block ${navLinkClass('/settings')}`}
             >
               Settings
+            </Link>
+            <Link
+              to="/how-it-works"
+              onClick={() => setMobileMenuOpen(false)}
+              className={`block ${navLinkClass('/how-it-works')}`}
+            >
+              How it works
             </Link>
           </div>
         )}

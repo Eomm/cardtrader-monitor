@@ -1,18 +1,25 @@
 import { Link } from 'react-router';
 import { Footer } from '../components/Footer';
+import { Navbar } from '../components/Navbar';
+import { useAuth } from '../contexts/AuthContext';
 
 export function HowItWorksPage() {
+  const { user } = useAuth();
+
   return (
     <div className="min-h-screen flex flex-col bg-slate-900 text-slate-100">
+      {user && <Navbar />}
       <div className="mx-auto w-full max-w-3xl px-4 py-8 sm:px-6 lg:px-8 flex-1">
         <div className="mb-8 flex items-center justify-between">
           <h1 className="text-2xl font-bold">How It Works</h1>
-          <Link
-            to="/"
-            className="rounded-md bg-slate-700 px-4 py-2 text-sm font-medium text-slate-100 transition-colors hover:bg-slate-600"
-          >
-            Go to Dashboard
-          </Link>
+          {!user && (
+            <Link
+              to="/"
+              className="rounded-md bg-slate-700 px-4 py-2 text-sm font-medium text-slate-100 transition-colors hover:bg-slate-600"
+            >
+              Go to Login
+            </Link>
+          )}
         </div>
 
         <div className="space-y-10">
@@ -26,13 +33,30 @@ export function HowItWorksPage() {
                 <strong className="text-slate-100">Telegram chat ID</strong>.
               </p>
               <p>
-                Generate your CardTrader API token from your CardTrader account settings. Paste it
+                Generate your API token from your{' '}
+                <a
+                  href="https://www.cardtrader.com/full-api"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-500 hover:text-blue-400 underline"
+                >
+                  CardTrader API settings
+                </a>
+                . Paste it
                 into the Settings page of this app. The token is encrypted and stored securely -- it
                 is only used to read your wishlists and check marketplace prices.
               </p>
               <p>
                 For Telegram notifications, start a chat with{' '}
-                <strong className="text-slate-100">@card_trader_monitor_bot</strong> on Telegram and
+                <a
+                  href="https://t.me/card_trader_monitor_bot"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-500 hover:text-blue-400 underline"
+                >
+                  @card_trader_monitor_bot
+                </a>{' '}
+                on Telegram and
                 send{' '}
                 <code className="rounded bg-slate-800 px-1.5 py-0.5 text-slate-300">/start</code>.
                 The bot will reply with your chat ID. Enter that ID in the Settings page and click
