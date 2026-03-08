@@ -107,6 +107,30 @@ Deno.serve(async (req) => {
     }
 
     // -----------------------------------------------------------------------
+    // 3b. Check wishlist count limit (max 2 per user)
+    // -----------------------------------------------------------------------
+    const { count, error: countError } = await supabaseAdmin
+      .from('wishlists')
+      .select('*', { count: 'exact', head: true })
+      .eq('user_id', user.id);
+
+    if (countError) {
+      return new Response(JSON.stringify({ error: 'Failed to check wishlist count' }), {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
+    if (count !== null && count >= 2) {
+      return new Response(
+        JSON.stringify({
+          error: 'Maximum 2 wishlists allowed. Remove an existing wishlist to import a new one.',
+        }),
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } },
+      );
+    }
+
+    // -----------------------------------------------------------------------
     // 4. Get CardTrader API token
     // -----------------------------------------------------------------------
     const { data: apiToken, error: tokenError } = await supabaseAdmin.rpc('get_api_token', {
