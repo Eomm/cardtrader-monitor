@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: completed
-stopped_at: Phase 6 context gathered
-last_updated: "2026-03-08T17:52:23.009Z"
-last_activity: "2026-03-07 - Completed quick task 1: Fix Telegram MarkdownV2 escaping for > character"
+status: in_progress
+stopped_at: Completed 06-01-PLAN.md
+last_updated: "2026-03-08T18:13:10.000Z"
+last_activity: "2026-03-08 - Completed 06-01: Fix Biome lint errors and rename expansion_name to expansion_id"
 progress:
   total_phases: 6
   completed_phases: 5
-  total_plans: 14
-  completed_plans: 14
-  percent: 100
+  total_plans: 18
+  completed_plans: 15
+  percent: 83
 ---
 
 # Project State
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-07)
 
 **Core value:** Users get notified about meaningful price movements on cards they care about -- so they can act on deals without constantly checking CardTrader.
-**Current focus:** Phase 3: Dashboard (Phase 2 complete)
+**Current focus:** Phase 6: Chores and Fixes (Phase 5 complete)
 
 ## Current Position
 
-Phase: 5 of 5 (Automation)
-Plan: 2 of 2 in current phase (05-02 complete)
-Status: All phases complete
-Last activity: 2026-03-07 - Completed quick task 1: Fix Telegram MarkdownV2 escaping for > character
+Phase: 6 of 6 (Chores and Fixes)
+Plan: 1 of 4 in current phase (06-01 complete)
+Status: In progress
+Last activity: 2026-03-08 - Completed 06-01: Fix Biome lint errors and rename expansion_name to expansion_id
 
-Progress: [██████████] 100%
+Progress: [████████░░] 83%
 
 ## Performance Metrics
 
@@ -59,6 +59,7 @@ Progress: [██████████] 100%
 | Phase 04-notifications P03 | 3 min | 2 tasks | 2 files |
 | Phase 05-automation P01 | 1 | 2 tasks | 4 files |
 | Phase 05-automation P02 | 2 min | 2 tasks | 2 files |
+| Phase 06-chores-and-fixes P01 | 4 min | 2 tasks | 23 files |
 
 ## Accumulated Context
 
@@ -109,6 +110,9 @@ Recent decisions affecting current work:
 - [Phase 05-02]: Hard-delete removed cards (CASCADE cleans up snapshots/notifications)
 - [Phase 05-02]: Blueprint cache checked before API calls to reduce rate limit usage
 - [Phase 05-02]: Metadata updates never touch user settings (rules, baseline, filters)
+- [06-01]: Used filter+type guard instead of non-null assertion for sync-wishlists Map.get()
+- [06-01]: Added ct_expansions optional join type to MonitoredCardWithPrice for Supabase FK join pattern
+- [06-01]: Display expansion via ct_expansions?.name with '---' fallback for null
 
 ### Pending Todos
 
@@ -131,6 +135,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-08T17:52:23.003Z
-Stopped at: Phase 6 context gathered
-Resume file: .planning/phases/06-chores-and-fixes/06-CONTEXT.md
+Last session: 2026-03-08T18:13:10.000Z
+Stopped at: Completed 06-01-PLAN.md
+Resume file: .planning/phases/06-chores-and-fixes/06-02-PLAN.md
