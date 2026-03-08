@@ -42,9 +42,8 @@ export function HowItWorksPage() {
                 >
                   CardTrader API settings
                 </a>
-                . Paste it
-                into the Settings page of this app. The token is encrypted and stored securely -- it
-                is only used to read your wishlists and check marketplace prices.
+                . Paste it into the Settings page of this app. The token is encrypted and stored
+                securely -- it is only used to read your wishlists and check marketplace prices.
               </p>
               <p>
                 For Telegram notifications, start a chat with{' '}
@@ -56,8 +55,7 @@ export function HowItWorksPage() {
                 >
                   @card_trader_monitor_bot
                 </a>{' '}
-                on Telegram and
-                send{' '}
+                on Telegram and send{' '}
                 <code className="rounded bg-slate-800 px-1.5 py-0.5 text-slate-300">/start</code>.
                 The bot will reply with your chat ID. Enter that ID in the Settings page and click
                 "Save & Test" to verify the connection.
