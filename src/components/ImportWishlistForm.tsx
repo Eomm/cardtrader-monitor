@@ -63,9 +63,9 @@ export function ImportWishlistForm({ onImportComplete, compact = false }: Import
     return (
       <div className="w-full">
         {successMessage && (
-          <p className="mb-2 text-sm text-green-600 dark:text-green-400">{successMessage}</p>
+          <p className="mb-2 text-sm text-green-400">{successMessage}</p>
         )}
-        {error && <p className="mb-2 text-sm text-flag-red">{error}</p>}
+        {error && <p className="mb-2 text-sm text-red-500">{error}</p>}
         <div className="flex gap-2">
           <input
             type="url"
@@ -73,13 +73,13 @@ export function ImportWishlistForm({ onImportComplete, compact = false }: Import
             onChange={(e) => setWishlistUrl(e.target.value)}
             placeholder="https://www.cardtrader.com/wishlists/12345"
             disabled={isImporting}
-            className="flex-1 rounded-md border border-steel/40 bg-white px-3 py-2 text-sm text-deep-space placeholder-steel/60 focus:border-steel focus:outline-none focus:ring-1 focus:ring-steel dark:border-steel/30 dark:bg-deep-space/80 dark:text-papaya dark:placeholder-steel/40"
+            className="flex-1 rounded-md border border-slate-700 bg-slate-800 px-3 py-2 text-sm text-slate-100 placeholder-slate-500 focus:border-slate-600 focus:outline-none focus:ring-1 focus:ring-blue-500"
           />
           <button
             type="button"
             onClick={handleImport}
             disabled={isImporting}
-            className="inline-flex items-center gap-2 rounded-md bg-steel px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-steel/80 disabled:cursor-not-allowed disabled:opacity-50"
+            className="inline-flex items-center gap-2 rounded-md bg-blue-500 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-600 disabled:cursor-not-allowed disabled:opacity-50"
           >
             {isImporting && <Spinner />}
             {isImporting ? 'Importing...' : 'Import'}
@@ -93,10 +93,10 @@ export function ImportWishlistForm({ onImportComplete, compact = false }: Import
     <div className="flex flex-1 flex-col items-center justify-center px-4 py-16">
       <div className="w-full max-w-md text-center">
         {/* Empty state icon */}
-        <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-steel/20">
+        <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-slate-700">
           <svg
             aria-hidden="true"
-            className="h-10 w-10 text-steel"
+            className="h-10 w-10 text-blue-500"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -110,19 +110,19 @@ export function ImportWishlistForm({ onImportComplete, compact = false }: Import
           </svg>
         </div>
 
-        <h2 className="mb-2 text-2xl font-bold text-deep-space dark:text-papaya">
+        <h2 className="mb-2 text-2xl font-bold text-slate-100">
           No cards being monitored yet
         </h2>
-        <p className="mb-6 text-deep-space/60 dark:text-papaya/60">
+        <p className="mb-6 text-slate-400">
           Paste your CardTrader wishlist URL below to import cards and start tracking prices.
         </p>
 
         {successMessage && (
-          <p className="mb-4 text-sm font-medium text-green-600 dark:text-green-400">
+          <p className="mb-4 text-sm font-medium text-green-400">
             {successMessage}
           </p>
         )}
-        {error && <p className="mb-4 text-sm text-flag-red">{error}</p>}
+        {error && <p className="mb-4 text-sm text-red-500">{error}</p>}
 
         <div className="flex flex-col gap-3">
           <input
@@ -131,13 +131,13 @@ export function ImportWishlistForm({ onImportComplete, compact = false }: Import
             onChange={(e) => setWishlistUrl(e.target.value)}
             placeholder="https://www.cardtrader.com/wishlists/12345"
             disabled={isImporting}
-            className="w-full rounded-md border border-steel/40 bg-white px-4 py-3 text-deep-space placeholder-steel/60 focus:border-steel focus:outline-none focus:ring-1 focus:ring-steel dark:border-steel/30 dark:bg-deep-space/80 dark:text-papaya dark:placeholder-steel/40"
+            className="w-full rounded-md border border-slate-700 bg-slate-800 px-4 py-3 text-slate-100 placeholder-slate-500 focus:border-slate-600 focus:outline-none focus:ring-1 focus:ring-blue-500"
           />
           <button
             type="button"
             onClick={handleImport}
             disabled={isImporting}
-            className="inline-flex items-center justify-center gap-2 rounded-md bg-steel px-4 py-3 font-medium text-white transition-colors hover:bg-steel/80 disabled:cursor-not-allowed disabled:opacity-50"
+            className="inline-flex items-center justify-center gap-2 rounded-md bg-blue-500 px-4 py-3 font-medium text-white transition-colors hover:bg-blue-600 disabled:cursor-not-allowed disabled:opacity-50"
           >
             {isImporting && <Spinner />}
             {isImporting ? 'Importing wishlist...' : 'Import Wishlist'}

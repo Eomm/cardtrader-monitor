@@ -10,8 +10,8 @@ export function LoginPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-papaya dark:bg-deep-space">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-steel border-t-flag-red" />
+      <div className="min-h-screen flex items-center justify-center bg-slate-900">
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-blue-500 border-t-red-500" />
       </div>
     );
   }
@@ -34,21 +34,21 @@ export function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-papaya dark:bg-deep-space px-4">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-slate-900 px-4">
       <div className="w-full max-w-md">
         {/* Hero */}
         <div className="text-center mb-10">
-          <h1 className="text-4xl font-bold text-deep-space dark:text-papaya mb-3">
+          <h1 className="text-4xl font-bold text-slate-100 mb-3">
             CardTrader Monitor
           </h1>
-          <p className="text-lg text-deep-space/70 dark:text-papaya/70">
+          <p className="text-lg text-slate-400">
             Track prices and never miss a deal on the cards you care about.
           </p>
         </div>
 
         {/* Sign-in card */}
-        <div className="bg-white dark:bg-deep-space/50 rounded-xl shadow-lg border border-steel/20 p-8">
-          <h2 className="text-xl font-semibold text-deep-space dark:text-papaya mb-6 text-center">
+        <div className="bg-slate-800 rounded-xl shadow-lg border border-slate-700 p-8">
+          <h2 className="text-xl font-semibold text-slate-100 mb-6 text-center">
             Get started
           </h2>
 
@@ -56,7 +56,7 @@ export function LoginPage() {
             type="button"
             onClick={handleGoogleSignIn}
             disabled={signingIn}
-            className="w-full flex items-center justify-center gap-3 px-4 py-3 bg-flag-red hover:bg-flag-red/90 disabled:opacity-50 disabled:cursor-not-allowed text-white font-medium rounded-lg transition-colors"
+            className="w-full flex items-center justify-center gap-3 px-4 py-3 bg-red-500 hover:bg-red-600 disabled:opacity-50 disabled:cursor-not-allowed text-white font-medium rounded-lg transition-colors"
           >
             <svg aria-hidden="true" className="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
               <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" />
@@ -68,10 +68,10 @@ export function LoginPage() {
           </button>
 
           {error && (
-            <p className="mt-4 text-sm text-molten dark:text-flag-red text-center">{error}</p>
+            <p className="mt-4 text-sm text-red-500 text-center">{error}</p>
           )}
 
-          <p className="mt-6 text-xs text-deep-space/50 dark:text-papaya/40 text-center">
+          <p className="mt-6 text-xs text-slate-500 text-center">
             Sign in to import your CardTrader wishlists and set up price alerts.
           </p>
         </div>

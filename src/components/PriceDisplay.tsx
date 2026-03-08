@@ -10,15 +10,15 @@ export function PriceChange({
   current: number | null;
 }) {
   if (current === null) {
-    return <span className="text-sm text-steel">No offers</span>;
+    return <span className="text-sm text-blue-500">No offers</span>;
   }
 
   if (baseline === null || baseline === 0) {
-    return <span className="text-sm text-steel">No baseline</span>;
+    return <span className="text-sm text-blue-500">No baseline</span>;
   }
 
   if (current === baseline) {
-    return <span className="text-sm text-steel">Baseline</span>;
+    return <span className="text-sm text-blue-500">Baseline</span>;
   }
 
   const pct = ((current - baseline) / baseline) * 100;
@@ -26,7 +26,7 @@ export function PriceChange({
 
   return (
     <span
-      className={`inline-flex items-center gap-1 text-sm font-medium ${isDown ? 'text-green-600 dark:text-green-400' : 'text-flag-red'}`}
+      className={`inline-flex items-center gap-1 text-sm font-medium ${isDown ? 'text-green-400' : 'text-red-500'}`}
     >
       <svg aria-hidden="true" className="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor">
         {isDown ? (

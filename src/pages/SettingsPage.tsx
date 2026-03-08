@@ -187,22 +187,22 @@ export function SettingsPage() {
   return (
     <div className="flex-1 px-4 py-8">
       <div className="max-w-2xl mx-auto">
-        <h1 className="text-2xl font-bold text-deep-space dark:text-papaya mb-8">Settings</h1>
+        <h1 className="text-2xl font-bold text-slate-100 mb-8">Settings</h1>
 
         {/* CardTrader API Token Section */}
-        <div className="bg-white dark:bg-deep-space/50 rounded-xl border border-steel/20 shadow-sm">
+        <div className="bg-slate-800 rounded-xl border border-slate-700 shadow-sm">
           <div className="p-6">
-            <h2 className="text-lg font-semibold text-deep-space dark:text-papaya mb-2">
+            <h2 className="text-lg font-semibold text-slate-100 mb-2">
               CardTrader API Token
             </h2>
-            <p className="text-sm text-deep-space/60 dark:text-papaya/60 mb-6">
+            <p className="text-sm text-slate-400 mb-6">
               Your API token is required to fetch wishlist data and monitor card prices. You can
               find it in your{' '}
               <a
                 href="https://www.cardtrader.com/it/docs/api/full/reference"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-steel underline hover:text-steel/80"
+                className="text-blue-500 underline hover:text-blue-400"
               >
                 CardTrader account settings
               </a>
@@ -213,22 +213,22 @@ export function SettingsPage() {
             <div className="flex items-center gap-2 mb-6">
               {checking ? (
                 <div className="flex items-center gap-2">
-                  <div className="h-3 w-3 animate-spin rounded-full border-2 border-steel border-t-flag-red" />
-                  <span className="text-sm text-deep-space/50 dark:text-papaya/50">
+                  <div className="h-3 w-3 animate-spin rounded-full border-2 border-blue-500 border-t-red-500" />
+                  <span className="text-sm text-slate-500">
                     Checking token status...
                   </span>
                 </div>
               ) : hasToken ? (
                 <>
                   <span className="inline-block h-3 w-3 rounded-full bg-green-500" />
-                  <span className="text-sm font-medium text-deep-space dark:text-papaya">
+                  <span className="text-sm font-medium text-slate-100">
                     Token saved
                   </span>
                 </>
               ) : (
                 <>
                   <span className="inline-block h-3 w-3 rounded-full bg-gray-400" />
-                  <span className="text-sm text-deep-space/60 dark:text-papaya/60">
+                  <span className="text-sm text-slate-400">
                     No token configured
                   </span>
                 </>
@@ -239,7 +239,7 @@ export function SettingsPage() {
             <div className="space-y-3">
               <label
                 htmlFor="api-token"
-                className="block text-sm font-medium text-deep-space dark:text-papaya"
+                className="block text-sm font-medium text-slate-100"
               >
                 {hasToken ? 'Update token' : 'Add token'}
               </label>
@@ -250,12 +250,12 @@ export function SettingsPage() {
                   value={tokenInput}
                   onChange={(e) => setTokenInput(e.target.value)}
                   placeholder="Paste your CardTrader API token"
-                  className="w-full px-4 py-2.5 pr-20 rounded-lg border border-steel/30 bg-white dark:bg-deep-space text-deep-space dark:text-papaya placeholder:text-deep-space/40 dark:placeholder:text-papaya/40 focus:outline-none focus:ring-2 focus:ring-steel/50"
+                  className="w-full px-4 py-2.5 pr-20 rounded-lg border border-slate-700 bg-slate-900 text-slate-100 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
                 <button
                   type="button"
                   onClick={() => setShowToken(!showToken)}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 px-2 py-1 text-xs text-steel hover:text-steel/80 transition-colors"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 px-2 py-1 text-xs text-blue-500 hover:text-blue-400 transition-colors"
                 >
                   {showToken ? 'Hide' : 'Show'}
                 </button>
@@ -264,7 +264,7 @@ export function SettingsPage() {
                 type="button"
                 onClick={handleSaveToken}
                 disabled={saving || !tokenInput.trim()}
-                className="px-5 py-2.5 bg-flag-red hover:bg-flag-red/90 disabled:opacity-50 disabled:cursor-not-allowed text-white font-medium rounded-lg transition-colors text-sm"
+                className="px-5 py-2.5 bg-red-500 hover:bg-red-600 disabled:opacity-50 disabled:cursor-not-allowed text-white font-medium rounded-lg transition-colors text-sm"
               >
                 {saving ? 'Saving...' : 'Save Token'}
               </button>
@@ -272,24 +272,24 @@ export function SettingsPage() {
 
             {/* Remove Token */}
             {hasToken && (
-              <div className="mt-6 pt-6 border-t border-steel/20">
+              <div className="mt-6 pt-6 border-t border-slate-700">
                 {confirmRemove ? (
                   <div className="flex items-center gap-3">
-                    <span className="text-sm text-deep-space/70 dark:text-papaya/70">
+                    <span className="text-sm text-slate-400">
                       Are you sure?
                     </span>
                     <button
                       type="button"
                       onClick={handleRemoveToken}
                       disabled={removing}
-                      className="px-4 py-2 bg-molten hover:bg-molten/90 disabled:opacity-50 text-white font-medium rounded-lg transition-colors text-sm"
+                      className="px-4 py-2 bg-red-700 hover:bg-red-800 disabled:opacity-50 text-white font-medium rounded-lg transition-colors text-sm"
                     >
                       {removing ? 'Removing...' : 'Yes, remove'}
                     </button>
                     <button
                       type="button"
                       onClick={() => setConfirmRemove(false)}
-                      className="px-4 py-2 border border-steel/30 text-deep-space dark:text-papaya rounded-lg hover:bg-steel/10 transition-colors text-sm"
+                      className="px-4 py-2 border border-slate-700 text-slate-100 rounded-lg hover:bg-slate-700 transition-colors text-sm"
                     >
                       Cancel
                     </button>
@@ -298,7 +298,7 @@ export function SettingsPage() {
                   <button
                     type="button"
                     onClick={() => setConfirmRemove(true)}
-                    className="px-4 py-2 bg-molten hover:bg-molten/90 text-white font-medium rounded-lg transition-colors text-sm"
+                    className="px-4 py-2 bg-red-700 hover:bg-red-800 text-white font-medium rounded-lg transition-colors text-sm"
                   >
                     Remove Token
                   </button>
@@ -311,8 +311,8 @@ export function SettingsPage() {
               <div
                 className={`mt-4 px-4 py-3 rounded-lg text-sm ${
                   message.type === 'success'
-                    ? 'bg-green-50 dark:bg-green-900/20 text-green-800 dark:text-green-300 border border-green-200 dark:border-green-800'
-                    : 'bg-red-50 dark:bg-red-900/20 text-molten dark:text-flag-red border border-red-200 dark:border-red-800'
+                    ? 'bg-green-900/20 text-green-300 border border-green-800'
+                    : 'bg-red-900/20 text-red-500 border border-red-800'
                 }`}
               >
                 {message.text}
@@ -322,14 +322,14 @@ export function SettingsPage() {
         </div>
 
         {/* Telegram Notifications Section */}
-        <div className="mt-6 bg-white dark:bg-deep-space/50 rounded-xl border border-steel/20 shadow-sm">
+        <div className="mt-6 bg-slate-800 rounded-xl border border-slate-700 shadow-sm">
           <div className="p-6">
-            <h2 className="text-lg font-semibold text-deep-space dark:text-papaya mb-2">
+            <h2 className="text-lg font-semibold text-slate-100 mb-2">
               Telegram Notifications
             </h2>
-            <p className="text-sm text-deep-space/60 dark:text-papaya/60 mb-6">
+            <p className="text-sm text-slate-400 mb-6">
               Receive price alerts via Telegram. Send{' '}
-              <span className="font-mono text-xs bg-steel/10 dark:bg-steel/20 px-1.5 py-0.5 rounded">
+              <span className="font-mono text-xs bg-slate-700 px-1.5 py-0.5 rounded">
                 /start
               </span>{' '}
               to{' '}
@@ -337,7 +337,7 @@ export function SettingsPage() {
                 href="https://t.me/card_trader_monitor_bot"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-steel underline hover:text-steel/80"
+                className="text-blue-500 underline hover:text-blue-400"
               >
                 @card_trader_monitor_bot
               </a>{' '}
@@ -348,22 +348,22 @@ export function SettingsPage() {
             <div className="flex items-center gap-2 mb-6">
               {telegramLoading ? (
                 <div className="flex items-center gap-2">
-                  <div className="h-3 w-3 animate-spin rounded-full border-2 border-steel border-t-flag-red" />
-                  <span className="text-sm text-deep-space/50 dark:text-papaya/50">
+                  <div className="h-3 w-3 animate-spin rounded-full border-2 border-blue-500 border-t-red-500" />
+                  <span className="text-sm text-slate-500">
                     Checking connection...
                   </span>
                 </div>
               ) : isConnected ? (
                 <>
                   <span className="inline-block h-3 w-3 rounded-full bg-green-500" />
-                  <span className="text-sm font-medium text-deep-space dark:text-papaya">
+                  <span className="text-sm font-medium text-slate-100">
                     Connected
                   </span>
                 </>
               ) : (
                 <>
                   <span className="inline-block h-3 w-3 rounded-full bg-gray-400" />
-                  <span className="text-sm text-deep-space/60 dark:text-papaya/60">
+                  <span className="text-sm text-slate-400">
                     Not connected
                   </span>
                 </>
@@ -374,7 +374,7 @@ export function SettingsPage() {
             <div className="space-y-3">
               <label
                 htmlFor="telegram-chat-id"
-                className="block text-sm font-medium text-deep-space dark:text-papaya"
+                className="block text-sm font-medium text-slate-100"
               >
                 {isConnected ? 'Update chat ID' : 'Chat ID'}
               </label>
@@ -385,13 +385,13 @@ export function SettingsPage() {
                 value={telegramInput}
                 onChange={(e) => setTelegramInput(e.target.value)}
                 placeholder="Paste your Telegram chat ID"
-                className="w-full px-4 py-2.5 rounded-lg border border-steel/30 bg-white dark:bg-deep-space text-deep-space dark:text-papaya placeholder:text-deep-space/40 dark:placeholder:text-papaya/40 focus:outline-none focus:ring-2 focus:ring-steel/50"
+                className="w-full px-4 py-2.5 rounded-lg border border-slate-700 bg-slate-900 text-slate-100 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
               <button
                 type="button"
                 onClick={handleSaveTelegram}
                 disabled={telegramSaving || !telegramInput.trim()}
-                className="px-5 py-2.5 bg-flag-red hover:bg-flag-red/90 disabled:opacity-50 disabled:cursor-not-allowed text-white font-medium rounded-lg transition-colors text-sm"
+                className="px-5 py-2.5 bg-red-500 hover:bg-red-600 disabled:opacity-50 disabled:cursor-not-allowed text-white font-medium rounded-lg transition-colors text-sm"
               >
                 {telegramSaving ? 'Saving...' : 'Save & Test'}
               </button>
@@ -399,24 +399,24 @@ export function SettingsPage() {
 
             {/* Disconnect */}
             {isConnected && (
-              <div className="mt-6 pt-6 border-t border-steel/20">
+              <div className="mt-6 pt-6 border-t border-slate-700">
                 {confirmTelegramRemove ? (
                   <div className="flex items-center gap-3">
-                    <span className="text-sm text-deep-space/70 dark:text-papaya/70">
+                    <span className="text-sm text-slate-400">
                       Are you sure?
                     </span>
                     <button
                       type="button"
                       onClick={handleDisconnectTelegram}
                       disabled={telegramRemoving}
-                      className="px-4 py-2 bg-molten hover:bg-molten/90 disabled:opacity-50 text-white font-medium rounded-lg transition-colors text-sm"
+                      className="px-4 py-2 bg-red-700 hover:bg-red-800 disabled:opacity-50 text-white font-medium rounded-lg transition-colors text-sm"
                     >
                       {telegramRemoving ? 'Disconnecting...' : 'Yes, disconnect'}
                     </button>
                     <button
                       type="button"
                       onClick={() => setConfirmTelegramRemove(false)}
-                      className="px-4 py-2 border border-steel/30 text-deep-space dark:text-papaya rounded-lg hover:bg-steel/10 transition-colors text-sm"
+                      className="px-4 py-2 border border-slate-700 text-slate-100 rounded-lg hover:bg-slate-700 transition-colors text-sm"
                     >
                       Cancel
                     </button>
@@ -425,7 +425,7 @@ export function SettingsPage() {
                   <button
                     type="button"
                     onClick={() => setConfirmTelegramRemove(true)}
-                    className="px-4 py-2 bg-molten hover:bg-molten/90 text-white font-medium rounded-lg transition-colors text-sm"
+                    className="px-4 py-2 bg-red-700 hover:bg-red-800 text-white font-medium rounded-lg transition-colors text-sm"
                   >
                     Disconnect
                   </button>
@@ -438,10 +438,10 @@ export function SettingsPage() {
               <div
                 className={`mt-4 px-4 py-3 rounded-lg text-sm ${
                   telegramMessage.type === 'success'
-                    ? 'bg-green-50 dark:bg-green-900/20 text-green-800 dark:text-green-300 border border-green-200 dark:border-green-800'
+                    ? 'bg-green-900/20 text-green-300 border border-green-800'
                     : telegramMessage.type === 'warning'
-                      ? 'bg-yellow-50 dark:bg-yellow-900/20 text-yellow-800 dark:text-yellow-300 border border-yellow-200 dark:border-yellow-800'
-                      : 'bg-red-50 dark:bg-red-900/20 text-molten dark:text-flag-red border border-red-200 dark:border-red-800'
+                      ? 'bg-yellow-900/20 text-yellow-300 border border-yellow-800'
+                      : 'bg-red-900/20 text-red-500 border border-red-800'
                 }`}
               >
                 {telegramMessage.text}

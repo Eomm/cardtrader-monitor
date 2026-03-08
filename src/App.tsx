@@ -9,7 +9,7 @@ import { SettingsPage } from './pages/SettingsPage';
 
 function AuthenticatedLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-screen flex flex-col bg-papaya dark:bg-deep-space text-deep-space dark:text-papaya">
+    <div className="min-h-screen flex flex-col bg-slate-900 text-slate-100">
       <Navbar />
       {children}
     </div>

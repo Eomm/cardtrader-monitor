@@ -78,7 +78,7 @@ export function RuleEditor({ cardId, rules, onSave }: RuleEditorProps) {
 
   return (
     <div>
-      <h3 className="mb-3 text-sm font-semibold uppercase tracking-wide text-deep-space/60 dark:text-papaya/60">
+      <h3 className="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-400">
         Notification Rules
       </h3>
 
@@ -89,8 +89,8 @@ export function RuleEditor({ cardId, rules, onSave }: RuleEditorProps) {
           onClick={() => setActiveTab('threshold')}
           className={`rounded px-3 py-1.5 text-sm font-medium transition-colors ${
             activeTab === 'threshold'
-              ? 'bg-steel text-white'
-              : 'bg-steel/10 text-deep-space/70 hover:bg-steel/20 dark:text-papaya/70'
+              ? 'bg-blue-500 text-white'
+              : 'bg-slate-700 text-slate-400 hover:bg-slate-600'
           }`}
         >
           Threshold ({thresholdRules.length})
@@ -100,8 +100,8 @@ export function RuleEditor({ cardId, rules, onSave }: RuleEditorProps) {
           onClick={() => setActiveTab('stability')}
           className={`rounded px-3 py-1.5 text-sm font-medium transition-colors ${
             activeTab === 'stability'
-              ? 'bg-steel text-white'
-              : 'bg-steel/10 text-deep-space/70 hover:bg-steel/20 dark:text-papaya/70'
+              ? 'bg-blue-500 text-white'
+              : 'bg-slate-700 text-slate-400 hover:bg-slate-600'
           }`}
         >
           Stability ({stabilityRules.length})
@@ -112,7 +112,7 @@ export function RuleEditor({ cardId, rules, onSave }: RuleEditorProps) {
       {activeTab === 'threshold' && (
         <div className="space-y-3">
           {thresholdRules.length === 0 ? (
-            <p className="py-4 text-center text-sm text-deep-space/50 dark:text-papaya/50">
+            <p className="py-4 text-center text-sm text-slate-500">
               No threshold rules
             </p>
           ) : (
@@ -121,12 +121,12 @@ export function RuleEditor({ cardId, rules, onSave }: RuleEditorProps) {
               return (
                 <div
                   key={idx}
-                  className="rounded-lg border border-steel/20 p-3 dark:border-steel/10"
+                  className="rounded-lg border border-slate-700 p-3"
                 >
                   <div className="flex flex-wrap items-center gap-3">
                     {/* Percentage */}
                     <label className="flex items-center gap-1.5 text-sm">
-                      <span className="text-deep-space/60 dark:text-papaya/60">%</span>
+                      <span className="text-slate-400">%</span>
                       <input
                         type="number"
                         min={1}
@@ -138,12 +138,12 @@ export function RuleEditor({ cardId, rules, onSave }: RuleEditorProps) {
                             threshold_percent: Number(e.target.value),
                           })
                         }
-                        className="w-20 rounded border border-steel/20 bg-white px-3 py-1.5 text-sm text-deep-space outline-none focus:border-steel/40 dark:border-steel/10 dark:bg-deep-space/60 dark:text-papaya"
+                        className="w-20 rounded border border-slate-700 bg-slate-800 px-3 py-1.5 text-sm text-slate-100 outline-none focus:border-slate-600"
                       />
                     </label>
 
                     {/* Direction */}
-                    <div className="flex overflow-hidden rounded border border-steel/20 dark:border-steel/10">
+                    <div className="flex overflow-hidden rounded border border-slate-700">
                       {(['up', 'down', 'both'] as const).map((dir) => (
                         <button
                           key={dir}
@@ -151,8 +151,8 @@ export function RuleEditor({ cardId, rules, onSave }: RuleEditorProps) {
                           onClick={() => updateRule(idx, { ...rule, direction: dir })}
                           className={`px-2.5 py-1 text-xs font-medium capitalize transition-colors ${
                             rule.direction === dir
-                              ? 'bg-steel text-white'
-                              : 'bg-white text-deep-space/70 hover:bg-steel/10 dark:bg-deep-space/60 dark:text-papaya/70'
+                              ? 'bg-blue-500 text-white'
+                              : 'bg-slate-800 text-slate-400 hover:bg-slate-700'
                           }`}
                         >
                           {dir}
@@ -165,7 +165,7 @@ export function RuleEditor({ cardId, rules, onSave }: RuleEditorProps) {
                       type="button"
                       onClick={() => updateRule(idx, { ...rule, enabled: !rule.enabled })}
                       className={`relative h-5 w-9 rounded-full transition-colors ${
-                        rule.enabled ? 'bg-steel' : 'bg-steel/30'
+                        rule.enabled ? 'bg-blue-500' : 'bg-slate-600'
                       }`}
                       aria-label={rule.enabled ? 'Disable rule' : 'Enable rule'}
                     >
@@ -180,7 +180,7 @@ export function RuleEditor({ cardId, rules, onSave }: RuleEditorProps) {
                     <button
                       type="button"
                       onClick={() => removeRule(idx)}
-                      className="ml-auto text-sm text-flag-red/70 transition-colors hover:text-flag-red"
+                      className="ml-auto text-sm text-red-400 transition-colors hover:text-red-500"
                     >
                       Remove
                     </button>
@@ -192,7 +192,7 @@ export function RuleEditor({ cardId, rules, onSave }: RuleEditorProps) {
           <button
             type="button"
             onClick={addThresholdRule}
-            className="w-full rounded border border-dashed border-steel/30 px-3 py-2 text-sm text-steel transition-colors hover:border-steel/50 hover:text-steel/80"
+            className="w-full rounded border border-dashed border-slate-600 px-3 py-2 text-sm text-blue-500 transition-colors hover:border-slate-500 hover:text-blue-400"
           >
             + Add Threshold Rule
           </button>
@@ -203,7 +203,7 @@ export function RuleEditor({ cardId, rules, onSave }: RuleEditorProps) {
       {activeTab === 'stability' && (
         <div className="space-y-3">
           {stabilityRules.length === 0 ? (
-            <p className="py-4 text-center text-sm text-deep-space/50 dark:text-papaya/50">
+            <p className="py-4 text-center text-sm text-slate-500">
               No stability rules
             </p>
           ) : (
@@ -212,12 +212,12 @@ export function RuleEditor({ cardId, rules, onSave }: RuleEditorProps) {
               return (
                 <div
                   key={idx}
-                  className="rounded-lg border border-steel/20 p-3 dark:border-steel/10"
+                  className="rounded-lg border border-slate-700 p-3"
                 >
                   <div className="flex flex-wrap items-center gap-3">
                     {/* Range % */}
                     <label className="flex items-center gap-1.5 text-sm">
-                      <span className="text-deep-space/60 dark:text-papaya/60">Range %</span>
+                      <span className="text-slate-400">Range %</span>
                       <input
                         type="number"
                         min={1}
@@ -229,13 +229,13 @@ export function RuleEditor({ cardId, rules, onSave }: RuleEditorProps) {
                             range_percent: Number(e.target.value),
                           })
                         }
-                        className="w-20 rounded border border-steel/20 bg-white px-3 py-1.5 text-sm text-deep-space outline-none focus:border-steel/40 dark:border-steel/10 dark:bg-deep-space/60 dark:text-papaya"
+                        className="w-20 rounded border border-slate-700 bg-slate-800 px-3 py-1.5 text-sm text-slate-100 outline-none focus:border-slate-600"
                       />
                     </label>
 
                     {/* Consecutive days */}
                     <label className="flex items-center gap-1.5 text-sm">
-                      <span className="text-deep-space/60 dark:text-papaya/60">Days</span>
+                      <span className="text-slate-400">Days</span>
                       <input
                         type="number"
                         min={1}
@@ -247,7 +247,7 @@ export function RuleEditor({ cardId, rules, onSave }: RuleEditorProps) {
                             consecutive_days: Number(e.target.value),
                           })
                         }
-                        className="w-20 rounded border border-steel/20 bg-white px-3 py-1.5 text-sm text-deep-space outline-none focus:border-steel/40 dark:border-steel/10 dark:bg-deep-space/60 dark:text-papaya"
+                        className="w-20 rounded border border-slate-700 bg-slate-800 px-3 py-1.5 text-sm text-slate-100 outline-none focus:border-slate-600"
                       />
                     </label>
 
@@ -256,7 +256,7 @@ export function RuleEditor({ cardId, rules, onSave }: RuleEditorProps) {
                       type="button"
                       onClick={() => updateRule(idx, { ...rule, enabled: !rule.enabled })}
                       className={`relative h-5 w-9 rounded-full transition-colors ${
-                        rule.enabled ? 'bg-steel' : 'bg-steel/30'
+                        rule.enabled ? 'bg-blue-500' : 'bg-slate-600'
                       }`}
                       aria-label={rule.enabled ? 'Disable rule' : 'Enable rule'}
                     >
@@ -271,7 +271,7 @@ export function RuleEditor({ cardId, rules, onSave }: RuleEditorProps) {
                     <button
                       type="button"
                       onClick={() => removeRule(idx)}
-                      className="ml-auto text-sm text-flag-red/70 transition-colors hover:text-flag-red"
+                      className="ml-auto text-sm text-red-400 transition-colors hover:text-red-500"
                     >
                       Remove
                     </button>
@@ -283,7 +283,7 @@ export function RuleEditor({ cardId, rules, onSave }: RuleEditorProps) {
           <button
             type="button"
             onClick={addStabilityRule}
-            className="w-full rounded border border-dashed border-steel/30 px-3 py-2 text-sm text-steel transition-colors hover:border-steel/50 hover:text-steel/80"
+            className="w-full rounded border border-dashed border-slate-600 px-3 py-2 text-sm text-blue-500 transition-colors hover:border-slate-500 hover:text-blue-400"
           >
             + Add Stability Rule
           </button>
@@ -296,14 +296,14 @@ export function RuleEditor({ cardId, rules, onSave }: RuleEditorProps) {
           type="button"
           onClick={handleSave}
           disabled={saving}
-          className="rounded-md bg-steel px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-steel/80 disabled:opacity-50"
+          className="rounded-md bg-blue-500 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-600 disabled:opacity-50"
         >
           {saving ? 'Saving...' : 'Save Rules'}
         </button>
         {feedback && (
           <span
             className={`text-sm font-medium ${
-              feedback.startsWith('Error') ? 'text-flag-red' : 'text-green-600 dark:text-green-400'
+              feedback.startsWith('Error') ? 'text-red-500' : 'text-green-400'
             }`}
           >
             {feedback}

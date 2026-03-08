@@ -1,13 +1,5 @@
 @import "tailwindcss";
 
-@theme {
-  --color-deep-space: #003049;
-  --color-papaya: #fdf0d5;
-  --color-flag-red: #c1121f;
-  --color-steel: #669bbc;
-  --color-molten: #780000;
-}
-
 body {
   margin: 0;
   -webkit-font-smoothing: antialiased;

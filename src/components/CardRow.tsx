@@ -9,10 +9,10 @@ type CardRowProps = {
 
 function ImagePlaceholder() {
   return (
-    <div className="flex h-full w-full items-center justify-center bg-steel/10">
+    <div className="flex h-full w-full items-center justify-center bg-slate-700">
       <svg
         aria-hidden="true"
-        className="h-6 w-6 text-steel/40"
+        className="h-6 w-6 text-slate-500"
         fill="none"
         viewBox="0 0 24 24"
         stroke="currentColor"
@@ -35,7 +35,7 @@ export function CardRow({ card }: CardRowProps) {
     <button
       type="button"
       onClick={() => navigate(`/cards/${card.id}`)}
-      className={`flex w-full items-center gap-3 rounded-lg border border-steel/20 px-3 py-2 text-left transition-colors hover:bg-steel/5 dark:border-steel/10 dark:hover:bg-steel/10 ${
+      className={`flex w-full items-center gap-3 rounded-lg border border-slate-700 px-3 py-2 text-left transition-colors hover:bg-slate-700 ${
         !card.is_active ? 'opacity-50' : ''
       }`}
     >
@@ -55,17 +55,17 @@ export function CardRow({ card }: CardRowProps) {
 
       {/* Name + flag */}
       <div className="min-w-0 flex-1">
-        <p className="truncate font-medium text-deep-space dark:text-papaya">
+        <p className="truncate font-medium text-slate-100">
           {card.card_name} <span className="text-sm">{languageToFlag(card.language_required)}</span>
         </p>
-        <p className="truncate text-sm text-deep-space/60 dark:text-papaya/60">
+        <p className="truncate text-sm text-slate-400">
           {card.ct_expansions?.name ?? '---'}
         </p>
       </div>
 
       {/* Price + change */}
       <div className="flex flex-shrink-0 flex-col items-end gap-0.5">
-        <span className="text-sm font-medium text-deep-space dark:text-papaya">
+        <span className="text-sm font-medium text-slate-100">
           {card.latest_price_cents !== null ? formatEur(card.latest_price_cents) : '---'}
         </span>
         <PriceChange baseline={card.baseline_price_cents} current={card.latest_price_cents} />

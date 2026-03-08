@@ -81,7 +81,7 @@ export function DashboardPage() {
       <div className="flex flex-1 items-center justify-center">
         <svg
           aria-hidden="true"
-          className="h-8 w-8 animate-spin text-steel"
+          className="h-8 w-8 animate-spin text-blue-500"
           viewBox="0 0 24 24"
           fill="none"
         >
@@ -107,14 +107,14 @@ export function DashboardPage() {
     return (
       <div className="flex flex-1 items-center justify-center px-4">
         <div className="text-center">
-          <p className="mb-4 text-flag-red">{error}</p>
+          <p className="mb-4 text-red-500">{error}</p>
           <button
             type="button"
             onClick={() => {
               setLoading(true);
               fetchCards();
             }}
-            className="rounded-md bg-steel px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-steel/80"
+            className="rounded-md bg-blue-500 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-600"
           >
             Retry
           </button>
@@ -134,7 +134,7 @@ export function DashboardPage() {
       <div className="mb-6">
         <ImportWishlistForm onImportComplete={handleImportComplete} compact />
       </div>
-      {error && <p className="mb-4 text-sm text-flag-red">{error}</p>}
+      {error && <p className="mb-4 text-sm text-red-500">{error}</p>}
       <CardList cards={cards} />
     </div>
   );

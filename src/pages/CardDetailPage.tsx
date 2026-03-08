@@ -114,7 +114,7 @@ export function CardDetailPage() {
       <div className="flex flex-1 items-center justify-center">
         <svg
           aria-hidden="true"
-          className="h-8 w-8 animate-spin text-steel"
+          className="h-8 w-8 animate-spin text-blue-500"
           viewBox="0 0 24 24"
           fill="none"
         >
@@ -141,14 +141,14 @@ export function CardDetailPage() {
     return (
       <div className="flex flex-1 items-center justify-center px-4">
         <div className="text-center">
-          <p className="mb-4 text-flag-red">{error}</p>
+          <p className="mb-4 text-red-500">{error}</p>
           <button
             type="button"
             onClick={() => {
               setLoading(true);
               fetchCard();
             }}
-            className="rounded-md bg-steel px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-steel/80"
+            className="rounded-md bg-blue-500 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-600"
           >
             Retry
           </button>
@@ -161,7 +161,7 @@ export function CardDetailPage() {
   if (!card) {
     return (
       <div className="flex flex-1 items-center justify-center px-4">
-        <p className="text-deep-space/60 dark:text-papaya/60">Card not found.</p>
+        <p className="text-slate-400">Card not found.</p>
       </div>
     );
   }
@@ -182,10 +182,10 @@ export function CardDetailPage() {
                 className="h-full w-full object-contain"
               />
             ) : (
-              <div className="flex h-full w-full items-center justify-center bg-steel/10">
+              <div className="flex h-full w-full items-center justify-center bg-slate-700">
                 <svg
                   aria-hidden="true"
-                  className="h-12 w-12 text-steel/40"
+                  className="h-12 w-12 text-slate-500"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -205,40 +205,40 @@ export function CardDetailPage() {
         {/* Info sections */}
         <div className="min-w-0 flex-1 space-y-6">
           {/* Card name */}
-          <h1 className="text-xl font-bold text-deep-space dark:text-papaya">{card.card_name}</h1>
+          <h1 className="text-xl font-bold text-slate-100">{card.card_name}</h1>
 
           {/* Section 1: Price */}
           <section>
-            <h2 className="mb-2 text-sm font-semibold uppercase tracking-wide text-deep-space/60 dark:text-papaya/60">
+            <h2 className="mb-2 text-sm font-semibold uppercase tracking-wide text-slate-400">
               Price
             </h2>
-            <div className="rounded-lg border border-steel/20 p-4 dark:border-steel/10">
+            <div className="rounded-lg border border-slate-700 p-4">
               <div className="flex flex-wrap items-baseline gap-4">
                 <div>
-                  <span className="text-xs text-deep-space/50 dark:text-papaya/50">Current</span>
+                  <span className="text-xs text-slate-500">Current</span>
                   {card.latest_price_cents !== null ? (
                     <a
                       href={`https://www.cardtrader.com/it/cards/${card.blueprint_id}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="block text-lg font-bold text-steel underline decoration-steel/30 transition-colors hover:text-steel/80"
+                      className="block text-lg font-bold text-blue-500 underline decoration-blue-500/30 transition-colors hover:text-blue-400"
                     >
                       {formatEur(card.latest_price_cents)}
                     </a>
                   ) : (
-                    <p className="text-lg font-bold text-deep-space/40 dark:text-papaya/40">---</p>
+                    <p className="text-lg font-bold text-slate-500">---</p>
                   )}
                 </div>
                 <div>
-                  <span className="text-xs text-deep-space/50 dark:text-papaya/50">Baseline</span>
-                  <p className="text-lg font-medium text-deep-space/70 dark:text-papaya/70">
+                  <span className="text-xs text-slate-500">Baseline</span>
+                  <p className="text-lg font-medium text-slate-400">
                     {card.baseline_price_cents !== null
                       ? formatEur(card.baseline_price_cents)
                       : '---'}
                   </p>
                 </div>
                 <div>
-                  <span className="text-xs text-deep-space/50 dark:text-papaya/50">Change</span>
+                  <span className="text-xs text-slate-500">Change</span>
                   <div className="mt-0.5">
                     <PriceChange
                       baseline={card.baseline_price_cents}
@@ -252,38 +252,38 @@ export function CardDetailPage() {
 
           {/* Section 2: Card Properties */}
           <section>
-            <h2 className="mb-2 text-sm font-semibold uppercase tracking-wide text-deep-space/60 dark:text-papaya/60">
+            <h2 className="mb-2 text-sm font-semibold uppercase tracking-wide text-slate-400">
               Properties
             </h2>
-            <div className="rounded-lg border border-steel/20 p-4 dark:border-steel/10">
+            <div className="rounded-lg border border-slate-700 p-4">
               <dl className="grid grid-cols-2 gap-x-6 gap-y-3 text-sm sm:grid-cols-3">
                 <div>
-                  <dt className="text-deep-space/50 dark:text-papaya/50">Expansion</dt>
+                  <dt className="text-slate-500">Expansion</dt>
                   <dd className="font-medium">{card.ct_expansions?.name ?? '---'}</dd>
                 </div>
                 <div>
-                  <dt className="text-deep-space/50 dark:text-papaya/50">Condition</dt>
+                  <dt className="text-slate-500">Condition</dt>
                   <dd className="font-medium">{card.condition_required ?? 'Any'}</dd>
                 </div>
                 <div>
-                  <dt className="text-deep-space/50 dark:text-papaya/50">Language</dt>
+                  <dt className="text-slate-500">Language</dt>
                   <dd className="font-medium">
                     {languageToFlag(card.language_required)} {card.language_required.toUpperCase()}
                   </dd>
                 </div>
                 <div>
-                  <dt className="text-deep-space/50 dark:text-papaya/50">Foil</dt>
+                  <dt className="text-slate-500">Foil</dt>
                   <dd className="font-medium">{foilLabel}</dd>
                 </div>
                 <div>
-                  <dt className="mb-1 text-deep-space/50 dark:text-papaya/50">CT Zero</dt>
+                  <dt className="mb-1 text-slate-500">CT Zero</dt>
                   <dd>
                     <button
                       type="button"
                       onClick={handleToggleZero}
                       disabled={togglingZero}
                       className={`relative h-5 w-9 rounded-full transition-colors disabled:opacity-50 ${
-                        card.only_zero ? 'bg-steel' : 'bg-steel/30'
+                        card.only_zero ? 'bg-blue-500' : 'bg-slate-600'
                       }`}
                       aria-label={card.only_zero ? 'Disable CT Zero' : 'Enable CT Zero'}
                     >
@@ -314,21 +314,21 @@ export function CardDetailPage() {
               <div>
                 {confirmStop ? (
                   <div className="flex items-center gap-3">
-                    <span className="text-sm text-deep-space/70 dark:text-papaya/70">
+                    <span className="text-sm text-slate-400">
                       Stop monitoring this card?
                     </span>
                     <button
                       type="button"
                       onClick={handleToggleActive}
                       disabled={togglingActive}
-                      className="rounded-md bg-flag-red px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-flag-red/80 disabled:opacity-50"
+                      className="rounded-md bg-red-500 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-red-600 disabled:opacity-50"
                     >
                       {togglingActive ? 'Stopping...' : 'Confirm'}
                     </button>
                     <button
                       type="button"
                       onClick={() => setConfirmStop(false)}
-                      className="rounded-md bg-steel/10 px-4 py-2 text-sm font-medium text-deep-space/70 transition-colors hover:bg-steel/20 dark:text-papaya/70"
+                      className="rounded-md bg-slate-700 px-4 py-2 text-sm font-medium text-slate-400 transition-colors hover:bg-slate-600"
                     >
                       Cancel
                     </button>
@@ -337,7 +337,7 @@ export function CardDetailPage() {
                   <button
                     type="button"
                     onClick={() => setConfirmStop(true)}
-                    className="rounded-md border border-flag-red/30 px-4 py-2 text-sm font-medium text-flag-red transition-colors hover:bg-flag-red/5"
+                    className="rounded-md border border-red-500/30 px-4 py-2 text-sm font-medium text-red-500 transition-colors hover:bg-red-500/5"
                   >
                     Stop Monitoring
                   </button>
@@ -348,7 +348,7 @@ export function CardDetailPage() {
                 type="button"
                 onClick={handleToggleActive}
                 disabled={togglingActive}
-                className="rounded-md bg-steel px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-steel/80 disabled:opacity-50"
+                className="rounded-md bg-blue-500 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-600 disabled:opacity-50"
               >
                 {togglingActive ? 'Resuming...' : 'Resume Monitoring'}
               </button>
