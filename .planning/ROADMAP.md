@@ -102,7 +102,7 @@ Plans:
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5
+Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
@@ -111,3 +111,16 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5
 | 3. Dashboard | 1/3 | In Progress|  |
 | 4. Notifications | 2/3 | In Progress|  |
 | 5. Automation | 2/2 | Complete   | 2026-03-07 |
+
+### Phase 6: chores and fixes
+
+**Goal:** Polish and harden v1 -- fix lint violations, migrate to dark modern palette, improve card detail UX, add public How It Works page, enforce wishlist limits, normalize schema, and update developer docs
+**Requirements**: None (chores/fixes phase, no formal requirement IDs)
+**Depends on:** Phase 5
+**Plans:** 4 plans
+
+Plans:
+- [ ] 06-01-PLAN.md — Fix all Biome lint errors and rename expansion_name to expansion_id with FK to ct_expansions
+- [ ] 06-02-PLAN.md — Migrate color palette to dark modern theme (Tailwind slate scale) and add site-wide footer
+- [ ] 06-03-PLAN.md — Public How It Works page, card detail UX enhancements, and 2-wishlist limit enforcement
+- [ ] 06-04-PLAN.md — Developer setup documentation (docs/SETUP.md)
