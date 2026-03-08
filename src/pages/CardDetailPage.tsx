@@ -16,6 +16,9 @@ export function CardDetailPage() {
   } | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [priceHistory, setPriceHistory] = useState<{ price_cents: number; recorded_at: string }[]>(
+    [],
+  );
   const [togglingZero, setTogglingZero] = useState(false);
   const [confirmStop, setConfirmStop] = useState(false);
   const [togglingActive, setTogglingActive] = useState(false);
@@ -42,18 +45,20 @@ export function CardDetailPage() {
         return;
       }
 
-      // Fetch latest price
+      // Fetch recent price snapshots
       const { data: priceData } = await supabase
         .from('price_snapshots')
-        .select('price_cents')
+        .select('price_cents, recorded_at')
         .eq('monitored_card_id', id)
         .order('recorded_at', { ascending: false })
-        .limit(1)
-        .single();
+        .limit(10);
+
+      const snapshots = priceData ?? [];
+      setPriceHistory(snapshots);
 
       const merged: MonitoredCardWithPrice = {
         ...cardData,
-        latest_price_cents: priceData?.price_cents ?? null,
+        latest_price_cents: snapshots.length > 0 ? snapshots[0].price_cents : null,
       };
 
       setCard(merged);
@@ -263,6 +268,35 @@ export function CardDetailPage() {
                   </div>
                 </div>
               </div>
+              {priceHistory.length > 1 && (
+                <div className="mt-4 border-t border-slate-700 pt-3">
+                  <h3 className="mb-2 text-xs font-medium uppercase tracking-wide text-slate-500">
+                    Recent Prices
+                  </h3>
+                  <div className="space-y-1">
+                    {priceHistory.map((snap) => (
+                      <div
+                        key={snap.recorded_at}
+                        className="flex items-center justify-between text-sm"
+                      >
+                        <span className="text-slate-500">
+                          {new Date(snap.recorded_at).toLocaleDateString(undefined, {
+                            month: 'short',
+                            day: 'numeric',
+                          })}{' '}
+                          {new Date(snap.recorded_at).toLocaleTimeString(undefined, {
+                            hour: '2-digit',
+                            minute: '2-digit',
+                          })}
+                        </span>
+                        <span className="font-medium text-slate-300">
+                          {formatEur(snap.price_cents)}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           </section>
 

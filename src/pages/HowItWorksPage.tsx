@@ -102,6 +102,13 @@ export function HowItWorksPage() {
                 price, new price, and a direct link to the CardTrader listing.
               </p>
               <p>
+                You can also set <strong className="text-slate-100">stability rules</strong> that
+                trigger when a price stays within a certain percentage range for a number of
+                consecutive days. For example, a stability rule with 5% range and 3 days will notify
+                you when a card's price has remained stable — useful for spotting good buying
+                opportunities after a price drop settles.
+              </p>
+              <p>
                 To avoid spam, there is a{' '}
                 <strong className="text-slate-100">24-hour cooldown</strong> per card. After an
                 alert fires, the same card will not trigger another notification for 24 hours --
