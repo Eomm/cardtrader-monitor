@@ -36,7 +36,6 @@ interface MonitoredCardRow {
 
 interface BlueprintGroup {
   blueprint_id: number;
-  filters: CardFilters;
   cards: MonitoredCardRow[];
 }
 
@@ -46,13 +45,9 @@ interface FetchResult {
   error?: string;
 }
 
-async function fetchMarketplaceProducts(
-  blueprintId: number,
-  language: string,
-  token: string,
-): Promise<FetchResult> {
+async function fetchMarketplaceProducts(blueprintId: number, token: string): Promise<FetchResult> {
   try {
-    const url = `${CARDTRADER_API_BASE}/marketplace/products?blueprint_id=${blueprintId}&language=${language}`;
+    const url = `${CARDTRADER_API_BASE}/marketplace/products?blueprint_id=${blueprintId}`;
     const response = await fetch(url, {
       headers: { Authorization: `Bearer ${token}` },
     });
@@ -202,12 +197,6 @@ export async function main(): Promise<void> {
     if (!blueprintGroups.has(card.blueprint_id)) {
       blueprintGroups.set(card.blueprint_id, {
         blueprint_id: card.blueprint_id,
-        filters: {
-          condition: card.condition_required ?? undefined,
-          language: card.language_required ?? 'en',
-          foil: card.foil_required ?? undefined,
-          onlyZero: card.only_zero,
-        },
         cards: [],
       });
     }
@@ -217,9 +206,9 @@ export async function main(): Promise<void> {
     }
   }
 
-  // 4. Get API token from a user who has one
+  // 4. Get all valid API tokens
   const distinctUserIds = [...new Set(cards.map((c) => c.user_id))];
-  let apiToken: string | null = null;
+  const apiTokens: string[] = [];
 
   for (const userId of distinctUserIds) {
     const { data: token, error: tokenError } = await supabase.rpc('get_api_token', {
@@ -232,37 +221,47 @@ export async function main(): Promise<void> {
     }
 
     if (token) {
-      apiToken = token;
-      break;
+      apiTokens.push(token);
     }
   }
 
-  if (!apiToken) {
+  if (apiTokens.length === 0) {
     console.error('No valid API tokens found among active card owners');
     process.exit(1);
   }
 
-  // 5. Fetch prices in rate-limited batches
+  console.log(`Using ${apiTokens.length} API key(s) for parallel fetching`);
+
+  // 5. Distribute groups across API keys and fetch in parallel
   const groups = [...blueprintGroups.values()];
   let failedCount = 0;
 
-  const fetchResults = await processBatches(
-    groups,
-    async (group: BlueprintGroup): Promise<FetchResult> => {
-      const result = await fetchMarketplaceProducts(
-        group.blueprint_id,
-        group.filters.language,
-        apiToken,
-      );
-      if (result.error) {
-        console.warn(`Failed to fetch blueprint ${group.blueprint_id}: ${result.error}`);
-        failedCount++;
-      }
-      return result;
-    },
-    8,
-    1000,
+  // Split groups evenly across available API keys
+  const groupsByToken: BlueprintGroup[][] = Array.from({ length: apiTokens.length }, () => []);
+  for (let i = 0; i < groups.length; i++) {
+    groupsByToken[i % apiTokens.length].push(groups[i]);
+  }
+
+  // Run processBatches in parallel — one per API key, each doing 8 concurrent fetches/sec
+  const allBatchResults = await Promise.all(
+    apiTokens.map((token, idx) =>
+      processBatches(
+        groupsByToken[idx],
+        async (group: BlueprintGroup): Promise<FetchResult> => {
+          const result = await fetchMarketplaceProducts(group.blueprint_id, token);
+          if (result.error) {
+            console.warn(`Failed to fetch blueprint ${group.blueprint_id}: ${result.error}`);
+            failedCount++;
+          }
+          return result;
+        },
+        8,
+        1000,
+      ),
+    ),
   );
+
+  const fetchResults = allBatchResults.flat();
 
   // Build a map of blueprint_id -> fetch result
   const resultsByBlueprint: Map<number, FetchResult> = new Map();
