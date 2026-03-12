@@ -368,7 +368,7 @@ async function syncWishlist(
   // 9. Update wishlists.last_synced_at
   await supabase
     .from('wishlists')
-    .update({ last_synced_at: new Date().toISOString() })
+    .update({ last_synced_at: new Date().toISOString(), name: ctWishlist.name })
     .eq('id', wishlist.id);
 
   return { added: toAdd.length, removed: toRemoveIds.length, updated: toUpdate.length };
