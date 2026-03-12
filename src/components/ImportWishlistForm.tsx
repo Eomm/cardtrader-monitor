@@ -36,7 +36,20 @@ export function ImportWishlistForm({ onImportComplete, compact = false }: Import
       );
 
       if (fnError) {
-        setError(fnError.message || 'Import failed. Please try again.');
+        let message = 'Import failed. Please try again.';
+        try {
+          if (fnError.context && typeof fnError.context.json === 'function') {
+            const body = await fnError.context.json();
+            if (body?.error && typeof body.error === 'string') {
+              message = body.error;
+            }
+          } else if (fnError.message) {
+            message = fnError.message;
+          }
+        } catch {
+          // JSON parsing failed, use default message
+        }
+        setError(message);
         return;
       }
 

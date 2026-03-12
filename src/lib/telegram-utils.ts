@@ -1,4 +1,4 @@
-import type { ThresholdRule } from './cardtrader-types';
+import type { FixedPriceRule, ThresholdRule } from './cardtrader-types';
 
 // ── Types ──────────────────────────────────────────────────────────
 
@@ -100,6 +100,56 @@ export function shouldNotify(
   return {
     ...result,
     comparisonPriceCents: lastNotification.priceCents,
+  };
+}
+
+// ── Fixed Price Evaluation ─────────────────────────────────────────
+
+/**
+ * Evaluate a fixed-price rule against a price crossing.
+ * Triggers when the current price crosses the configured EUR target in the given direction.
+ * Returns a NotifyResult-compatible shape so alert-building code works identically.
+ *
+ * Crossing semantics:
+ * - direction='down': triggers when currentCents <= targetCents AND (no previous OR previousCents > targetCents)
+ * - direction='up':   triggers when currentCents >= targetCents AND previousCents < targetCents
+ * - direction='both': triggers on either crossing direction
+ * - enabled=false / currentCents=null: never triggers
+ */
+export function shouldNotifyFixedPrice(
+  rule: FixedPriceRule,
+  previousCents: number | null,
+  currentCents: number | null,
+): NotifyResult {
+  if (!rule.enabled || currentCents === null) {
+    return { triggered: false, percentChange: 0, comparisonPriceCents: previousCents };
+  }
+
+  const targetCents = Math.round(rule.price_eur * 100);
+
+  const crossedDown =
+    currentCents <= targetCents && (previousCents === null || previousCents > targetCents);
+  const crossedUp =
+    currentCents >= targetCents && previousCents !== null && previousCents < targetCents;
+
+  let triggered = false;
+  if (rule.direction === 'down') {
+    triggered = crossedDown;
+  } else if (rule.direction === 'up') {
+    triggered = crossedUp;
+  } else {
+    triggered = crossedDown || crossedUp;
+  }
+
+  const percentChange =
+    previousCents !== null && previousCents !== 0
+      ? ((currentCents - previousCents) / previousCents) * 100
+      : 0;
+
+  return {
+    triggered,
+    percentChange,
+    comparisonPriceCents: previousCents,
   };
 }
 

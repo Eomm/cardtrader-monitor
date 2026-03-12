@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import {
+  createDefaultFixedPriceRule,
   createDefaultNotificationRule,
   createDefaultNotificationRules,
   createDefaultStabilityRule,
@@ -38,6 +39,25 @@ describe('createDefaultStabilityRule', () => {
   it('returns a new object each time', () => {
     const rule1 = createDefaultStabilityRule();
     const rule2 = createDefaultStabilityRule();
+    expect(rule1).not.toBe(rule2);
+    expect(rule1).toEqual(rule2);
+  });
+});
+
+describe('createDefaultFixedPriceRule', () => {
+  it('returns correct default fixed price rule shape', () => {
+    const rule = createDefaultFixedPriceRule();
+    expect(rule).toEqual({
+      type: 'fixed_price',
+      price_eur: 1.0,
+      direction: 'down',
+      enabled: true,
+    });
+  });
+
+  it('returns a new object each time', () => {
+    const rule1 = createDefaultFixedPriceRule();
+    const rule2 = createDefaultFixedPriceRule();
     expect(rule1).not.toBe(rule2);
     expect(rule1).toEqual(rule2);
   });

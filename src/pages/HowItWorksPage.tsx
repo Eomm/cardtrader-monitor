@@ -99,6 +99,13 @@ export function HowItWorksPage() {
             </h2>
             <div className="space-y-3 text-sm leading-relaxed text-slate-400">
               <p>
+                The dashboard shows the{' '}
+                <strong className="text-slate-100">first active rule</strong> for each card directly
+                in the card row. You can edit the rule inline -- click on it to change the threshold,
+                direction, or target price without opening the card detail page. Changes are saved
+                immediately.
+              </p>
+              <p>
                 Each card can have <strong className="text-slate-100">threshold rules</strong> that
                 trigger when the price moves by a certain percentage from the baseline. You choose
                 the percentage and the direction (up, down, or both).
@@ -106,6 +113,16 @@ export function HowItWorksPage() {
               <p>
                 When a threshold is crossed, you get a Telegram notification with the card name, old
                 price, new price, and a direct link to the CardTrader listing.
+              </p>
+              <p>
+                You can also set a <strong className="text-slate-100">fixed price</strong> rule that
+                triggers when the market price crosses a specific EUR target. Choose a direction:{' '}
+                <strong className="text-slate-100">down</strong> to be notified when the price drops
+                below your target, <strong className="text-slate-100">up</strong> when it rises
+                above, or <strong className="text-slate-100">both</strong> for either crossing.
+                Unlike threshold rules which are percentage-based relative to the baseline, fixed
+                price rules work with an absolute EUR value -- useful when you know exactly how much
+                you are willing to pay.
               </p>
               <p>
                 You can also set <strong className="text-slate-100">stability rules</strong> that

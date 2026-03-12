@@ -10,6 +10,7 @@ import { supabase } from '../lib/supabase';
 export function DashboardPage() {
   const { user } = useAuth();
   const [cards, setCards] = useState<MonitoredCardWithPrice[]>([]);
+  const [wishlists, setWishlists] = useState<{ id: string; name: string }[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [hasToken, setHasToken] = useState<boolean | null>(null);
@@ -36,18 +37,23 @@ export function DashboardPage() {
         return;
       }
 
-      // Fetch latest price snapshot for each card
+      // Fetch latest price snapshot and wishlists in parallel
       const cardIds = monitoredCards.map((c) => c.id);
-      const { data: snapshots, error: snapError } = await supabase
-        .from('price_snapshots')
-        .select('monitored_card_id, price_cents, recorded_at')
-        .in('monitored_card_id', cardIds)
-        .order('recorded_at', { ascending: false });
+      const [{ data: snapshots, error: snapError }, { data: wishlistData }] = await Promise.all([
+        supabase
+          .from('price_snapshots')
+          .select('monitored_card_id, price_cents, recorded_at')
+          .in('monitored_card_id', cardIds)
+          .order('recorded_at', { ascending: false }),
+        supabase.from('wishlists').select('id, name'),
+      ]);
 
       if (snapError) {
         // Cards loaded, prices failed -- show cards without prices
         console.error('Failed to fetch price snapshots:', snapError.message);
       }
+
+      if (wishlistData) setWishlists(wishlistData);
 
       // Build a map of latest price per card (first occurrence is most recent due to ordering)
       const latestPriceMap = new Map<string, number>();
@@ -212,7 +218,7 @@ export function DashboardPage() {
         <ImportWishlistForm onImportComplete={handleImportComplete} compact />
       </div>
       {error && <p className="mb-4 text-sm text-red-500">{error}</p>}
-      <CardList cards={cards} />
+      <CardList cards={cards} wishlists={wishlists} onRuleSaved={fetchCards} />
     </div>
   );
 }

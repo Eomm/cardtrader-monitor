@@ -102,7 +102,7 @@ Plans:
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6
+Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
@@ -124,3 +124,15 @@ Plans:
 - [ ] 06-02-PLAN.md — Migrate color palette to dark modern theme (Tailwind slate scale) and add site-wide footer
 - [ ] 06-03-PLAN.md — Public How It Works page, card detail UX enhancements, and 2-wishlist limit enforcement
 - [ ] 06-04-PLAN.md — Developer setup documentation (docs/SETUP.md)
+
+### Phase 7: UI usability improvements: wishlist filter, persistent filters, threshold UX, fixed price threshold rule
+
+**Goal:** Enhance dashboard usability with inline rule editing from card rows, a new fixed-price threshold rule type, wishlist-based card filtering, and persistent filter state across page reloads
+**Requirements**: UX-01, UX-02, UX-03, UX-04, UX-05
+**Depends on:** Phase 6
+**Plans:** 3/3 plans complete
+
+Plans:
+- [ ] 07-01-PLAN.md — FixedPriceRule type, evaluation logic with TDD, and fetch-prices.ts backend integration
+- [ ] 07-02-PLAN.md — Fixed Price tab in RuleEditor and inline rule editing on CardRow
+- [ ] 07-03-PLAN.md — Wishlist filter dropdown and persistent filter state via localStorage

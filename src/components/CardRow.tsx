@@ -1,10 +1,14 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router';
-import type { MonitoredCardWithPrice } from '../lib/cardtrader-types';
+import type { MonitoredCardWithPrice, NotificationRule } from '../lib/cardtrader-types';
 import { languageToFlag } from '../lib/cardtrader-utils';
+import { supabase } from '../lib/supabase';
 import { PriceChange, formatEur } from './PriceDisplay';
 
 type CardRowProps = {
   card: MonitoredCardWithPrice;
+  wishlistName?: string;
+  onRuleSaved?: () => void;
 };
 
 function ImagePlaceholder() {
@@ -28,14 +32,143 @@ function ImagePlaceholder() {
   );
 }
 
-export function CardRow({ card }: CardRowProps) {
+function directionEmoji(direction: 'up' | 'down' | 'both'): string {
+  if (direction === 'down') return '\u25BC';
+  if (direction === 'up') return '\u25B2';
+  return '\u2195';
+}
+
+type InlineRuleInputProps = {
+  card: MonitoredCardWithPrice;
+  onSaved: () => void;
+};
+
+function InlineRuleInput({ card, onSaved }: InlineRuleInputProps) {
+  const firstRule = card.notification_rule?.[0] ?? null;
+
+  if (!firstRule) {
+    return <span className="text-xs text-slate-500 italic">---</span>;
+  }
+
+  let primaryField: 'threshold_percent' | 'price_eur' | 'range_percent';
+  let suffix: string;
+
+  if (firstRule.type === 'threshold') {
+    primaryField = 'threshold_percent';
+    suffix = '%';
+  } else if (firstRule.type === 'fixed_price') {
+    primaryField = 'price_eur';
+    suffix = 'EUR';
+  } else {
+    primaryField = 'range_percent';
+    suffix = '%';
+  }
+
+  const initialValue =
+    firstRule.type === 'fixed_price'
+      ? firstRule.price_eur.toFixed(2)
+      : String(
+          (firstRule as { threshold_percent?: number; range_percent?: number })[
+            primaryField as 'threshold_percent' | 'range_percent'
+          ] ?? 0,
+        );
+
+  return (
+    <InlineRuleInputInner
+      card={card}
+      firstRule={firstRule}
+      primaryField={primaryField}
+      suffix={suffix}
+      initialValue={initialValue}
+      onSaved={onSaved}
+    />
+  );
+}
+
+type InlineRuleInputInnerProps = {
+  card: MonitoredCardWithPrice;
+  firstRule: NonNullable<MonitoredCardWithPrice['notification_rule']>[number];
+  primaryField: 'threshold_percent' | 'price_eur' | 'range_percent';
+  suffix: string;
+  initialValue: string;
+  onSaved: () => void;
+};
+
+function InlineRuleInputInner({
+  card,
+  firstRule,
+  primaryField,
+  suffix,
+  initialValue,
+  onSaved,
+}: InlineRuleInputInnerProps) {
+  const [localValue, setLocalValue] = useState(initialValue);
+  const [saving, setSaving] = useState(false);
+  const [saved, setSaved] = useState(false);
+
+  const emoji = 'direction' in firstRule ? directionEmoji(firstRule.direction) : '';
+
+  async function handleSave() {
+    if (saving) return;
+    const parsed = Number.parseFloat(localValue);
+    if (Number.isNaN(parsed)) return;
+
+    setSaving(true);
+    const updatedRules: NotificationRule[] = (card.notification_rule ?? []).map((rule, i) => {
+      if (i !== 0) return rule;
+      return { ...rule, [primaryField]: parsed } as NotificationRule;
+    });
+
+    const { error } = await supabase
+      .from('monitored_cards')
+      .update({ notification_rule: updatedRules })
+      .eq('id', card.id);
+
+    setSaving(false);
+
+    if (!error) {
+      setSaved(true);
+      onSaved();
+      setTimeout(() => setSaved(false), 1500);
+    }
+  }
+
+  return (
+    <div
+      className="flex flex-shrink-0 items-center gap-1"
+      onClick={(e) => e.stopPropagation()}
+      onKeyDown={(e) => e.stopPropagation()}
+    >
+      {emoji && <span className="text-xs text-slate-400">{emoji}</span>}
+      <input
+        type="number"
+        value={localValue}
+        onChange={(e) => setLocalValue(e.target.value)}
+        onBlur={handleSave}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') handleSave();
+        }}
+        className="w-16 rounded border border-slate-700 bg-slate-800 px-2 py-1 text-xs text-slate-100 outline-none focus:border-slate-600"
+        aria-label={`Rule value (${suffix})`}
+      />
+      <span className="text-xs text-slate-400">{suffix}</span>
+      {saved && <span className="text-xs text-green-400">&#10003;</span>}
+    </div>
+  );
+}
+
+export function CardRow({ card, wishlistName, onRuleSaved }: CardRowProps) {
   const navigate = useNavigate();
 
   return (
-    <button
-      type="button"
+    <div
+      role="button"
+      tabIndex={0}
       onClick={() => navigate(`/cards/${card.id}`)}
-      className={`flex w-full items-center gap-3 rounded-lg border border-slate-700 px-3 py-2 text-left transition-colors hover:bg-slate-700 ${
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') navigate(`/cards/${card.id}`);
+      }}
+      className={`flex w-full cursor-pointer items-center gap-3 rounded-lg border border-slate-700 px-3 py-2 text-left transition-colors hover:bg-slate-700 ${
         !card.is_active ? 'opacity-50' : ''
       }`}
     >
@@ -58,8 +191,14 @@ export function CardRow({ card }: CardRowProps) {
         <p className="truncate font-medium text-slate-100">
           {card.card_name} <span className="text-sm">{languageToFlag(card.language_required)}</span>
         </p>
-        <p className="truncate text-sm text-slate-400">{card.ct_expansions?.name ?? '---'}</p>
+        <p className="truncate text-sm text-slate-400">
+          {card.ct_expansions?.name ?? '---'}
+          {wishlistName ? ` · ${wishlistName}` : ''}
+        </p>
       </div>
+
+      {/* Inline rule input */}
+      <InlineRuleInput card={card} onSaved={onRuleSaved ?? (() => {})} />
 
       {/* Price + change */}
       <div className="flex flex-shrink-0 flex-col items-end gap-0.5">
@@ -68,6 +207,6 @@ export function CardRow({ card }: CardRowProps) {
         </span>
         <PriceChange baseline={card.baseline_price_cents} current={card.latest_price_cents} />
       </div>
-    </button>
+    </div>
   );
 }

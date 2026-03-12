@@ -60,7 +60,14 @@ export interface StabilityRule {
   enabled: boolean;
 }
 
-export type NotificationRule = ThresholdRule | StabilityRule;
+export interface FixedPriceRule {
+  type: 'fixed_price';
+  price_eur: number;
+  direction: 'up' | 'down' | 'both';
+  enabled: boolean;
+}
+
+export type NotificationRule = ThresholdRule | StabilityRule | FixedPriceRule;
 
 export interface CardFilters {
   condition?: string;

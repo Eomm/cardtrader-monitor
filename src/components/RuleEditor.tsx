@@ -1,7 +1,16 @@
 import { useState } from 'react';
 import { Link } from 'react-router';
-import type { NotificationRule, StabilityRule, ThresholdRule } from '../lib/cardtrader-types';
-import { createDefaultNotificationRule, createDefaultStabilityRule } from '../lib/cardtrader-utils';
+import type {
+  FixedPriceRule,
+  NotificationRule,
+  StabilityRule,
+  ThresholdRule,
+} from '../lib/cardtrader-types';
+import {
+  createDefaultFixedPriceRule,
+  createDefaultNotificationRule,
+  createDefaultStabilityRule,
+} from '../lib/cardtrader-utils';
 import { supabase } from '../lib/supabase';
 
 type RuleEditorProps = {
@@ -10,7 +19,7 @@ type RuleEditorProps = {
   onSave: () => void;
 };
 
-type ActiveTab = 'threshold' | 'stability';
+type ActiveTab = 'threshold' | 'stability' | 'fixed_price';
 
 export function RuleEditor({ cardId, rules, onSave }: RuleEditorProps) {
   const [localRules, setLocalRules] = useState<NotificationRule[]>(
@@ -22,6 +31,7 @@ export function RuleEditor({ cardId, rules, onSave }: RuleEditorProps) {
 
   const thresholdRules = localRules.filter((r): r is ThresholdRule => r.type === 'threshold');
   const stabilityRules = localRules.filter((r): r is StabilityRule => r.type === 'stability');
+  const fixedPriceRules = localRules.filter((r): r is FixedPriceRule => r.type === 'fixed_price');
 
   function updateRule(index: number, updated: NotificationRule) {
     setLocalRules((prev) => {
@@ -46,6 +56,12 @@ export function RuleEditor({ cardId, rules, onSave }: RuleEditorProps) {
   function addStabilityRule() {
     setLocalRules((prev) => [...prev, createDefaultStabilityRule()]);
     setActiveTab('stability');
+    setFeedback(null);
+  }
+
+  function addFixedPriceRule() {
+    setLocalRules((prev) => [...prev, createDefaultFixedPriceRule()]);
+    setActiveTab('fixed_price');
     setFeedback(null);
   }
 
@@ -115,6 +131,17 @@ export function RuleEditor({ cardId, rules, onSave }: RuleEditorProps) {
           }`}
         >
           Stability ({stabilityRules.length})
+        </button>
+        <button
+          type="button"
+          onClick={() => setActiveTab('fixed_price')}
+          className={`rounded px-3 py-1.5 text-sm font-medium transition-colors ${
+            activeTab === 'fixed_price'
+              ? 'bg-blue-500 text-white'
+              : 'bg-slate-700 text-slate-400 hover:bg-slate-600'
+          }`}
+        >
+          Fixed Price ({fixedPriceRules.length})
         </button>
       </div>
 
@@ -286,6 +313,92 @@ export function RuleEditor({ cardId, rules, onSave }: RuleEditorProps) {
             className="w-full rounded border border-dashed border-slate-600 px-3 py-2 text-sm text-blue-500 transition-colors hover:border-slate-500 hover:text-blue-400"
           >
             + Add Stability Rule
+          </button>
+        </div>
+      )}
+
+      {/* Fixed Price tab */}
+      {activeTab === 'fixed_price' && (
+        <div className="space-y-3">
+          {fixedPriceRules.length === 0 ? (
+            <p className="py-4 text-center text-sm text-slate-500">No fixed price rules</p>
+          ) : (
+            fixedPriceRules.map((rule) => {
+              const idx = getGlobalIndex(rule);
+              return (
+                <div key={idx} className="rounded-lg border border-slate-700 p-3">
+                  <div className="flex flex-wrap items-center gap-3">
+                    {/* EUR amount */}
+                    <label className="flex items-center gap-1.5 text-sm">
+                      <span className="text-slate-400">EUR</span>
+                      <input
+                        type="number"
+                        min={0.01}
+                        step={0.01}
+                        value={rule.price_eur}
+                        onChange={(e) =>
+                          updateRule(idx, {
+                            ...rule,
+                            price_eur: Number(e.target.value),
+                          })
+                        }
+                        className="w-20 rounded border border-slate-700 bg-slate-800 px-3 py-1.5 text-sm text-slate-100 outline-none focus:border-slate-600"
+                      />
+                    </label>
+
+                    {/* Direction */}
+                    <div className="flex overflow-hidden rounded border border-slate-700">
+                      {(['up', 'down', 'both'] as const).map((dir) => (
+                        <button
+                          key={dir}
+                          type="button"
+                          onClick={() => updateRule(idx, { ...rule, direction: dir })}
+                          className={`px-2.5 py-1 text-xs font-medium capitalize transition-colors ${
+                            rule.direction === dir
+                              ? 'bg-blue-500 text-white'
+                              : 'bg-slate-800 text-slate-400 hover:bg-slate-700'
+                          }`}
+                        >
+                          {dir}
+                        </button>
+                      ))}
+                    </div>
+
+                    {/* Enabled toggle */}
+                    <button
+                      type="button"
+                      onClick={() => updateRule(idx, { ...rule, enabled: !rule.enabled })}
+                      className={`relative h-5 w-9 rounded-full transition-colors ${
+                        rule.enabled ? 'bg-blue-500' : 'bg-slate-600'
+                      }`}
+                      aria-label={rule.enabled ? 'Disable rule' : 'Enable rule'}
+                    >
+                      <span
+                        className={`absolute top-0.5 left-0.5 h-4 w-4 rounded-full bg-white transition-transform ${
+                          rule.enabled ? 'translate-x-4' : ''
+                        }`}
+                      />
+                    </button>
+
+                    {/* Remove */}
+                    <button
+                      type="button"
+                      onClick={() => removeRule(idx)}
+                      className="ml-auto text-sm text-red-400 transition-colors hover:text-red-500"
+                    >
+                      Remove
+                    </button>
+                  </div>
+                </div>
+              );
+            })
+          )}
+          <button
+            type="button"
+            onClick={addFixedPriceRule}
+            className="w-full rounded border border-dashed border-slate-600 px-3 py-2 text-sm text-blue-500 transition-colors hover:border-slate-500 hover:text-blue-400"
+          >
+            + Add Fixed Price Rule
           </button>
         </div>
       )}

@@ -1,6 +1,7 @@
 import type {
   Blueprint,
   CardFilters,
+  FixedPriceRule,
   MarketplaceProduct,
   MonitoredCardWithPrice,
   NotificationRule,
@@ -109,6 +110,19 @@ export function createDefaultNotificationRule(): ThresholdRule {
     type: 'threshold',
     threshold_percent: 20,
     direction: 'both',
+    enabled: true,
+  };
+}
+
+/**
+ * Create the default fixed price rule.
+ * Triggers when price drops to or below 1.00 EUR.
+ */
+export function createDefaultFixedPriceRule(): FixedPriceRule {
+  return {
+    type: 'fixed_price',
+    price_eur: 1.0,
+    direction: 'down',
     enabled: true,
   };
 }

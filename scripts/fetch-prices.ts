@@ -1,6 +1,7 @@
 import { createClient } from '@supabase/supabase-js';
 import type {
   CardFilters,
+  FixedPriceRule,
   MarketplaceProduct,
   NotificationRule,
   ThresholdRule,
@@ -15,6 +16,7 @@ import {
   type ThresholdAlert,
   formatAlertMessage,
   shouldNotify,
+  shouldNotifyFixedPrice,
 } from '../src/lib/telegram-utils.ts';
 
 const CARDTRADER_API_BASE = 'https://api.cardtrader.com/api/v2';
@@ -377,7 +379,11 @@ export async function main(): Promise<void> {
         (r): r is ThresholdRule => r.type === 'threshold' && r.enabled,
       );
 
-      if (thresholdRules.length === 0) continue;
+      const fixedPriceRules = rules.filter(
+        (r): r is FixedPriceRule => r.type === 'fixed_price' && r.enabled,
+      );
+
+      if (thresholdRules.length === 0 && fixedPriceRules.length === 0) continue;
 
       const currentPrice = currentPriceMap.get(card.id) ?? null;
       if (currentPrice === null) continue;
@@ -385,11 +391,13 @@ export async function main(): Promise<void> {
       if (!card.telegram_chat_id) continue;
 
       const lastNotif = lastNotifMap.get(card.id) ?? null;
+      const chatKey = String(card.telegram_chat_id);
+
+      let alertSent = false;
 
       for (const rule of thresholdRules) {
         const result = shouldNotify(rule, card.baseline_price_cents, currentPrice, lastNotif);
         if (result.triggered) {
-          const chatKey = String(card.telegram_chat_id);
           const alert: AlertWithCardId = {
             cardId: card.id,
             cardName: card.card_name,
@@ -405,7 +413,33 @@ export async function main(): Promise<void> {
             existing.push(alert);
             alertsByChat.set(chatKey, existing);
           }
+          alertSent = true;
           break; // One alert per card is enough
+        }
+      }
+
+      if (!alertSent) {
+        for (const rule of fixedPriceRules) {
+          const previousPrice = lastNotif?.priceCents ?? card.baseline_price_cents;
+          const result = shouldNotifyFixedPrice(rule, previousPrice, currentPrice);
+          if (result.triggered) {
+            const alert: AlertWithCardId = {
+              cardId: card.id,
+              cardName: card.card_name,
+              blueprintId: card.blueprint_id,
+              oldPriceCents: result.comparisonPriceCents ?? 0,
+              newPriceCents: currentPrice,
+              percentChange: result.percentChange,
+            };
+
+            const existing = alertsByChat.get(chatKey) ?? [];
+            // Avoid duplicate alerts for the same card (multiple rules)
+            if (!existing.some((a) => a.cardId === card.id)) {
+              existing.push(alert);
+              alertsByChat.set(chatKey, existing);
+            }
+            break; // One alert per card is enough
+          }
         }
       }
     }

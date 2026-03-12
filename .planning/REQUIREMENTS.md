@@ -65,6 +65,14 @@ Requirements for initial release. Each maps to roadmap phases.
 - [x] **QUAL-01**: Project uses Biome for linting and formatting
 - [x] **QUAL-02**: Biome runs in CI on push/PR via GitHub Actions
 
+### UI/UX Improvements
+
+- [x] **UX-01**: User can create a fixed-price threshold rule that alerts when price crosses an absolute EUR amount
+- [x] **UX-02**: Fixed-price rules are evaluated during hourly price checks and trigger Telegram alerts
+- [x] **UX-03**: User can edit the first rule's primary value inline from the dashboard card row (auto-saves on blur/Enter)
+- [x] **UX-04**: User can filter the dashboard card list by wishlist
+- [x] **UX-05**: Dashboard filter state (search, expansion, wishlist) persists across page reloads via localStorage
+
 ## v2 Requirements
 
 Deferred to future release. Tracked but not in current roadmap.
@@ -145,12 +153,17 @@ Which phases cover which requirements. Updated during roadmap creation.
 | NOTF-04 | Phase 4: Notifications | Complete |
 | WISH-04 | Phase 5: Automation | Complete |
 | PRIC-05 | Phase 5: Automation | Complete |
+| UX-01 | Phase 7: UI Usability | Planned |
+| UX-02 | Phase 7: UI Usability | Planned |
+| UX-03 | Phase 7: UI Usability | Planned |
+| UX-04 | Phase 7: UI Usability | Planned |
+| UX-05 | Phase 7: UI Usability | Planned |
 
 **Coverage:**
-- v1 requirements: 31 total
-- Mapped to phases: 31
+- v1 requirements: 36 total
+- Mapped to phases: 36
 - Unmapped: 0
 
 ---
 *Requirements defined: 2026-03-07*
-*Last updated: 2026-03-07 after roadmap creation*
+*Last updated: 2026-03-12 after Phase 7 planning*

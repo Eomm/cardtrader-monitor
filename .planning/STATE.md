@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 06-03-PLAN.md
-last_updated: "2026-03-08T18:33:28.845Z"
+stopped_at: "Completed 07-02: Fixed Price tab in RuleEditor and inline rule editing in CardRow"
+last_updated: "2026-03-12T16:50:50.445Z"
 last_activity: "2026-03-08 - Completed 06-03: How It Works page and card detail UX"
 progress:
-  total_phases: 6
-  completed_phases: 6
-  total_plans: 18
-  completed_plans: 18
+  total_phases: 7
+  completed_phases: 7
+  total_plans: 21
+  completed_plans: 21
   percent: 100
 ---
 
@@ -63,6 +63,9 @@ Progress: [██████████] 100%
 | Phase 06-chores-and-fixes P04 | 1 min | 1 tasks | 1 files |
 | Phase 06 P02 | 6 min | 2 tasks | 14 files |
 | Phase 06 P03 | 2 min | 2 tasks | 5 files |
+| Phase 07-ui-usability-improvements P01 | 3 | 3 tasks | 5 files |
+| Phase 07-ui-usability-improvements P03 | 8 | 2 tasks | 4 files |
+| Phase 07-ui-usability-improvements P02 | 2 | 2 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -122,6 +125,13 @@ Recent decisions affecting current work:
 - [06-03]: Wishlist info fetched as separate query after card load (not joined) for simplicity
 - [06-03]: Help icon uses plain ? in bordered circle rather than SVG icon library
 - [06-03]: Wishlist count check placed after auth but before API token fetch to fail fast
+- [Phase 07-01]: FixedPriceRule uses crossing semantics: triggers only when price crosses target threshold (not just below/above)
+- [Phase 07-01]: Threshold rules evaluated before fixed_price rules; first triggered rule wins per card
+- [Phase 07-ui-usability-improvements]: Installed jsdom as devDependency for vitest localStorage support; used @vitest-environment jsdom annotation on test file
+- [Phase 07-ui-usability-improvements]: Exported FILTER_KEY, DEFAULT_FILTERS, DashboardFilters, loadFilters from CardList.tsx at module level for unit testability
+- [Phase 07-02]: InlineRuleInput split into outer/inner components to avoid hooks-in-conditional anti-pattern
+- [Phase 07-02]: Direction emoji uses Unicode triangle characters; no icon library dependency
+- [Phase 07-02]: CardList onRuleSaved wired through fully (was previously ignored as _onRuleSaved)
 
 ### Pending Todos
 
@@ -135,15 +145,19 @@ None yet.
 ### Roadmap Evolution
 
 - Phase 6 added: chores and fixes
+- Phase 7 added: UI usability improvements (wishlist filter, persistent filters, threshold UX, fixed price threshold rule)
 
 ### Quick Tasks Completed
 
 | # | Description | Date | Commit | Directory |
 |---|-------------|------|--------|-----------|
 | 1 | Fix Telegram MarkdownV2 escaping for > character | 2026-03-07 | 903bfba | [1-fix-telegram-markdownv2-escaping-for-cha](./quick/1-fix-telegram-markdownv2-escaping-for-cha/) |
+| 2 | Dashboard must show wishlist name in card row | 2026-03-12 | d3d6a12 | [2-dashboard-must-show-wishlist-name-in-car](./quick/2-dashboard-must-show-wishlist-name-in-car/) |
+| 3 | Display error message from 400 response | 2026-03-12 | 91f4b88 | [3-display-error-message-from-400-response-](./quick/3-display-error-message-from-400-response-/) |
+| 4 | Update How It Works page with inline rule editing and fixed price rule docs | 2026-03-12 | 8e75f10 | [4-update-how-it-works-page-with-inline-rul](./quick/4-update-how-it-works-page-with-inline-rul/) |
 
 ## Session Continuity
 
-Last session: 2026-03-08T18:29:19Z
-Stopped at: Completed 06-03-PLAN.md
+Last session: 2026-03-12T17:20:00Z
+Stopped at: Completed quick task 4: Update How It Works page with inline rule editing and fixed price rule docs
 Resume file: None
