@@ -101,9 +101,9 @@ export function HowItWorksPage() {
               <p>
                 The dashboard shows the{' '}
                 <strong className="text-slate-100">first active rule</strong> for each card directly
-                in the card row. You can edit the rule inline -- click on it to change the threshold,
-                direction, or target price without opening the card detail page. Changes are saved
-                immediately.
+                in the card row. You can edit the rule inline -- click on it to change the
+                threshold, direction, or target price without opening the card detail page. Changes
+                are saved immediately.
               </p>
               <p>
                 Each card can have <strong className="text-slate-100">threshold rules</strong> that

@@ -148,7 +148,7 @@ function InlineRuleInputInner({
         onKeyDown={(e) => {
           if (e.key === 'Enter') handleSave();
         }}
-        className="w-16 rounded border border-slate-700 bg-slate-800 px-2 py-1 text-xs text-slate-100 outline-none focus:border-slate-600"
+        className="w-14 rounded border border-slate-700 bg-slate-800 px-2 py-1 text-xs text-slate-100 outline-none focus:border-slate-600"
         aria-label={`Rule value (${suffix})`}
       />
       <span className="text-xs text-slate-400">{suffix}</span>
@@ -168,7 +168,7 @@ export function CardRow({ card, wishlistName, onRuleSaved }: CardRowProps) {
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') navigate(`/cards/${card.id}`);
       }}
-      className={`flex w-full cursor-pointer items-center gap-3 rounded-lg border border-slate-700 px-3 py-2 text-left transition-colors hover:bg-slate-700 ${
+      className={`flex w-full cursor-pointer flex-wrap items-center gap-2 rounded-lg border border-slate-700 px-3 py-2 text-left transition-colors hover:bg-slate-700 sm:flex-nowrap sm:gap-3 ${
         !card.is_active ? 'opacity-50' : ''
       }`}
     >
@@ -187,7 +187,7 @@ export function CardRow({ card, wishlistName, onRuleSaved }: CardRowProps) {
       </div>
 
       {/* Name + flag */}
-      <div className="min-w-0 flex-1">
+      <div className="min-w-0 basis-[calc(100%-3.5rem)] flex-1 sm:basis-0">
         <p className="truncate font-medium text-slate-100">
           {card.card_name} <span className="text-sm">{languageToFlag(card.language_required)}</span>
         </p>
@@ -198,7 +198,9 @@ export function CardRow({ card, wishlistName, onRuleSaved }: CardRowProps) {
       </div>
 
       {/* Inline rule input */}
-      <InlineRuleInput card={card} onSaved={onRuleSaved ?? (() => {})} />
+      <div className="ml-auto sm:ml-0">
+        <InlineRuleInput card={card} onSaved={onRuleSaved ?? (() => {})} />
+      </div>
 
       {/* Price + change */}
       <div className="flex flex-shrink-0 flex-col items-end gap-0.5">

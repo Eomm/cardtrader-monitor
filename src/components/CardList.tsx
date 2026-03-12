@@ -39,7 +39,11 @@ type CardListProps = {
 };
 
 function calcVariation(card: MonitoredCardWithPrice): number | null {
-  if (card.latest_price_cents === null || card.baseline_price_cents === null || card.baseline_price_cents === 0) {
+  if (
+    card.latest_price_cents === null ||
+    card.baseline_price_cents === null ||
+    card.baseline_price_cents === 0
+  ) {
     return null;
   }
   return ((card.latest_price_cents - card.baseline_price_cents) / card.baseline_price_cents) * 100;
@@ -55,7 +59,7 @@ export function CardList({ cards, wishlists, onRuleSaved }: CardListProps) {
 
   const wishlistMap = useMemo(() => {
     const map = new Map<string, string>();
-    for (const w of (wishlists ?? [])) {
+    for (const w of wishlists ?? []) {
       map.set(w.id, w.name);
     }
     return map;
@@ -73,7 +77,10 @@ export function CardList({ cards, wishlists, onRuleSaved }: CardListProps) {
   // Persist filters to localStorage on change
   useEffect(() => {
     try {
-      localStorage.setItem(FILTER_KEY, JSON.stringify({ search, expansionFilter, wishlistFilter, sortField, sortDirection }));
+      localStorage.setItem(
+        FILTER_KEY,
+        JSON.stringify({ search, expansionFilter, wishlistFilter, sortField, sortDirection }),
+      );
     } catch {
       // Ignore storage errors (private browsing, storage full)
     }
@@ -139,7 +146,7 @@ export function CardList({ cards, wishlists, onRuleSaved }: CardListProps) {
 
   return (
     <div>
-      <div className="mb-3 flex gap-2">
+      <div className="mb-3 flex flex-col gap-2 sm:flex-row">
         <input
           type="text"
           placeholder="Search cards..."
@@ -151,7 +158,7 @@ export function CardList({ cards, wishlists, onRuleSaved }: CardListProps) {
           <select
             value={expansionFilter}
             onChange={(e) => setExpansionFilter(e.target.value)}
-            className="rounded border border-slate-700 bg-slate-800 px-3 py-2 text-sm text-slate-100 outline-none transition-colors focus:border-slate-600"
+            className="w-full rounded border border-slate-700 bg-slate-800 px-3 py-2 text-sm text-slate-100 outline-none transition-colors focus:border-slate-600 sm:w-auto"
           >
             <option value="">All expansions</option>
             {expansions.map((name) => (
@@ -165,7 +172,7 @@ export function CardList({ cards, wishlists, onRuleSaved }: CardListProps) {
           <select
             value={wishlistFilter}
             onChange={(e) => setWishlistFilter(e.target.value)}
-            className="rounded border border-slate-700 bg-slate-800 px-3 py-2 text-sm text-slate-100 outline-none transition-colors focus:border-slate-600"
+            className="w-full rounded border border-slate-700 bg-slate-800 px-3 py-2 text-sm text-slate-100 outline-none transition-colors focus:border-slate-600 sm:w-auto"
           >
             <option value="">All wishlists</option>
             {wishlists.map((w) => (
@@ -177,7 +184,7 @@ export function CardList({ cards, wishlists, onRuleSaved }: CardListProps) {
         )}
       </div>
 
-      <div className="mb-3 flex gap-2">
+      <div className="mb-3 flex flex-wrap gap-2">
         <span className="self-center text-xs text-slate-500">Sort:</span>
         <button
           type="button"
@@ -199,7 +206,8 @@ export function CardList({ cards, wishlists, onRuleSaved }: CardListProps) {
               : 'border-slate-700 bg-slate-800 text-slate-400 hover:text-slate-100'
           }`}
         >
-          Variation{sortField === 'variation' ? (sortDirection === 'asc' ? ' \u25b2' : ' \u25bc') : ''}
+          Variation
+          {sortField === 'variation' ? (sortDirection === 'asc' ? ' \u25b2' : ' \u25bc') : ''}
         </button>
       </div>
 
@@ -208,7 +216,12 @@ export function CardList({ cards, wishlists, onRuleSaved }: CardListProps) {
       ) : (
         <div className="flex flex-col gap-1">
           {sorted.map((card) => (
-            <CardRow key={card.id} card={card} wishlistName={wishlistMap.get(card.wishlist_id)} onRuleSaved={onRuleSaved} />
+            <CardRow
+              key={card.id}
+              card={card}
+              wishlistName={wishlistMap.get(card.wishlist_id)}
+              onRuleSaved={onRuleSaved}
+            />
           ))}
         </div>
       )}
