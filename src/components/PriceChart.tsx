@@ -1,4 +1,5 @@
-import type { NotificationRule, ThresholdRule, FixedPriceRule } from '../lib/cardtrader-types';
+import { useState } from 'react';
+import type { FixedPriceRule, NotificationRule, ThresholdRule } from '../lib/cardtrader-types';
 
 type PriceChartProps = {
   priceHistory: { price_cents: number; recorded_at: string }[];
@@ -34,7 +35,12 @@ function formatDate(iso: string): string {
   return d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
 }
 
+// Y-axis tick values for the chart
+const Y_TICK_INDICES = [0, 1, 2, 3] as const;
+
 export function PriceChart({ priceHistory, baselinePriceCents, rules }: PriceChartProps) {
+  const [hovered, setHovered] = useState<number | null>(null);
+
   // Need at least 2 points for a line
   if (priceHistory.length < 2) return null;
 
@@ -81,7 +87,9 @@ export function PriceChart({ priceHistory, baselinePriceCents, rules }: PriceCha
   const maxCents = rawMax + range * 0.1;
 
   // Build polyline points
-  const points = data.map((d, i) => `${toX(i, data.length)},${toY(d.price_cents, minCents, maxCents)}`).join(' ');
+  const points = data
+    .map((d, i) => `${toX(i, data.length)},${toY(d.price_cents, minCents, maxCents)}`)
+    .join(' ');
 
   // Filled area path: go along the line then close at bottom
   const firstX = toX(0, data.length);
@@ -90,7 +98,7 @@ export function PriceChart({ priceHistory, baselinePriceCents, rules }: PriceCha
   const areaPoints = `${firstX},${bottomY} ${points} ${lastX},${bottomY}`;
 
   // Y-axis ticks: 4 evenly spaced values
-  const yTicks = [0, 1, 2, 3].map((i) => minCents + ((maxCents - minCents) * i) / 3);
+  const yTicks = Y_TICK_INDICES.map((i) => minCents + ((maxCents - minCents) * i) / 3);
 
   // Text labels
   const firstDate = formatDate(data[0].recorded_at);
@@ -107,16 +115,11 @@ export function PriceChart({ priceHistory, baselinePriceCents, rules }: PriceCha
         {/* Y-axis tick labels */}
         {yTicks.map((val, i) => {
           const y = toY(val, minCents, maxCents);
+          const label = formatLabel(val);
           return (
-            <text
-              key={i}
-              x={PAD_LEFT - 4}
-              y={y + 3}
-              textAnchor="end"
-              fill="#64748b"
-              fontSize={10}
-            >
-              {formatLabel(val)}
+            // biome-ignore lint/suspicious/noArrayIndexKey: static tick positions that never reorder
+            <text key={i} x={PAD_LEFT - 4} y={y + 3} textAnchor="end" fill="#64748b" fontSize={10}>
+              {label}
             </text>
           );
         })}
@@ -154,16 +157,34 @@ export function PriceChart({ priceHistory, baselinePriceCents, rules }: PriceCha
           strokeLinecap="round"
         />
 
-        {/* Data point circles */}
-        {data.map((d, i) => (
-          <circle
-            key={i}
-            cx={toX(i, data.length)}
-            cy={toY(d.price_cents, minCents, maxCents)}
-            r={3}
-            fill="#3b82f6"
-          />
-        ))}
+        {/* Data point circles with hit targets */}
+        {data.map((d, i) => {
+          const cx = toX(i, data.length);
+          const cy = toY(d.price_cents, minCents, maxCents);
+          const isHovered = hovered === i;
+          return (
+            <g key={d.recorded_at}>
+              {/* Visible circle */}
+              <circle
+                cx={cx}
+                cy={cy}
+                r={isHovered ? 4 : 3}
+                fill="#3b82f6"
+                style={{ pointerEvents: 'none' }}
+              />
+              {/* Invisible hit target */}
+              <circle
+                cx={cx}
+                cy={cy}
+                r={8}
+                fill="transparent"
+                onMouseEnter={() => setHovered(i)}
+                onMouseLeave={() => setHovered(null)}
+                style={{ cursor: 'crosshair' }}
+              />
+            </g>
+          );
+        })}
 
         {/* Baseline line */}
         {baselinePriceCents !== null &&
@@ -212,6 +233,7 @@ export function PriceChart({ priceHistory, baselinePriceCents, rules }: PriceCha
               if (value < minCents || value > maxCents) return null;
               const y = toY(value, minCents, maxCents);
               return (
+                // biome-ignore lint/suspicious/noArrayIndexKey: rule+direction pairs are positionally stable
                 <g key={`threshold-${rIdx}-${lIdx}`}>
                   <line
                     x1={PAD_LEFT}
@@ -242,6 +264,7 @@ export function PriceChart({ priceHistory, baselinePriceCents, rules }: PriceCha
           if (value < minCents || value > maxCents) return null;
           const y = toY(value, minCents, maxCents);
           return (
+            // biome-ignore lint/suspicious/noArrayIndexKey: rule position is stable for fixed-price rules
             <g key={`fixed-${rIdx}`}>
               <line
                 x1={PAD_LEFT}
@@ -264,6 +287,62 @@ export function PriceChart({ priceHistory, baselinePriceCents, rules }: PriceCha
             </g>
           );
         })}
+        {/* Hover tooltip — rendered last to appear on top */}
+        {hovered !== null && (() => {
+          const d = data[hovered];
+          const cx = toX(hovered, data.length);
+          const cy = toY(d.price_cents, minCents, maxCents);
+
+          const priceLine = formatLabel(d.price_cents);
+          const dateObj = new Date(d.recorded_at);
+          const datePart = dateObj.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+          const timePart = dateObj.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' });
+          const timeLine = `${datePart}, ${timePart}`;
+
+          const tooltipW = 90;
+          const tooltipH = 34;
+
+          // Position: above by default, below if near top edge
+          const positionBelow = cy < PAD_TOP + 40;
+          const ty = positionBelow ? cy + 15 : cy - tooltipH - 5;
+
+          // Horizontal anchor: right-align if near right edge
+          const nearRight = cx > WIDTH - 80;
+          const tx = nearRight ? cx - tooltipW : cx;
+
+          return (
+            <g style={{ pointerEvents: 'none' }}>
+              <rect
+                x={tx}
+                y={ty}
+                width={tooltipW}
+                height={tooltipH}
+                fill="#1e293b"
+                rx={4}
+                stroke="#334155"
+                strokeWidth={1}
+              />
+              <text
+                x={tx + tooltipW / 2}
+                y={ty + 13}
+                textAnchor="middle"
+                fill="#e2e8f0"
+                fontSize={10}
+              >
+                {priceLine}
+              </text>
+              <text
+                x={tx + tooltipW / 2}
+                y={ty + 26}
+                textAnchor="middle"
+                fill="#94a3b8"
+                fontSize={9}
+              >
+                {timeLine}
+              </text>
+            </g>
+          );
+        })()}
       </svg>
     </div>
   );

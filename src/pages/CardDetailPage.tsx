@@ -281,35 +281,6 @@ export function CardDetailPage() {
                   />
                 </div>
               )}
-              {priceHistory.length > 1 && (
-                <div className="mt-4 border-t border-slate-700 pt-3">
-                  <h3 className="mb-2 text-xs font-medium uppercase tracking-wide text-slate-500">
-                    Price Log
-                  </h3>
-                  <div className="space-y-1">
-                    {priceHistory.slice(0, 10).map((snap) => (
-                      <div
-                        key={snap.recorded_at}
-                        className="flex items-center justify-between text-sm"
-                      >
-                        <span className="text-slate-500">
-                          {new Date(snap.recorded_at).toLocaleDateString(undefined, {
-                            month: 'short',
-                            day: 'numeric',
-                          })}{' '}
-                          {new Date(snap.recorded_at).toLocaleTimeString(undefined, {
-                            hour: '2-digit',
-                            minute: '2-digit',
-                          })}
-                        </span>
-                        <span className="font-medium text-slate-300">
-                          {formatEur(snap.price_cents)}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
             </div>
           </section>
 
