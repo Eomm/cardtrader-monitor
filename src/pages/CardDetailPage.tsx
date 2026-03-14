@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
+import { PriceChart } from '../components/PriceChart';
 import { PriceChange, formatEur } from '../components/PriceDisplay';
 import { RuleEditor } from '../components/RuleEditor';
 import type { MonitoredCardWithPrice } from '../lib/cardtrader-types';
@@ -51,7 +52,7 @@ export function CardDetailPage() {
         .select('price_cents, recorded_at')
         .eq('monitored_card_id', id)
         .order('recorded_at', { ascending: false })
-        .limit(10);
+        .limit(30);
 
       const snapshots = priceData ?? [];
       setPriceHistory(snapshots);
@@ -271,10 +272,22 @@ export function CardDetailPage() {
               {priceHistory.length > 1 && (
                 <div className="mt-4 border-t border-slate-700 pt-3">
                   <h3 className="mb-2 text-xs font-medium uppercase tracking-wide text-slate-500">
-                    Recent Prices
+                    Price History
+                  </h3>
+                  <PriceChart
+                    priceHistory={priceHistory}
+                    baselinePriceCents={card.baseline_price_cents}
+                    rules={card.notification_rule}
+                  />
+                </div>
+              )}
+              {priceHistory.length > 1 && (
+                <div className="mt-4 border-t border-slate-700 pt-3">
+                  <h3 className="mb-2 text-xs font-medium uppercase tracking-wide text-slate-500">
+                    Price Log
                   </h3>
                   <div className="space-y-1">
-                    {priceHistory.map((snap) => (
+                    {priceHistory.slice(0, 10).map((snap) => (
                       <div
                         key={snap.recorded_at}
                         className="flex items-center justify-between text-sm"
