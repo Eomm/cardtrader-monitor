@@ -46,15 +46,23 @@ export function CardDetailPage() {
         return;
       }
 
-      // Fetch recent price snapshots
+      // Fetch recent price snapshots (extra rows to ensure 30 unique days)
       const { data: priceData } = await supabase
         .from('price_snapshots')
         .select('price_cents, recorded_at')
         .eq('monitored_card_id', id)
         .order('recorded_at', { ascending: false })
-        .limit(30);
+        .limit(100);
 
-      const snapshots = priceData ?? [];
+      // Deduplicate: keep only the most recent snapshot per day
+      const byDay = new Map<string, { price_cents: number; recorded_at: string }>();
+      for (const snap of priceData ?? []) {
+        const day = snap.recorded_at.slice(0, 10);
+        if (!byDay.has(day)) {
+          byDay.set(day, snap);
+        }
+      }
+      const snapshots = Array.from(byDay.values()).slice(0, 30);
       setPriceHistory(snapshots);
 
       const merged: MonitoredCardWithPrice = {

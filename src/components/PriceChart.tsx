@@ -288,61 +288,68 @@ export function PriceChart({ priceHistory, baselinePriceCents, rules }: PriceCha
           );
         })}
         {/* Hover tooltip — rendered last to appear on top */}
-        {hovered !== null && (() => {
-          const d = data[hovered];
-          const cx = toX(hovered, data.length);
-          const cy = toY(d.price_cents, minCents, maxCents);
+        {hovered !== null &&
+          (() => {
+            const d = data[hovered];
+            const cx = toX(hovered, data.length);
+            const cy = toY(d.price_cents, minCents, maxCents);
 
-          const priceLine = formatLabel(d.price_cents);
-          const dateObj = new Date(d.recorded_at);
-          const datePart = dateObj.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
-          const timePart = dateObj.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' });
-          const timeLine = `${datePart}, ${timePart}`;
+            const priceLine = formatLabel(d.price_cents);
+            const dateObj = new Date(d.recorded_at);
+            const datePart = dateObj.toLocaleDateString(undefined, {
+              month: 'short',
+              day: 'numeric',
+            });
+            const timePart = dateObj.toLocaleTimeString(undefined, {
+              hour: '2-digit',
+              minute: '2-digit',
+            });
+            const timeLine = `${datePart}, ${timePart}`;
 
-          const tooltipW = 90;
-          const tooltipH = 34;
+            const tooltipW = 90;
+            const tooltipH = 34;
 
-          // Position: above by default, below if near top edge
-          const positionBelow = cy < PAD_TOP + 40;
-          const ty = positionBelow ? cy + 15 : cy - tooltipH - 5;
+            // Position: above by default, below if near top edge
+            const positionBelow = cy < PAD_TOP + 40;
+            const ty = positionBelow ? cy + 15 : cy - tooltipH - 5;
 
-          // Horizontal anchor: right-align if near right edge
-          const nearRight = cx > WIDTH - 80;
-          const tx = nearRight ? cx - tooltipW : cx;
+            // Horizontal anchor: right-align if near right edge
+            const nearRight = cx > WIDTH - 80;
+            const tx = nearRight ? cx - tooltipW : cx;
 
-          return (
-            <g style={{ pointerEvents: 'none' }}>
-              <rect
-                x={tx}
-                y={ty}
-                width={tooltipW}
-                height={tooltipH}
-                fill="#1e293b"
-                rx={4}
-                stroke="#334155"
-                strokeWidth={1}
-              />
-              <text
-                x={tx + tooltipW / 2}
-                y={ty + 13}
-                textAnchor="middle"
-                fill="#e2e8f0"
-                fontSize={10}
-              >
-                {priceLine}
-              </text>
-              <text
-                x={tx + tooltipW / 2}
-                y={ty + 26}
-                textAnchor="middle"
-                fill="#94a3b8"
-                fontSize={9}
-              >
-                {timeLine}
-              </text>
-            </g>
-          );
-        })()}
+            return (
+              <g style={{ pointerEvents: 'none' }}>
+                <rect
+                  x={tx}
+                  y={ty}
+                  width={tooltipW}
+                  height={tooltipH}
+                  fill="#1e293b"
+                  rx={4}
+                  stroke="#334155"
+                  strokeWidth={1}
+                />
+                <text
+                  x={tx + tooltipW / 2}
+                  y={ty + 13}
+                  textAnchor="middle"
+                  fill="#e2e8f0"
+                  fontSize={10}
+                >
+                  {priceLine}
+                </text>
+                <text
+                  x={tx + tooltipW / 2}
+                  y={ty + 26}
+                  textAnchor="middle"
+                  fill="#94a3b8"
+                  fontSize={9}
+                >
+                  {timeLine}
+                </text>
+              </g>
+            );
+          })()}
       </svg>
     </div>
   );
