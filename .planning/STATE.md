@@ -158,9 +158,10 @@ None yet.
 | 5 | Write comprehensive README.md | 2026-03-12 | 81cbaf8 | [5-we-need-to-write-a-meaningful-readme-fil](./quick/5-we-need-to-write-a-meaningful-readme-fil/) |
 | 6 | Add sort buttons to dashboard for price and variation | 2026-03-12 | 9711b6f | [6-add-sort-buttons-to-dashboard-for-price-](./quick/6-add-sort-buttons-to-dashboard-for-price-/) |
 | 7 | Fix mobile UI breakage with filters | 2026-03-12 | 6c88297 | [7-fix-mobile-ui-breakage-with-filters](./quick/7-fix-mobile-ui-breakage-with-filters/) |
+| 8 | Add line chart for recent prices with threshold/fixed-price rule overlay lines | 2026-03-14 | 45badc6 | [8-add-line-chart-for-recent-prices-with-th](./quick/8-add-line-chart-for-recent-prices-with-th/) |
 
 ## Session Continuity
 
-Last session: 2026-03-12T19:55:28Z
-Stopped at: Completed quick task 7: Fix mobile UI breakage with filters
+Last session: 2026-03-14T13:41:24Z
+Stopped at: Completed quick task 8: Add line chart for recent prices with threshold/fixed-price rule overlay lines
 Resume file: None
