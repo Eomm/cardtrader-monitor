@@ -5,7 +5,7 @@ milestone_name: milestone
 status: executing
 stopped_at: "Completed 07-02: Fixed Price tab in RuleEditor and inline rule editing in CardRow"
 last_updated: "2026-03-12T16:50:50.445Z"
-last_activity: "2026-03-08 - Completed 06-03: How It Works page and card detail UX"
+last_activity: "2026-03-29 - Completed quick task 10: improve homepage with catchy description, beta notice, how it works link, and privacy page"
 progress:
   total_phases: 7
   completed_phases: 7
@@ -28,7 +28,7 @@ See: .planning/PROJECT.md (updated 2026-03-07)
 Phase: 6 of 6 (Chores and Fixes)
 Plan: 4 of 4 in current phase (06-03 complete)
 Status: In progress
-Last activity: 2026-03-08 - Completed 06-03: How It Works page and card detail UX
+Last activity: 2026-03-29 - Completed quick task 10: improve homepage with catchy description, beta notice, how it works link, and privacy page
 
 Progress: [██████████] 100%
 
