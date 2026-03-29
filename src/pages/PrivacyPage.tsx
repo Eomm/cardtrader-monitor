@@ -56,7 +56,8 @@ export function PrivacyPage() {
             <div className="space-y-3 text-sm leading-relaxed text-slate-400">
               <p>
                 Your data is used solely to provide the CardTrader Monitor service — importing
-                wishlists, tracking prices, and sending alerts when price conditions are met.
+                Magic: The Gathering wishlists, tracking card prices, and sending alerts when price
+                conditions are met.
               </p>
               <p>
                 We do <strong className="text-slate-100">not</strong> sell, share, or use your data

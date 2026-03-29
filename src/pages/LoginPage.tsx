@@ -45,10 +45,10 @@ export function LoginPage() {
             </span>
             <h1 className="text-4xl font-bold text-slate-100 mb-3">CardTrader Monitor</h1>
             <p className="text-lg text-slate-300">
-              Stop refreshing CardTrader. Get notified when prices drop on the cards you care about.
+              Stop refreshing CardTrader. Get notified when prices drop on the Magic: The Gathering cards you care about.
             </p>
             <ul className="mt-4 space-y-1">
-              <li className="text-sm text-slate-400">&#10003; Import your wishlists</li>
+              <li className="text-sm text-slate-400">&#10003; Import your MTG wishlists</li>
               <li className="text-sm text-slate-400">&#10003; Set custom price alerts</li>
               <li className="text-sm text-slate-400">&#10003; Get Telegram notifications</li>
             </ul>
@@ -76,7 +76,7 @@ export function LoginPage() {
             {error && <p className="mt-4 text-sm text-red-500 text-center">{error}</p>}
 
             <p className="mt-6 text-xs text-slate-500 text-center">
-              Sign in to import your CardTrader wishlists and set up price alerts.
+              Sign in to import your CardTrader MTG wishlists and set up price alerts.
             </p>
           </div>
 
