@@ -7,6 +7,7 @@ import { CardDetailPage } from './pages/CardDetailPage';
 import { DashboardPage } from './pages/DashboardPage';
 import { HowItWorksPage } from './pages/HowItWorksPage';
 import { LoginPage } from './pages/LoginPage';
+import { PrivacyPage } from './pages/PrivacyPage';
 import { SettingsPage } from './pages/SettingsPage';
 
 function AuthenticatedLayout({ children }: { children: React.ReactNode }) {
@@ -26,6 +27,7 @@ function App() {
         <Routes>
           <Route path="/" element={<LoginPage />} />
           <Route path="/how-it-works" element={<HowItWorksPage />} />
+          <Route path="/privacy" element={<PrivacyPage />} />
           <Route
             path="/dashboard"
             element={
