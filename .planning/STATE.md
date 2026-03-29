@@ -5,7 +5,7 @@ milestone_name: milestone
 status: executing
 stopped_at: "Completed 07-02: Fixed Price tab in RuleEditor and inline rule editing in CardRow"
 last_updated: "2026-03-12T16:50:50.445Z"
-last_activity: "2026-03-29 - Completed quick task 10: improve homepage with catchy description, beta notice, how it works link, and privacy page"
+last_activity: "2026-03-29 - Completed quick task 11: add Magic: The Gathering mentions to LoginPage and PrivacyPage"
 progress:
   total_phases: 7
   completed_phases: 7
@@ -161,9 +161,10 @@ None yet.
 | 8 | Add line chart for recent prices with threshold/fixed-price rule overlay lines | 2026-03-14 | 45badc6 | [8-add-line-chart-for-recent-prices-with-th](./quick/8-add-line-chart-for-recent-prices-with-th/) |
 | 9 | Hide Price Log section and add hover tooltips to PriceChart | 2026-03-14 | 41b315d | [9-hide-price-log-section-and-add-hover-too](./quick/9-hide-price-log-section-and-add-hover-too/) |
 | 10 | Improve homepage with catchy description, BETA badge, and Privacy page | 2026-03-29 | c802240 | [10-improve-homepage-with-catchy-description](./quick/10-improve-homepage-with-catchy-description/) |
+| 11 | Specify service works for Magic: The Gathering cards | 2026-03-29 | 6c9f690 | [11-specify-service-works-for-magic-the-gath](./quick/11-specify-service-works-for-magic-the-gath/) |
 
 ## Session Continuity
 
 Last session: 2026-03-29T00:00:00Z
-Stopped at: Completed quick task 10: Improve homepage with catchy description, BETA badge, and Privacy page
+Stopped at: Completed quick task 11: add Magic: The Gathering mentions to LoginPage and PrivacyPage
 Resume file: None
