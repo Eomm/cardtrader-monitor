@@ -160,9 +160,10 @@ None yet.
 | 7 | Fix mobile UI breakage with filters | 2026-03-12 | 6c88297 | [7-fix-mobile-ui-breakage-with-filters](./quick/7-fix-mobile-ui-breakage-with-filters/) |
 | 8 | Add line chart for recent prices with threshold/fixed-price rule overlay lines | 2026-03-14 | 45badc6 | [8-add-line-chart-for-recent-prices-with-th](./quick/8-add-line-chart-for-recent-prices-with-th/) |
 | 9 | Hide Price Log section and add hover tooltips to PriceChart | 2026-03-14 | 41b315d | [9-hide-price-log-section-and-add-hover-too](./quick/9-hide-price-log-section-and-add-hover-too/) |
+| 10 | Improve homepage with catchy description, BETA badge, and Privacy page | 2026-03-29 | c802240 | [10-improve-homepage-with-catchy-description](./quick/10-improve-homepage-with-catchy-description/) |
 
 ## Session Continuity
 
-Last session: 2026-03-14T13:52:11Z
-Stopped at: Completed quick task 9: Hide Price Log section and add hover tooltips to PriceChart
+Last session: 2026-03-29T00:00:00Z
+Stopped at: Completed quick task 10: Improve homepage with catchy description, BETA badge, and Privacy page
 Resume file: None
