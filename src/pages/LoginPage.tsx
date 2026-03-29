@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Navigate } from 'react-router';
+import { Link, Navigate } from 'react-router';
 import { Footer } from '../components/Footer';
 import { useAuth } from '../contexts/AuthContext';
 import { supabase } from '../lib/supabase';
@@ -40,10 +40,18 @@ export function LoginPage() {
         <div className="w-full max-w-md">
           {/* Hero */}
           <div className="text-center mb-10">
+            <span className="inline-block rounded-full bg-amber-500/20 text-amber-400 text-xs font-semibold px-3 py-1 mb-4">
+              BETA
+            </span>
             <h1 className="text-4xl font-bold text-slate-100 mb-3">CardTrader Monitor</h1>
-            <p className="text-lg text-slate-400">
-              Track prices and never miss a deal on the cards you care about.
+            <p className="text-lg text-slate-300">
+              Stop refreshing CardTrader. Get notified when prices drop on the cards you care about.
             </p>
+            <ul className="mt-4 space-y-1">
+              <li className="text-sm text-slate-400">&#10003; Import your wishlists</li>
+              <li className="text-sm text-slate-400">&#10003; Set custom price alerts</li>
+              <li className="text-sm text-slate-400">&#10003; Get Telegram notifications</li>
+            </ul>
           </div>
 
           {/* Sign-in card */}
@@ -70,6 +78,21 @@ export function LoginPage() {
             <p className="mt-6 text-xs text-slate-500 text-center">
               Sign in to import your CardTrader wishlists and set up price alerts.
             </p>
+          </div>
+
+          {/* Beta disclaimer */}
+          <p className="text-xs text-slate-500 text-center mt-4">
+            This is a beta project. The service may be modified or discontinued at any time.
+          </p>
+
+          {/* Navigation links */}
+          <div className="flex gap-4 justify-center mt-3">
+            <Link to="/how-it-works" className="text-sm text-blue-500 hover:text-blue-400 underline">
+              How it works
+            </Link>
+            <Link to="/privacy" className="text-sm text-blue-500 hover:text-blue-400 underline">
+              Privacy
+            </Link>
           </div>
         </div>
       </div>
