@@ -26,9 +26,7 @@ export function PrivacyPage() {
           <section>
             <h2 className="mb-3 text-xl font-semibold text-slate-100">What data we collect</h2>
             <div className="space-y-3 text-sm leading-relaxed text-slate-400">
-              <p>
-                We collect only the minimum data required to provide the service:
-              </p>
+              <p>We collect only the minimum data required to provide the service:</p>
               <ul className="list-disc list-inside space-y-1">
                 <li>
                   <strong className="text-slate-100">Google account email and name</strong> — used
@@ -70,10 +68,10 @@ export function PrivacyPage() {
             <h2 className="mb-3 text-xl font-semibold text-slate-100">Data storage</h2>
             <div className="space-y-3 text-sm leading-relaxed text-slate-400">
               <p>
-                All data is stored in{' '}
-                <strong className="text-slate-100">Supabase</strong>, hosted in the EU. Row-level
-                security (RLS) policies are enforced at the database level — users can only access
-                their own data. Your CardTrader API token is encrypted before storage.
+                All data is stored in <strong className="text-slate-100">Supabase</strong>, hosted
+                in the EU. Row-level security (RLS) policies are enforced at the database level —
+                users can only access their own data. Your CardTrader API token is encrypted before
+                storage.
               </p>
             </div>
           </section>
@@ -95,8 +93,8 @@ export function PrivacyPage() {
                   notifications
                 </li>
                 <li>
-                  <strong className="text-slate-100">Supabase</strong> — database and
-                  authentication infrastructure
+                  <strong className="text-slate-100">Supabase</strong> — database and authentication
+                  infrastructure
                 </li>
               </ul>
             </div>

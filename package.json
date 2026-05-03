@@ -8,6 +8,8 @@
     "build": "tsc -b && vite build",
     "check": "biome check .",
     "check:fix": "biome check . --write",
+    "lint": "biome check .",
+    "lint:fix": "biome check . --write",
     "preview": "vite preview",
     "test": "vitest run --reporter=verbose",
     "db:push": "supabase db push",

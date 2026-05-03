@@ -45,7 +45,8 @@ export function LoginPage() {
             </span>
             <h1 className="text-4xl font-bold text-slate-100 mb-3">CardTrader Monitor</h1>
             <p className="text-lg text-slate-300">
-              Stop refreshing CardTrader. Get notified when prices drop on the Magic: The Gathering cards you care about.
+              Stop refreshing CardTrader. Get notified when prices drop on the Magic: The Gathering
+              cards you care about.
             </p>
             <ul className="mt-4 space-y-1">
               <li className="text-sm text-slate-400">&#10003; Import your MTG wishlists</li>
@@ -87,7 +88,10 @@ export function LoginPage() {
 
           {/* Navigation links */}
           <div className="flex gap-4 justify-center mt-3">
-            <Link to="/how-it-works" className="text-sm text-blue-500 hover:text-blue-400 underline">
+            <Link
+              to="/how-it-works"
+              className="text-sm text-blue-500 hover:text-blue-400 underline"
+            >
               How it works
             </Link>
             <Link to="/privacy" className="text-sm text-blue-500 hover:text-blue-400 underline">
