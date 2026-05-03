@@ -167,7 +167,10 @@ const LANGUAGE_TO_COUNTRY: Record<string, string> = {
 
 export function languageToFlag(lang: string): string {
   const countryCode = LANGUAGE_TO_COUNTRY[lang];
-  if (!countryCode) {
+  if (!countryCode && !lang) {
+    return '🏳️';
+  }
+  if (!countryCode && lang) {
     return lang.toUpperCase();
   }
   // Convert country code to regional indicator symbols (flag emoji)
