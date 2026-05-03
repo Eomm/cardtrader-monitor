@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import type { MonitoredCardWithPrice } from '../lib/cardtrader-types';
 import { CardRow } from './CardRow';
+import { formatEur } from './PriceDisplay';
 
 export const FILTER_KEY = 'cardtrader-dashboard-filters';
 
@@ -112,6 +113,8 @@ export function CardList({ cards, wishlists, onRuleSaved }: CardListProps) {
     return true;
   });
 
+  const filteredTotalCents = filtered.reduce((acc, c) => acc + (c.latest_price_cents ?? 0), 0);
+
   const sorted = useMemo(() => {
     if (!sortField) return filtered;
     return [...filtered].sort((a, b) => {
@@ -184,8 +187,8 @@ export function CardList({ cards, wishlists, onRuleSaved }: CardListProps) {
         )}
       </div>
 
-      <div className="mb-3 flex flex-wrap gap-2">
-        <span className="self-center text-xs text-slate-500">Sort:</span>
+      <div className="mb-3 flex flex-wrap items-center gap-2">
+        <span className="text-xs text-slate-500">Sort:</span>
         <button
           type="button"
           onClick={() => toggleSort('price')}
@@ -195,7 +198,8 @@ export function CardList({ cards, wishlists, onRuleSaved }: CardListProps) {
               : 'border-slate-700 bg-slate-800 text-slate-400 hover:text-slate-100'
           }`}
         >
-          Price{sortField === 'price' ? (sortDirection === 'asc' ? ' \u25b2' : ' \u25bc') : ''}
+          Price
+          {sortField === 'price' ? (sortDirection === 'asc' ? ' \u25b2' : ' \u25bc') : ''}
         </button>
         <button
           type="button"
@@ -209,6 +213,11 @@ export function CardList({ cards, wishlists, onRuleSaved }: CardListProps) {
           Variation
           {sortField === 'variation' ? (sortDirection === 'asc' ? ' \u25b2' : ' \u25bc') : ''}
         </button>
+        <div className="ml-auto flex items-center gap-2 text-xs text-slate-400">
+          <span>{filtered.length} cards</span>
+          <span className="text-slate-600">💰</span>
+          <span>{formatEur(filteredTotalCents)}</span>
+        </div>
       </div>
 
       {sorted.length === 0 ? (

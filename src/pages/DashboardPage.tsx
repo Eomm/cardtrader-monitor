@@ -2,7 +2,6 @@ import { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router';
 import { CardList } from '../components/CardList';
 import { ImportWishlistForm } from '../components/ImportWishlistForm';
-import { formatEur } from '../components/PriceDisplay';
 import { useAuth } from '../contexts/AuthContext';
 import type { MonitoredCardWithPrice } from '../lib/cardtrader-types';
 import { sortCards } from '../lib/cardtrader-utils';
@@ -213,25 +212,12 @@ export function DashboardPage() {
   }
 
   // Cards exist: compact import form + card grid
-  const totalCards = cards.length;
-  const totalValueCents = cards.reduce((acc, c) => acc + (c.latest_price_cents ?? 0), 0);
-
   return (
     <div className="mx-auto w-full max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
       <div className="mb-6">
         <ImportWishlistForm onImportComplete={handleImportComplete} compact />
       </div>
       {error && <p className="mb-4 text-sm text-red-500">{error}</p>}
-      <div className="mb-4 flex flex-wrap gap-4">
-        <div className="flex items-center gap-2 rounded-md border border-slate-700 bg-slate-800 px-4 py-2">
-          <span className="text-sm text-slate-400">Cards</span>
-          <span className="text-sm font-semibold text-slate-100">{totalCards}</span>
-        </div>
-        <div className="flex items-center gap-2 rounded-md border border-slate-700 bg-slate-800 px-4 py-2">
-          <span className="text-sm text-slate-400">Total value</span>
-          <span className="text-sm font-semibold text-slate-100">{formatEur(totalValueCents)}</span>
-        </div>
-      </div>
       <CardList cards={cards} wishlists={wishlists} onRuleSaved={fetchCards} />
     </div>
   );
