@@ -5,7 +5,7 @@ milestone_name: milestone
 status: executing
 stopped_at: "Completed 07-02: Fixed Price tab in RuleEditor and inline rule editing in CardRow"
 last_updated: "2026-03-12T16:50:50.445Z"
-last_activity: "2026-05-03 - Completed quick task 260503-dgt: in the dashboard view, I would like to see: the total number of cards and the total amount of all the cards viewed"
+last_activity: "2026-05-04 - Completed quick task 260504-bj6: add Min/Max columns and Set-as-Baseline button to card detail price section"
 progress:
   total_phases: 7
   completed_phases: 7
@@ -28,7 +28,7 @@ See: .planning/PROJECT.md (updated 2026-03-07)
 Phase: 6 of 6 (Chores and Fixes)
 Plan: 4 of 4 in current phase (06-03 complete)
 Status: In progress
-Last activity: 2026-05-03 - Completed quick task 260503-dgt: dashboard stats bar (card count + total value)
+Last activity: 2026-05-04 - Completed quick task 260504-bj6: add Min/Max columns and Set-as-Baseline button to card detail price section
 
 Progress: [██████████] 100%
 
@@ -163,6 +163,7 @@ None yet.
 | 10 | Improve homepage with catchy description, BETA badge, and Privacy page | 2026-03-29 | c802240 | [10-improve-homepage-with-catchy-description](./quick/10-improve-homepage-with-catchy-description/) |
 | 11 | Specify service works for Magic: The Gathering cards | 2026-03-29 | 6c9f690 | [11-specify-service-works-for-magic-the-gath](./quick/11-specify-service-works-for-magic-the-gath/) |
 | 260503-dgt | in the dashboard view, I would like to see: the total number of cards and the total amount of all the cards viewed | 2026-05-03 | b86c9ed | [260503-dgt-in-the-dashboard-view-i-would-like-to-se](./quick/260503-dgt-in-the-dashboard-view-i-would-like-to-se/) |
+| 260504-bj6 | Add Min/Max columns and Set-as-Baseline button to card detail price section | 2026-05-04 | 40f36a9 | [260504-bj6-card-detail-min-max-and-set-baseline](./quick/260504-bj6-card-detail-min-max-and-set-baseline/) |
 
 ## Session Continuity
 
