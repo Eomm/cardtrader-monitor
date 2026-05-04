@@ -23,6 +23,7 @@ export function CardDetailPage() {
   const [togglingZero, setTogglingZero] = useState(false);
   const [confirmStop, setConfirmStop] = useState(false);
   const [togglingActive, setTogglingActive] = useState(false);
+  const [settingBaseline, setSettingBaseline] = useState(false);
 
   const fetchCard = useCallback(async () => {
     if (!id) return;
@@ -138,6 +139,19 @@ export function CardDetailPage() {
     fetchCard();
   }
 
+  async function handleSetBaseline() {
+    if (!card || card.latest_price_cents === null) return;
+    setSettingBaseline(true);
+    const { error: updateError } = await supabase
+      .from('monitored_cards')
+      .update({ baseline_price_cents: card.latest_price_cents })
+      .eq('id', card.id);
+    setSettingBaseline(false);
+    if (!updateError) {
+      setCard((prev) => prev ? { ...prev, baseline_price_cents: prev.latest_price_cents } : prev);
+    }
+  }
+
   // Loading state
   if (loading) {
     return (
@@ -195,6 +209,10 @@ export function CardDetailPage() {
       </div>
     );
   }
+
+  const minPrice = priceHistory.length > 0 ? Math.min(...priceHistory.map(s => s.price_cents)) : null;
+  const maxPrice = priceHistory.length > 0 ? Math.max(...priceHistory.map(s => s.price_cents)) : null;
+  const oldestSnapshotDate = priceHistory.length > 0 ? priceHistory[priceHistory.length - 1].recorded_at.slice(0, 10) : null;
 
   const foilLabel =
     card.foil_required === true ? 'Yes' : card.foil_required === false ? 'No' : 'Any';
@@ -276,6 +294,20 @@ export function CardDetailPage() {
                     />
                   </div>
                 </div>
+                <div>
+                  <span className="text-xs text-slate-500">
+                    Min{oldestSnapshotDate ? ` (${oldestSnapshotDate})` : ''}
+                  </span>
+                  <p className="text-lg font-medium text-slate-400">
+                    {minPrice !== null ? formatEur(minPrice) : '---'}
+                  </p>
+                </div>
+                <div>
+                  <span className="text-xs text-slate-500">Max</span>
+                  <p className="text-lg font-medium text-slate-400">
+                    {maxPrice !== null ? formatEur(maxPrice) : '---'}
+                  </p>
+                </div>
               </div>
               {priceHistory.length > 1 && (
                 <div className="mt-4 border-t border-slate-700 pt-3">
@@ -287,6 +319,16 @@ export function CardDetailPage() {
                     baselinePriceCents={card.baseline_price_cents}
                     rules={card.notification_rule}
                   />
+                  <div className="mt-3 flex justify-end">
+                    <button
+                      type="button"
+                      onClick={handleSetBaseline}
+                      disabled={settingBaseline || card.latest_price_cents === null}
+                      className="rounded-md bg-slate-700 px-3 py-1.5 text-xs font-medium text-slate-300 transition-colors hover:bg-slate-600 disabled:opacity-50"
+                    >
+                      {settingBaseline ? 'Saving...' : 'Set current as Baseline'}
+                    </button>
+                  </div>
                 </div>
               )}
             </div>
