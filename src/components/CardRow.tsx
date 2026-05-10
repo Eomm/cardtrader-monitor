@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router';
 import type { MonitoredCardWithPrice, NotificationRule } from '../lib/cardtrader-types';
 import { languageToFlag } from '../lib/cardtrader-utils';
 import { supabase } from '../lib/supabase';
-import { PriceChange, formatEur } from './PriceDisplay';
+import { formatEur, PriceChange } from './PriceDisplay';
 
 type CardRowProps = {
   card: MonitoredCardWithPrice;
@@ -134,6 +134,7 @@ function InlineRuleInputInner({
   }
 
   return (
+    // biome-ignore lint/a11y/noStaticElementInteractions: event boundary to prevent row navigation while editing the inline rule
     <div
       className="flex flex-shrink-0 items-center gap-1"
       onClick={(e) => e.stopPropagation()}
@@ -161,6 +162,7 @@ export function CardRow({ card, wishlistName, onRuleSaved }: CardRowProps) {
   const navigate = useNavigate();
 
   return (
+    // biome-ignore lint/a11y/useSemanticElements: cannot use <button> because the row contains an <input> for the inline rule editor
     <div
       role="button"
       tabIndex={0}

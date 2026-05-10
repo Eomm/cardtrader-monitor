@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import { PriceChart } from '../components/PriceChart';
-import { PriceChange, formatEur } from '../components/PriceDisplay';
+import { formatEur, PriceChange } from '../components/PriceDisplay';
 import { RuleEditor } from '../components/RuleEditor';
 import type { MonitoredCardWithPrice } from '../lib/cardtrader-types';
 import { languageToFlag } from '../lib/cardtrader-utils';
@@ -148,7 +148,7 @@ export function CardDetailPage() {
       .eq('id', card.id);
     setSettingBaseline(false);
     if (!updateError) {
-      setCard((prev) => prev ? { ...prev, baseline_price_cents: prev.latest_price_cents } : prev);
+      setCard((prev) => (prev ? { ...prev, baseline_price_cents: prev.latest_price_cents } : prev));
     }
   }
 
@@ -210,9 +210,12 @@ export function CardDetailPage() {
     );
   }
 
-  const minPrice = priceHistory.length > 0 ? Math.min(...priceHistory.map(s => s.price_cents)) : null;
-  const maxPrice = priceHistory.length > 0 ? Math.max(...priceHistory.map(s => s.price_cents)) : null;
-  const oldestSnapshotDate = priceHistory.length > 0 ? priceHistory[priceHistory.length - 1].recorded_at.slice(0, 10) : null;
+  const minPrice =
+    priceHistory.length > 0 ? Math.min(...priceHistory.map((s) => s.price_cents)) : null;
+  const maxPrice =
+    priceHistory.length > 0 ? Math.max(...priceHistory.map((s) => s.price_cents)) : null;
+  const oldestSnapshotDate =
+    priceHistory.length > 0 ? priceHistory[priceHistory.length - 1].recorded_at.slice(0, 10) : null;
 
   const foilLabel =
     card.foil_required === true ? 'Yes' : card.foil_required === false ? 'No' : 'Any';

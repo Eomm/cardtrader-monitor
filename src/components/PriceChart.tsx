@@ -173,6 +173,7 @@ export function PriceChart({ priceHistory, baselinePriceCents, rules }: PriceCha
                 style={{ pointerEvents: 'none' }}
               />
               {/* Invisible hit target */}
+              {/* biome-ignore lint/a11y/noStaticElementInteractions: hover-only SVG hit target with no interactive equivalent */}
               <circle
                 cx={cx}
                 cy={cy}

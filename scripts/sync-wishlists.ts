@@ -1,10 +1,5 @@
-import { type SupabaseClient, createClient } from '@supabase/supabase-js';
-import type {
-  Blueprint,
-  CardFilters,
-  Expansion,
-  MarketplaceProduct,
-} from '../src/lib/cardtrader-types.ts';
+import { createClient, type SupabaseClient } from '@supabase/supabase-js';
+import type { Blueprint, Expansion, MarketplaceProduct } from '../src/lib/cardtrader-types.ts';
 import {
   createDefaultNotificationRule,
   findCheapestPrice,

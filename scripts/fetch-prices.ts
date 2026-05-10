@@ -13,10 +13,10 @@ import {
   processBatches,
 } from '../src/lib/cardtrader-utils.ts';
 import {
-  type ThresholdAlert,
   formatAlertMessage,
   shouldNotify,
   shouldNotifyFixedPrice,
+  type ThresholdAlert,
 } from '../src/lib/telegram-utils.ts';
 
 const CARDTRADER_API_BASE = 'https://api.cardtrader.com/api/v2';

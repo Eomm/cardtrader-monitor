@@ -1,15 +1,14 @@
 import { createClient } from 'npm:@supabase/supabase-js@2';
 import {
   type Blueprint,
-  type Expansion,
-  type NotificationRule,
-  type WishlistItem,
   fetchBlueprintsForExpansion,
   fetchExpansions,
   fetchMarketplaceProducts,
   fetchWishlist,
   findCheapestPrice,
+  type NotificationRule,
   processBatches,
+  type WishlistItem,
 } from '../_shared/cardtrader-api.ts';
 import { corsHeaders, handleCors } from '../_shared/cors.ts';
 

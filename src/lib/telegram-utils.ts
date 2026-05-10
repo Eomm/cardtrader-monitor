@@ -155,7 +155,7 @@ export function shouldNotifyFixedPrice(
 
 // ── MarkdownV2 Escaping ────────────────────────────────────────────
 
-const MARKDOWN_V2_SPECIAL = /([_*\[\]()~`>#+\-=|{}.!\\])/g;
+const MARKDOWN_V2_SPECIAL = /([_*[\]()~`>#+\-=|{}.!\\])/g;
 
 export function escapeMarkdownV2(text: string): string {
   return text.replace(MARKDOWN_V2_SPECIAL, '\\$1');
