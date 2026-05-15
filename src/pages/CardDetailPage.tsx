@@ -371,7 +371,7 @@ export function CardDetailPage() {
                   <dt className="text-slate-500">Language</dt>
                   <dd className="font-medium">
                     {languageToFlag(card.language_required)}{' '}
-                    {card.language_required?.toUpperCase() || '🏳️'}
+                    {card.language_required?.toUpperCase() || '-'}
                   </dd>
                 </div>
                 <div>
