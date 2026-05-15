@@ -4,8 +4,8 @@ milestone: v1.0
 milestone_name: milestone
 status: executing
 stopped_at: "Completed 07-02: Fixed Price tab in RuleEditor and inline rule editing in CardRow"
-last_updated: "2026-03-12T16:50:50.445Z"
-last_activity: "2026-05-04 - Completed quick task 260504-bj6: add Min/Max columns and Set-as-Baseline button to card detail price section"
+last_updated: "2026-05-15T00:00:00.000Z"
+last_activity: "2026-05-15 - Completed quick task 260515-wsh: Wishlists page (list/delete/external link) + moved import form off the dashboard"
 progress:
   total_phases: 7
   completed_phases: 7
@@ -164,9 +164,10 @@ None yet.
 | 11 | Specify service works for Magic: The Gathering cards | 2026-03-29 | 6c9f690 | [11-specify-service-works-for-magic-the-gath](./quick/11-specify-service-works-for-magic-the-gath/) |
 | 260503-dgt | in the dashboard view, I would like to see: the total number of cards and the total amount of all the cards viewed | 2026-05-03 | b86c9ed | [260503-dgt-in-the-dashboard-view-i-would-like-to-se](./quick/260503-dgt-in-the-dashboard-view-i-would-like-to-se/) |
 | 260504-bj6 | Add Min/Max columns and Set-as-Baseline button to card detail price section | 2026-05-04 | 40f36a9 | [260504-bj6-card-detail-min-max-and-set-baseline](./quick/260504-bj6-card-detail-min-max-and-set-baseline/) |
+| 260515-wsh | Add Wishlists page (list/delete/external link) and move import form off the dashboard | 2026-05-15 | 3cb4cb4 | [260515-wsh-wishlists-page](./quick/260515-wsh-wishlists-page/) |
 
 ## Session Continuity
 
-Last session: 2026-05-03T00:00:00Z
-Stopped at: Completed quick task 260503-dgt: dashboard stats bar (card count + total value)
+Last session: 2026-05-15T00:00:00Z
+Stopped at: Completed quick task 260515-wsh: Wishlists page + import form moved off dashboard
 Resume file: None
