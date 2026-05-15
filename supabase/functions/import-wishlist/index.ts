@@ -38,6 +38,24 @@ function normaliseFoil(foil: string | boolean): boolean {
   return foil === 'true';
 }
 
+/**
+ * Normalise wishlist language. CardTrader returns `null`, `"null"`, or `""` when
+ * the user didn't pin a language; we default to `"en"` so it matches marketplace
+ * offers (whose `mtg_language` is always a concrete code like `"en"`). This is
+ * the same fallback scripts/fetch-prices.ts uses at read time, applied here at
+ * write time so the DB never holds a bogus `"null"` string.
+ */
+function normaliseLanguage(lang: string | null | undefined): string {
+  if (!lang || lang === 'null') return 'en';
+  return lang;
+}
+
+/** Normalise wishlist condition. Treat null/"null"/empty as "no constraint". */
+function normaliseCondition(cond: string | null | undefined): string | null {
+  if (!cond || cond === 'null') return null;
+  return cond;
+}
+
 // ---------------------------------------------------------------------------
 // Edge Function entry point
 // ---------------------------------------------------------------------------
@@ -68,11 +86,14 @@ Deno.serve(async (req) => {
 
     const wishlistId = extractWishlistId(wishlistUrl);
     if (!wishlistId) {
+      console.warn(`[import-wishlist] Invalid CardTrader wishlist URL: ${wishlistUrl}`);
       return new Response(JSON.stringify({ error: 'Invalid CardTrader wishlist URL' }), {
         status: 400,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
     }
+
+    console.log(`[import-wishlist] Starting import for wishlist ${wishlistId}`);
 
     // -----------------------------------------------------------------------
     // 2. Auth: create Supabase clients
@@ -99,6 +120,7 @@ Deno.serve(async (req) => {
     } = await supabaseUser.auth.getUser();
 
     if (userError || !user) {
+      console.warn(`[import-wishlist] Auth failed: ${userError?.message ?? 'no user from token'}`);
       return new Response(JSON.stringify({ error: 'Not authenticated' }), {
         status: 401,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -114,6 +136,9 @@ Deno.serve(async (req) => {
       .eq('user_id', user.id);
 
     if (countError) {
+      console.error(
+        `[import-wishlist] Failed to check wishlist count for user ${user.id}: ${countError.message}`,
+      );
       return new Response(JSON.stringify({ error: 'Failed to check wishlist count' }), {
         status: 500,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -137,6 +162,9 @@ Deno.serve(async (req) => {
     });
 
     if (tokenError || !apiToken) {
+      console.warn(
+        `[import-wishlist] Missing/undecryptable API token for user ${user.id}: ${tokenError?.message ?? 'token is null'}`,
+      );
       return new Response(
         JSON.stringify({
           error: 'Please add your CardTrader API token in Settings',
@@ -169,6 +197,9 @@ Deno.serve(async (req) => {
 
     // 5c. Fetch wishlist items
     const wishlist = await fetchWishlist(apiToken, wishlistId);
+    console.log(
+      `[import-wishlist] Fetched wishlist "${wishlist.name}" (${wishlist.items.length} items) and ${expansionMap.size} expansions`,
+    );
 
     // 5d. Group items by expansion_code, resolve to expansion_id
     const itemsByExpansion = new Map<string, WishlistItem[]>();
@@ -250,30 +281,66 @@ Deno.serve(async (req) => {
       });
     }
 
-    // 5g. For each resolved card: fetch marketplace products and find cheapest price
+    console.log(
+      `[import-wishlist] Resolved ${resolvedCards.length}/${wishlist.items.length} items to blueprints (${skippedCards.length} skipped)`,
+    );
+    for (const skipped of skippedCards) {
+      console.log(`[import-wishlist] Skipped "${skipped.card_name}": ${skipped.reason}`);
+    }
+
+    // 5g. For each resolved card: fetch marketplace products and find cheapest price.
+    // Mirrors scripts/fetch-prices.ts behaviour: fetcher returns { products, error? }
+    // instead of throwing, so we can log every per-card failure individually.
+    let fetchFailedCount = 0;
+    let noOffersCount = 0;
+
     const prices = await processBatches(
       resolvedCards,
       async (card) => {
-        try {
-          const products = await fetchMarketplaceProducts(
-            apiToken,
-            card.blueprint.id,
-            card.item.language,
+        const result = await fetchMarketplaceProducts(apiToken, card.blueprint.id);
+
+        if (result.error) {
+          console.warn(
+            `[import-wishlist] Marketplace fetch failed for blueprint ${card.blueprint.id} (${card.blueprint.name}): ${result.error}`,
           );
-          const cheapest = findCheapestPrice(products, {
-            condition: card.item.condition || undefined,
-            language: card.item.language,
-            foil: normaliseFoil(card.item.foil) || undefined,
-            onlyZero: true,
-          });
-          return cheapest;
-        } catch {
-          // If marketplace fetch fails for a single card, continue with null price
+          fetchFailedCount++;
           return null;
         }
+
+        const normalisedCondition = normaliseCondition(card.item.condition);
+        const normalisedLanguage = normaliseLanguage(card.item.language);
+        const filters = {
+          condition: normalisedCondition ?? undefined,
+          language: normalisedLanguage,
+          foil: normaliseFoil(card.item.foil) || undefined,
+          onlyZero: true,
+        };
+
+        const cheapest = findCheapestPrice(result.products, filters);
+
+        if (cheapest === null) {
+          const sample = result.products[0]?.properties_hash;
+          const sampleSeller = result.products[0]?.user;
+          console.log(
+            `[import-wishlist] No matching offers for blueprint ${card.blueprint.id} (${card.blueprint.name}) — ` +
+              `${result.products.length} products returned, 0 passed filters. ` +
+              `Filters (normalised): condition="${normalisedCondition ?? '(any)'}", language="${normalisedLanguage}", foil=${normaliseFoil(card.item.foil)}. ` +
+              `Wishlist raw: condition="${card.item.condition}", language="${card.item.language}". ` +
+              `Sample marketplace product: condition="${sample?.condition ?? 'n/a'}", language="${sample?.mtg_language ?? 'n/a'}", foil=${sample?.mtg_foil ?? 'n/a'}, ` +
+              `seller: user_type="${sampleSeller?.user_type ?? 'n/a'}", can_sell_via_hub=${sampleSeller?.can_sell_via_hub ?? 'n/a'}, can_sell_sealed_with_ct_zero=${sampleSeller?.can_sell_sealed_with_ct_zero ?? 'n/a'}`,
+          );
+          noOffersCount++;
+        }
+
+        return cheapest;
       },
       8,
       1000,
+    );
+
+    const baselineSetCount = prices.filter((p) => p !== null).length;
+    console.log(
+      `[import-wishlist] Marketplace summary for wishlist ${wishlistId}: ${baselineSetCount}/${resolvedCards.length} baselines set, ${noOffersCount} cards had no matching offers, ${fetchFailedCount} fetches failed`,
     );
 
     // -----------------------------------------------------------------------
@@ -296,6 +363,9 @@ Deno.serve(async (req) => {
       .single();
 
     if (wishlistError || !wishlistRow) {
+      console.error(
+        `[import-wishlist] Failed to upsert wishlist row for cardtrader_wishlist_id=${wishlistId} user=${user.id}: ${wishlistError?.message ?? 'unknown'}`,
+      );
       return new Response(
         JSON.stringify({
           error: `Database error: Failed to upsert wishlist - ${wishlistError?.message ?? 'unknown'}`,
@@ -320,8 +390,8 @@ Deno.serve(async (req) => {
       baseline_price_cents: prices[idx] ?? null,
       notification_rule: [defaultRule],
       only_zero: true,
-      condition_required: card.item.condition || null,
-      language_required: card.item.language,
+      condition_required: normaliseCondition(card.item.condition),
+      language_required: normaliseLanguage(card.item.language),
       foil_required: normaliseFoil(card.item.foil),
       is_active: true,
     }));
@@ -343,6 +413,9 @@ Deno.serve(async (req) => {
         .single();
 
       if (insertError) {
+        console.warn(
+          `[import-wishlist] Upsert failed for ${row.card_name} (blueprint ${row.blueprint_id}): ${insertError.message} — falling back to insert`,
+        );
         // If upsert fails (e.g. no unique constraint), try plain insert
         const { data: fallbackInserted, error: fallbackError } = await supabaseAdmin
           .from('monitored_cards')
@@ -351,6 +424,9 @@ Deno.serve(async (req) => {
           .single();
 
         if (fallbackError) {
+          console.error(
+            `[import-wishlist] Fallback insert failed for ${row.card_name} (blueprint ${row.blueprint_id}): ${fallbackError.message}`,
+          );
           importedDetails.push({
             card_name: row.card_name,
             status: 'skipped',
@@ -392,7 +468,14 @@ Deno.serve(async (req) => {
       }));
 
     if (snapshotRows.length > 0) {
-      await supabaseAdmin.from('price_snapshots').insert(snapshotRows);
+      const { error: snapshotError } = await supabaseAdmin
+        .from('price_snapshots')
+        .insert(snapshotRows);
+      if (snapshotError) {
+        console.error(
+          `[import-wishlist] Failed to insert ${snapshotRows.length} initial price snapshots: ${snapshotError.message}`,
+        );
+      }
     }
 
     // -----------------------------------------------------------------------
@@ -400,6 +483,10 @@ Deno.serve(async (req) => {
     // -----------------------------------------------------------------------
     const importedCount = importedDetails.filter((d) => d.status === 'imported').length;
     const skippedCount = importedDetails.filter((d) => d.status === 'skipped').length;
+
+    console.log(
+      `[import-wishlist] Done for wishlist ${wishlistId}: imported=${importedCount}, skipped=${skippedCount}, baselines=${baselineSetCount}, snapshots=${snapshotRows.length}`,
+    );
 
     return new Response(
       JSON.stringify({
@@ -418,14 +505,17 @@ Deno.serve(async (req) => {
     // 9. Error handling
     // -----------------------------------------------------------------------
     const message = err instanceof Error ? err.message : String(err);
+    const stack = err instanceof Error ? err.stack : undefined;
 
     if (message.includes('CardTrader API error')) {
+      console.error(`[import-wishlist] CardTrader API error: ${message}`);
       return new Response(JSON.stringify({ error: `CardTrader API error: ${message}` }), {
         status: 502,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
     }
 
+    console.error(`[import-wishlist] Internal server error: ${message}\n${stack ?? ''}`);
     return new Response(JSON.stringify({ error: `Internal server error: ${message}` }), {
       status: 500,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },

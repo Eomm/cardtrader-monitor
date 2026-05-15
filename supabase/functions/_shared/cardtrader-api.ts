@@ -139,22 +139,49 @@ export async function fetchBlueprintsForExpansion(
   return map;
 }
 
+export interface MarketplaceFetchResult {
+  blueprint_id: number;
+  products: MarketplaceProduct[];
+  error?: string;
+}
+
 /**
  * Fetch marketplace products for a blueprint.
  * Response is keyed by blueprint_id as string, not an array!
+ *
+ * Mirrors scripts/fetch-prices.ts: never throws, surfaces errors in the
+ * return value so per-card failures can be logged without aborting the batch.
+ * Language is intentionally NOT sent as a query param — filtering happens
+ * client-side via filterCtZeroOffers so the API returns the full offer set.
  */
 export async function fetchMarketplaceProducts(
   apiToken: string,
   blueprintId: number,
-  language?: string,
-): Promise<MarketplaceProduct[]> {
-  let url = `${CARD_TRADER_BASE_URL}/marketplace/products?blueprint_id=${blueprintId}`;
-  if (language) {
-    url += `&language=${language}`;
+): Promise<MarketplaceFetchResult> {
+  try {
+    const url = `${CARD_TRADER_BASE_URL}/marketplace/products?blueprint_id=${blueprintId}`;
+    const res = await fetch(url, { headers: authHeaders(apiToken) });
+
+    if (!res.ok) {
+      const text = await res.text().catch(() => '');
+      return {
+        blueprint_id: blueprintId,
+        products: [],
+        error: `HTTP ${res.status}: ${text.slice(0, 200)}`,
+      };
+    }
+
+    const data = (await res.json()) as Record<string, MarketplaceProduct[]>;
+    const key = String(blueprintId);
+    const products = Array.isArray(data[key]) ? data[key] : [];
+    return { blueprint_id: blueprintId, products };
+  } catch (err) {
+    return {
+      blueprint_id: blueprintId,
+      products: [],
+      error: err instanceof Error ? err.message : String(err),
+    };
   }
-  const response = await fetchJson<Record<string, MarketplaceProduct[]>>(url, apiToken);
-  // Response is keyed by blueprint_id as string
-  return response[String(blueprintId)] ?? [];
 }
 
 // ---------------------------------------------------------------------------
