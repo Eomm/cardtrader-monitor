@@ -9,6 +9,7 @@ import { HowItWorksPage } from './pages/HowItWorksPage';
 import { LoginPage } from './pages/LoginPage';
 import { PrivacyPage } from './pages/PrivacyPage';
 import { SettingsPage } from './pages/SettingsPage';
+import { WishlistsPage } from './pages/WishlistsPage';
 
 function AuthenticatedLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -34,6 +35,16 @@ function App() {
               <ProtectedRoute>
                 <AuthenticatedLayout>
                   <DashboardPage />
+                </AuthenticatedLayout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/wishlists"
+            element={
+              <ProtectedRoute>
+                <AuthenticatedLayout>
+                  <WishlistsPage />
                 </AuthenticatedLayout>
               </ProtectedRoute>
             }

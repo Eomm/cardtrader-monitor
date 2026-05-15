@@ -48,6 +48,9 @@ export function Navbar() {
             <Link to="/dashboard" className={navLinkClass('/dashboard')}>
               Dashboard
             </Link>
+            <Link to="/wishlists" className={navLinkClass('/wishlists')}>
+              Wishlists
+            </Link>
             <Link to="/settings" className={navLinkClass('/settings')}>
               Settings
             </Link>
@@ -129,6 +132,13 @@ export function Navbar() {
               className={`block ${navLinkClass('/dashboard')}`}
             >
               Dashboard
+            </Link>
+            <Link
+              to="/wishlists"
+              onClick={() => setMobileMenuOpen(false)}
+              className={`block ${navLinkClass('/wishlists')}`}
+            >
+              Wishlists
             </Link>
             <Link
               to="/settings"

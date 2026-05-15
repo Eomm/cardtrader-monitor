@@ -211,12 +211,9 @@ export function DashboardPage() {
     return <ImportWishlistForm onImportComplete={handleImportComplete} />;
   }
 
-  // Cards exist: compact import form + card grid
+  // Cards exist: card grid only — import lives on /wishlists
   return (
     <div className="mx-auto w-full max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-      <div className="mb-6">
-        <ImportWishlistForm onImportComplete={handleImportComplete} compact />
-      </div>
       {error && <p className="mb-4 text-sm text-red-500">{error}</p>}
       <CardList cards={cards} wishlists={wishlists} onRuleSaved={fetchCards} />
     </div>
